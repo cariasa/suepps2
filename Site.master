@@ -1,0 +1,52 @@
+﻿<%@ Master Language="VB" AutoEventWireup="false" CodeFile="Site.Master.vb" Inherits="Site" %>
+<%@ Register Src="~/moca_menucontrol.ascx" TagPrefix="uc" TagName="MOCA_MenuControl" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head runat="server">
+    <title></title>
+    <link href="~/Styles/Site.css" rel="stylesheet" type="text/css" />
+    <asp:ContentPlaceHolder ID="HeadContent" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form runat="server">
+    <div class="page">
+        <div class="header">
+            <div class="title">
+                <asp:Image ID="iHeaderMain" runat="server" ImageUrl="~/Imagenes/sds.png" /> <br />
+                
+            </div>
+            <div class="loginDisplay">
+                <asp:LoginView ID="HeadLoginView" runat="server" EnableViewState="false">
+                    <AnonymousTemplate>
+                        [ <a href="~/Account/Login.aspx" ID="HeadLoginStatus" runat="server">Ingresar al Sistema</a> ]
+                    </AnonymousTemplate>
+                    <LoggedInTemplate>
+                        Bienvenido! <span class="bold"><asp:LoginName ID="HeadLoginName" runat="server" /></span>!
+                        [ <asp:HyperLink ID="hlMenuPrincipal" runat="server" Text="Menú Principal" NavigateUrl="/SSO/">Menú Principal</asp:HyperLink> ] 
+                        [ <asp:LoginStatus ID="HeadLoginStatus" runat="server" LogoutAction="Redirect" LogoutText="Salir" LogoutPageUrl="~/"/> ]
+                        <br />
+                        <asp:HyperLink ID="hlUserOptions" runat="server" 
+                            NavigateUrl="~/Account/AdminUser.aspx">Opciones del Usuario</asp:HyperLink>
+                    </LoggedInTemplate>
+                </asp:LoginView><br />
+                <asp:Image ID="iModulo" runat="server" AlternateText="Imagen del Módulo" ImageUrl="~/Imagenes/suepps-logo.png" />
+            </div>
+            <uc:MOCA_MenuControl runat="server" ID="ucMOCA_MenuControl" />
+        </div>
+        <div class="main">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server"/>
+        </div>
+        <div class="clear">
+        </div>
+    </div>
+    <div class="footer">
+        
+        <asp:Image ID="Image1" runat="server" AlternateText="Gobierno" 
+            ImageUrl="~/Imagenes/gobunidad.gif" />
+        
+    </div>
+    </form>
+</body>
+</html>
