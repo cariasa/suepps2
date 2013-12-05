@@ -1,18 +1,19 @@
-﻿<%@ Page Language="VB" AutoEventWireup="false" CodeFile="InstrumentosEvaluacion.aspx.vb" Inherits="Cuantitativo_InstrumentosEvaluacion" %>
+﻿<%@ Page Language="VB" AutoEventWireup="false" CodeFile="InstrumentosEvaluacion.aspx.vb" Inherits="Cuantitativo_InstrumentosEvaluacion" MasterPageFile="~/Site.master" %>
 
 <%@ Register Assembly="DevExpress.Web.v13.1, Version=13.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web.ASPxGridView" TagPrefix="dx" %>
 
 <%@ Register assembly="DevExpress.Web.v13.1, Version=13.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" namespace="DevExpress.Web.ASPxEditors" tagprefix="dx" %>
 
-<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title></title>
-</head>
-<body>
-    <form id="form1" runat="server" onload="form1_Load">
+
+<%@ Register Src="~/MOCA_UE.ascx" TagPrefix="uc1" TagName="MOCA_UE" %>
+
+<asp:Content ID="cHeader" ContentPlaceHolderID="HeadContent" Runat="Server">
+</asp:Content>
+<asp:Content ID="cBody" ContentPlaceHolderID="MainContent" Runat="Server">
+    <uc1:MOCA_UE runat="server" ID="MOCA_UE01" />
+
+
     <div>
 
         <div>
@@ -115,14 +116,8 @@
                 <asp:FormParameter Name="IdInstrumentoDeEvaluacion" />
             </DeleteParameters>
 
-
-
         </asp:SqlDataSource>
 
-       
-
-
     </div>
-    </form>
-</body>
-</html>
+  
+  </asp:Content>
