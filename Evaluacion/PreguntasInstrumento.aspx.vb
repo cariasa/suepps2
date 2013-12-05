@@ -5,12 +5,42 @@ Imports System.Data.Common
 Partial Class Cuantitativo_PreguntasInstrumento
     Inherits System.Web.UI.Page
 
-    Protected Sub form1_Load(sender As Object, e As EventArgs)
+    Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
+        'Verifica si el usuario tiene el acceso a la pagina solicitada
+        Using dtMOCA As System.Data.DataTable = fMOCA.CheckPageAccess(3.05) 'este es el Id definido en el MOCA
+            If dtMOCA.Rows.Count() > 0 Then
+                ''Activa o Inactiva los objetos,(sean botones, grid, hiperlinks, etc),  
+                ''en la pagina que se indique deacuerdo al parametro indicado
+                'btnAgregar.Visible = dtMOCA.Rows.Item(0).Item("AllowAdd")
 
-        Session("IdInstrumento") = Request.QueryString.Get(0)
-        SqlDataSource1.SelectParameters(0).DefaultValue = Session("IdInstrumento")
-        SqlDataSource1.InsertParameters(0).DefaultValue = Session("IdInstrumento")
+                ''Los siguientes datos pueden ser cambiados por los nombres de Objetos a los que corresponde la acción que se desea realizar, 
+                ''si no hay necesidad de utilizar esta sección silo la eliminan dejandola en blanco y solo evaluando el acceso a la pagina
+                'btnModificar.Visible = dtMOCA.Rows.Item(0).Item("AllowUpdate")
+                'btnEliminar.Visible = dtMOCA.Rows.Item(0).Item("AllowDelete")
+                'btnAutorizar.Visible = dtMOCA.Rows.Item(0).Item("AllowAction01")
+                ''Object5.Visible = dtMOCA.Rows.Item(0).Item("AllowAction02")
+                ''Object6.Visible = dtMOCA.Rows.Item(0).Item("AllowAction03")
+                ''Object7.Visible = dtMOCA.Rows.Item(0).Item("AllowAction04")
+                ''Object8.Visible = dtMOCA.Rows.Item(0).Item("AllowAction05")
+                ''Object9.Visible = dtMOCA.Rows.Item(0).Item("AllowAction06")
+                ''Object10.Visible = dtMOCA.Rows.Item(0).Item("AllowAction07")
 
+                'Para activar o desactivar los botones en un ASPxGridView preferiblemente use variables de sessión
+                Session("AllowAdd") = dtMOCA.Rows.Item(0).Item("AllowAdd")
+                Session("AllowUpdate") = dtMOCA.Rows.Item(0).Item("AllowUpdate")
+                Session("AllowDelete") = dtMOCA.Rows.Item(0).Item("AllowDelete")
+            Else
+                'Si no se recupero ningun dato se entendera que el usuario no tiene acceso a la pagina solicitada
+                'y sera redireccionado a la Pagina siguiente que le notifica al usuario que no tiene acceso
+                Response.Redirect("~/NoAccess.aspx")
+            End If
+
+           Session("IdInstrumento") = Request.QueryString.Get(0)
+            SqlDataSource1.SelectParameters(0).DefaultValue = Session("IdInstrumento")
+            SqlDataSource1.InsertParameters(0).DefaultValue = Session("IdInstrumento")
+
+
+        End Using
     End Sub
 
     Protected Sub ASPxGridViewOpciones_BeforePerformDataSelect(sender As Object, e As EventArgs)
@@ -125,7 +155,7 @@ Partial Class Cuantitativo_PreguntasInstrumento
 
     End Sub
 
-  
+
     Protected Sub SqlDataSource1_Inserted(sender As Object, e As SqlDataSourceStatusEventArgs)
 
         Dim sqlConnection1 As New System.Data.SqlClient.SqlConnection(WebConfigurationManager.ConnectionStrings("SUEPPSConnectionString").ConnectionString)
