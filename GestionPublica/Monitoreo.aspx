@@ -10,7 +10,7 @@
 </asp:Content>
 <asp:Content ID="cBody" ContentPlaceHolderID="MainContent" Runat="Server">
     <uc1:MOCA_UE runat="server" ID="MOCA_UE01" />
-    
+    <%-- prueba --%>
       
         <div>
               <dx:ASPxLabel runat="server" Text="Políticas:" ID="Políticas" AssociatedControlID="comboPolitica" />
