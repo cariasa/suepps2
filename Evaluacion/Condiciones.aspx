@@ -1,13 +1,12 @@
-﻿<%@ Page Language="VB" AutoEventWireup="false" CodeFile="Condiciones.aspx.vb" Inherits="Evaluacion_Condiciones" %>
+﻿<%@ Page Language="VB" AutoEventWireup="false" CodeFile="Condiciones.aspx.vb" Inherits="Evaluacion_Condiciones"  MasterPageFile="~/Site.master"%>
 
-<!DOCTYPE html>
+<%@ Register Src="~/MOCA_UE.ascx" TagPrefix="uc1" TagName="MOCA_UE" %>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title></title>
-</head>
-<body>
-    <form id="form1" runat="server">
+<asp:Content ID="cHeader" ContentPlaceHolderID="HeadContent" Runat="Server">
+</asp:Content>
+<asp:Content ID="cBody" ContentPlaceHolderID="MainContent" Runat="Server">
+    <uc1:MOCA_UE runat="server" ID="MOCA_UE01" />
+
     <div>
         <table>
             <tr>
@@ -123,6 +122,4 @@
 
         </asp:SqlDataSource>
     </div>
-    </form>
-</body>
-</html>
+ </asp:Content>

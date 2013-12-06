@@ -1,13 +1,13 @@
-﻿<%@ Page Language="VB" AutoEventWireup="false" CodeFile="Parametros.aspx.vb" Inherits="Evaluacion_Parametros" %>
+﻿<%@ Page Language="VB" AutoEventWireup="false" CodeFile="Parametros.aspx.vb" Inherits="Evaluacion_Parametros" MasterPageFile="~/Site.master" %>
 
-<!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head runat="server">
-    <title></title>
-</head>
-<body>
-    <form id="form1" runat="server">
+<%@ Register Src="~/MOCA_UE.ascx" TagPrefix="uc1" TagName="MOCA_UE" %>
+
+<asp:Content ID="cHeader" ContentPlaceHolderID="HeadContent" Runat="Server">
+</asp:Content>
+<asp:Content ID="cBody" ContentPlaceHolderID="MainContent" Runat="Server">
+    <uc1:MOCA_UE runat="server" ID="MOCA_UE01" />
+
     <div>
         <dx:ASPxPageControl ID="carTabPage" runat="server" ActiveTabIndex="0" EnableHierarchyRecreation="True" Height="250">
 
@@ -256,6 +256,5 @@
     </TabPages>
     </dx:ASPxPageControl>
     </div>
-    </form>
-</body>
-</html>
+ 
+    </asp:Content>
