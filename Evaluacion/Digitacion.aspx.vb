@@ -1,5 +1,5 @@
 ﻿
-Partial Class Cuantitativo_AplicacionInstrumento
+Partial Class Cuantitativo_DigitarInstrumento
     Inherits System.Web.UI.Page
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
@@ -32,15 +32,16 @@ Partial Class Cuantitativo_AplicacionInstrumento
                 Response.Redirect("~/NoAccess.aspx")
             End If
 
-        Session("IdInstrumento") = Request.QueryString.Get(0)
-
-            SqlDataSource1.SelectParameters(0).DefaultValue = Session("IdInstrumento")
-            SqlDataSource1.InsertParameters(1).DefaultValue = Session("IdInstrumento")
-
-
+       
 
         End Using
     End Sub
 
-  
+
+    Protected Sub LinkButton1_Click(sender As Object, e As EventArgs)
+
+        Response.Redirect("Encuesta.aspx?CodFSU=" + 58.ToString() + "&CodDigitador=" + 10.ToString() + "&IdAplicacion=" + Me.ASPxTextBox1.Text.ToString)
+
+
+    End Sub
 End Class
