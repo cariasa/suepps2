@@ -1,7 +1,6 @@
 ﻿
-Partial Class Cuantitativo_Encuesta
+Partial Class Cuantitativo_DigitarInstrumento
     Inherits System.Web.UI.Page
-
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
         'Verifica si el usuario tiene el acceso a la pagina solicitada
@@ -33,13 +32,16 @@ Partial Class Cuantitativo_Encuesta
                 Response.Redirect("~/NoAccess.aspx")
             End If
 
-
-            Session("CodFSU") = Request.QueryString.Get(0)
-            Session("CodDigitador") = Request.QueryString.Get(1)
-            Session("IdAplicacion") = Request.QueryString.Get(2)
-
+       
 
         End Using
     End Sub
 
+
+    Protected Sub LinkButton1_Click(sender As Object, e As EventArgs)
+
+        Response.Redirect("Encuesta.aspx?CodFSU=" + 58.ToString() + "&CodDigitador=" + 10.ToString() + "&IdAplicacion=" + Me.ASPxTextBox1.Text.ToString)
+
+
+    End Sub
 End Class
