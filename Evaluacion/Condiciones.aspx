@@ -73,8 +73,8 @@
                             <dx:ListEditItem Text=">" Value=">" />
                             <dx:ListEditItem Text=">=" Value=">=" />
                             <dx:ListEditItem Text="Contenido" Value=">" />
-                            <dx:ListEditItem Text="AND" Value=">" />
-                            <dx:ListEditItem Text="OR" Value=">" />
+                            <dx:ListEditItem Text="AND" Value="AND" />
+                            <dx:ListEditItem Text="OR" Value="OR" />
                         </Items>
                     </PropertiesComboBox>
                 </dx:GridViewDataComboBoxColumn>
