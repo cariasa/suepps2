@@ -52,6 +52,7 @@
                                       <DataItemTemplate>
                                           <asp:LinkButton id="link1"  Text="Crear Instrumento" runat="server" OnClick="link1_Click" /> 
                                           <asp:LinkButton id="LinkButton1"  Text="Asociar Indicador" runat="server" OnClick="LinkButton1_Click" /> 
+                                          <asp:LinkButton id="AsociarDocumento" Text="Documentos" runat="server" OnClick="Documento_Click" />
                                       </DataItemTemplate>  
                                         <Settings AllowAutoFilter="False" />
                                         <EditFormSettings Visible="False" />
