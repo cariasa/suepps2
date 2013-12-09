@@ -68,7 +68,7 @@ Partial Class Evaluacion_DocumentosEvaluacion
         'Command.Parameters.AddWithValue("@IdPrograma", CodPrograma)
         'Command.Parameters.AddWithValue("@Enlace", Ruta + unico)
         'Command.Parameters.AddWithValue("@Direccion", e.UploadedFile.FileName)
-        'Command.Parameters.AddWithValue("@NombreDocumento", TxtNombre.Text)
+        'Command.Parameters.AddWithValue("@NombreDocumento", TxtNombre.Text) 'No está agarrando el texto que hay en ese textbox!!!!
         'Command.Parameters.AddWithValue("@DescripcionDocumento", TxtDescripcion.Text)
         'Command.Parameters.AddWithValue("@PalabrasClave", TxtPalabras.Text)
         'Command.Parameters.AddWithValue("@CreadoPor", Membership.GetUser.UserName)
