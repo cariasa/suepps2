@@ -258,4 +258,16 @@ Partial Class Evaluacion_Parametros
             End If
         End Using
     End Sub
+
+    Protected Sub SqlDataSourceSUEPPS_Inserted(sender As Object, e As SqlDataSourceStatusEventArgs)
+        ASPxGridViewVariables.DataBind()
+    End Sub
+
+    Protected Sub SqlDataSourceSUEPPS_Updated(sender As Object, e As SqlDataSourceStatusEventArgs)
+        ASPxGridViewVariables.DataBind()
+    End Sub
+
+    Protected Sub SqlDataSourceSUEPPS_Deleted(sender As Object, e As SqlDataSourceStatusEventArgs)
+        ASPxGridViewVariables.DataBind()
+    End Sub
 End Class

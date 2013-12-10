@@ -13,7 +13,7 @@
             </tr>
             <tr>
                 <td>
-                    <dx:ASPxLabel ID="ASPxLabelTitulo" runat="server" Text="Asociación de Instrumento AVANZADO" ></dx:ASPxLabel>
+                    <dx:ASPxLabel ID="ASPxLabelTitulo" runat="server" Text="Asociación de Instrumento" ></dx:ASPxLabel>
                 </td>
                 <td>
                     <dx:ASPxLabel ID="espacio" runat="server" Text=" " Width="280"></dx:ASPxLabel>
@@ -22,9 +22,9 @@
                 </td>
             </tr>
         </table>
-        <dx:ASPxGridView ID="ASPxGridViewValoresMacro" runat="server" AutoGenerateColumns="False" SettingsEditing-EditFormColumnCount="1" SettingsEditing-Mode="EditFormAndDisplayRow" DataSourceID="SqlDataSourceVariablesMacro" KeyFieldName="IdVariableMacro">
+        <dx:ASPxGridView ID="ASPxGridViewValoresMacro" runat="server" AutoGenerateColumns="False" SettingsEditing-EditFormColumnCount="1" SettingsEditing-Mode="EditFormAndDisplayRow" DataSourceID="SqlDataSourceVariablesMacro" KeyFieldName="IdVariableMacro" Settings-ShowFilterRow="true">
             <Columns>
-                <dx:GridViewDataTextColumn FieldName="IdVariableMacro" ReadOnly="True" VisibleIndex="0">
+                <dx:GridViewDataTextColumn FieldName="IdVariableMacro" ReadOnly="True" VisibleIndex="0" Caption="ID">
                     <EditFormSettings Visible="False"></EditFormSettings>
                 </dx:GridViewDataTextColumn>
                 
@@ -55,10 +55,14 @@
                     <DeleteButton Visible="true"></DeleteButton>
                 </dx:GridViewCommandColumn>
             </Columns>
+            <SettingsPager>
+                <AllButton Visible="True" Text="Todos">
+                </AllButton>
+            </SettingsPager>
             <SettingsDetail ShowDetailRow="true" ShowDetailButtons="true"/>
             <Templates>
             <DetailRow>
-                <dx:ASPxGridView ID="ASPxGridViewDetallesVariablesMacro" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSourceDetallesVariablesMacro" KeyFieldName="IdDetalleVariableMacro" OnBeforePerformDataSelect="ASPxGridViewDetallesVariablesMacro_BeforePerformDataSelect" >
+                <dx:ASPxGridView ID="ASPxGridViewDetallesVariablesMacro" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSourceDetallesVariablesMacro" KeyFieldName="IdDetalleVariableMacro" OnBeforePerformDataSelect="ASPxGridViewDetallesVariablesMacro_BeforePerformDataSelect" Settings-ShowFilterRow="true" >
                     <Columns>
                         <dx:GridViewDataTextColumn FieldName="IdDetalleVariableMacro" ReadOnly="True" VisibleIndex="0" Visible="false">
                             <EditFormSettings Visible="False"></EditFormSettings>
@@ -76,11 +80,15 @@
                             <DeleteButton Visible="true"></DeleteButton>
                         </dx:GridViewCommandColumn>
                     </Columns>
+                    <SettingsPager>
+                <AllButton Visible="True" Text="Todos">
+                </AllButton>
+            </SettingsPager>
                     <SettingsDetail  ShowDetailRow="true" ShowDetailButtons="true"/>
                     <Templates>
                         <DetailRow>
                             <%-- Grid para Valores Detalle Macro --%>
-                            <dx:ASPxGridView ID="ASPxGridViewValoresDetalleMacro" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSourceValoresDetalleMacro" KeyFieldName="IdValorVariableMacro" OnBeforePerformDataSelect="ASPxGridViewValoresDetalleMacro_BeforePerformDataSelect" >
+                            <dx:ASPxGridView ID="ASPxGridViewValoresDetalleMacro" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSourceValoresDetalleMacro" KeyFieldName="IdValorVariableMacro" OnBeforePerformDataSelect="ASPxGridViewValoresDetalleMacro_BeforePerformDataSelect" Settings-ShowFilterRow="true">
                                 <Columns>
                                     <dx:GridViewDataTextColumn FieldName="IdValorVariableMacro" ReadOnly="True" VisibleIndex="0" Visible="false">
                                         <EditFormSettings Visible="False"></EditFormSettings>
@@ -99,6 +107,10 @@
                                         <DeleteButton Visible="true"></DeleteButton>
                                     </dx:GridViewCommandColumn>
                                 </Columns>
+                                <SettingsPager>
+                                    <AllButton Visible="True" Text="Todos">
+                                    </AllButton>
+                                </SettingsPager>
                             </dx:ASPxGridView>
                             <%-- Fin Valores Detalle Macro --%>
                            

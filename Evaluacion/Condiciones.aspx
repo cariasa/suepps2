@@ -25,7 +25,7 @@
         
         </table>
         
-        <dx:ASPxGridView ID="ASPxGridViewCondiciones" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSourceCondiciones" KeyFieldName="IdCondicion">
+        <dx:ASPxGridView ID="ASPxGridViewCondiciones" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSourceCondiciones" KeyFieldName="IdCondicion" Settings-ShowFilterRow="true">
             <Columns>
                 <dx:GridViewDataTextColumn FieldName="IdCondicion" ReadOnly="True" VisibleIndex="0" Caption="ID">
                     <EditFormSettings Visible="False"></EditFormSettings>
@@ -58,8 +58,8 @@
                 </dx:GridViewDataComboBoxColumn>
                 
                 
-                <dx:GridViewDataTextColumn FieldName="NombreCondicion" VisibleIndex="3" Caption="Nombre"></dx:GridViewDataTextColumn>
-                <dx:GridViewDataTextColumn FieldName="DescripcionCondicion" VisibleIndex="4" Caption="Descripción"></dx:GridViewDataTextColumn>
+                <dx:GridViewDataTextColumn FieldName="NombreCondicion" VisibleIndex="3" Caption="Nombre"><Settings AutoFilterCondition="Contains" /></dx:GridViewDataTextColumn>
+                <dx:GridViewDataTextColumn FieldName="DescripcionCondicion" VisibleIndex="4" Caption="Descripción"><Settings AutoFilterCondition="Contains" /></dx:GridViewDataTextColumn>
                 <dx:GridViewDataCheckColumn FieldName="Raiz" VisibleIndex="5"></dx:GridViewDataCheckColumn>
                 <dx:GridViewDataTextColumn FieldName="Operando1" VisibleIndex="6" Caption="Identificador"></dx:GridViewDataTextColumn>
                 <%--<dx:GridViewDataTextColumn FieldName="Operador" VisibleIndex="7"></dx:GridViewDataTextColumn>--%>
@@ -94,6 +94,10 @@
                     <DeleteButton Visible="true"></DeleteButton>
                 </dx:GridViewCommandColumn>
             </Columns>
+            <SettingsPager>
+                <AllButton Visible="True" Text="Todos">
+                </AllButton>
+            </SettingsPager>
         </dx:ASPxGridView>
         <asp:SqlDataSource runat="server" ID="SqlDataSourceCondiciones" ConnectionString='<%$ ConnectionStrings:SUEPPSConnectionString %>' 
             SelectCommand="SELECT * FROM [Condiciones] WHERE [IdVariable]=@IdVariable AND [Activo]=1"
