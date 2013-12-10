@@ -85,4 +85,17 @@ Partial Class Cuantitativo_Default
         Response.Redirect("IndicadoresEvaluacion.aspx?CodP=" + codprograma + "&NomP=" + nombreprograma)
 
     End Sub
+    Protected Sub Documento_Click(sender As Object, e As EventArgs)
+
+        Dim detail As ASPxGridView = TryCast(ASPxGridView1.FindDetailRowTemplateControl(Session("indexpolitica"), "ASPxGridView2"), ASPxGridView)
+
+        Dim index As Integer = detail.FocusedRowIndex()
+
+        Dim codprograma As String = detail.GetRowValues(index, "codigo_ficha").ToString()
+
+        Dim nombreprograma As String = detail.GetRowValues(index, "NombreProyecto").ToString()
+
+        Response.Redirect("DocumentosEvaluacion.aspx?CodP=" + codprograma + "&NomP=" + nombreprograma)
+
+    End Sub
 End Class

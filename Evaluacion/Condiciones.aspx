@@ -72,7 +72,10 @@
                             <dx:ListEditItem Text="<=" Value="<=" />
                             <dx:ListEditItem Text=">" Value=">" />
                             <dx:ListEditItem Text=">=" Value=">=" />
+
                             <dx:ListEditItem Text="Contenido" Value="Contenido" />
+
+                            
                             <dx:ListEditItem Text="AND" Value="AND" />
                             <dx:ListEditItem Text="OR" Value="OR" />
                         </Items>

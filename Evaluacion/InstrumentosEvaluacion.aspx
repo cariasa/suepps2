@@ -37,6 +37,19 @@
                 </dx:GridViewDataTextColumn>
                 <dx:GridViewDataTextColumn FieldName="Ano" Caption="Año" VisibleIndex="4">
                 </dx:GridViewDataTextColumn>
+                <dx:GridViewDataComboBoxColumn VisibleIndex="5" FieldName="IdProcesoEvaluacion" 
+                    Caption="Proceso">
+                    <EditFormSettings ColumnSpan="2" />
+                        <PropertiesComboBox ValueType="System.String" 
+                
+                            DataSourceID="SqlProceso" 
+                            ValueField="IdProcesoEvaluacion" 
+                            TextField="ProcesoEvaluacion"/>
+                         <Settings AllowAutoFilter="True" />
+                                    <Settings AutoFilterCondition="Contains" />
+                                    <Settings FilterMode="DisplayText" />     
+                  </dx:GridViewDataComboBoxColumn>
+
                 <dx:GridViewDataTextColumn FieldName="CreadoPor" VisibleIndex="5" Visible="false">
                 </dx:GridViewDataTextColumn>
                 <dx:GridViewDataDateColumn FieldName="FechaCreacion" VisibleIndex="6" Visible="false">
@@ -103,6 +116,7 @@
                 <asp:FormParameter Name="NombreInstrumento" />
                 <asp:FormParameter Name="DescripcionInstrumento" />
                 <asp:FormParameter Name="Ano" />
+                <asp:FormParameter Name="IdProcesoEvaluacion" />
             </InsertParameters>
 
             <UpdateParameters>
@@ -110,6 +124,7 @@
                 <asp:FormParameter Name="NombreInstrumento" />
                 <asp:FormParameter Name="DescripcionInstrumento" />
                 <asp:FormParameter Name="Ano" />
+                <asp:FormParameter Name="IdProcesoEvaluacion" />
             </UpdateParameters>
 
             <DeleteParameters>
@@ -117,6 +132,7 @@
             </DeleteParameters>
 
         </asp:SqlDataSource>
+        <asp:SqlDataSource ID="SqlProceso" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" SelectCommand="SELECT [ProcesoEvaluacion],[IdProcesoEvaluacion] FROM [ProcesosEvaluacion]"> </asp:SqlDataSource>
 
     </div>
   

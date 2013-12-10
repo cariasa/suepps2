@@ -40,8 +40,8 @@ Partial Class Cuantitativo_InstrumentosEvaluacion
             Me.Programa.Text = "Crear Instrumento de Evaluación Programa < " + Session("NombrePrograma") + " >"
 
             SqlDataSource1.SelectCommand = "SELECT * FROM [InstrumentosDeEvaluacion] where [IdPrograma]=@IdPrograma and [Activo]=1"
-            SqlDataSource1.InsertCommand = "Insert INTO [InstrumentosDeEvaluacion] ([IdPrograma], [NombreInstrumento],[DescripcionInstrumento],[Ano],[CreadoPor], [FechaCreacion], [Activo]) VALUES (@IdPrograma, @NombreInstrumento,@DescripcionInstrumento,@Ano,'PACO', getDate(), 1)"
-            SqlDataSource1.UpdateCommand = "UPDATE [InstrumentosDeEvaluacion] SET [NombreInstrumento]=@NombreInstrumento, [DescripcionInstrumento]=@DescripcionInstrumento,[ActualizadoPor]='PACO',[FechaActualizacion]=getDate(),[Ano]=@Ano WHERE [IdInstrumentoDeEvaluacion]=@IdInstrumentoDeEvaluacion"
+            SqlDataSource1.InsertCommand = "Insert INTO [InstrumentosDeEvaluacion] ([IdProcesoEvaluacion], [IdPrograma], [NombreInstrumento],[DescripcionInstrumento],[Ano],[CreadoPor], [FechaCreacion], [Activo]) VALUES (@IdProcesoEvaluacion, @IdPrograma, @NombreInstrumento,@DescripcionInstrumento,@Ano,'PACO', getDate(), 1)"
+            SqlDataSource1.UpdateCommand = "UPDATE [InstrumentosDeEvaluacion] SET [IdProcesoEvaluacion]=@IdProcesoEvaluacion, [NombreInstrumento]=@NombreInstrumento, [DescripcionInstrumento]=@DescripcionInstrumento,[ActualizadoPor]='PACO',[FechaActualizacion]=getDate(),[Ano]=@Ano WHERE [IdInstrumentoDeEvaluacion]=@IdInstrumentoDeEvaluacion"
             SqlDataSource1.DeleteCommand = "UPDATE [InstrumentosDeEvaluacion] SET [Activo]=0 WHERE [IdInstrumentoDeEvaluacion]=@IdInstrumentoDeEvaluacion"
 
             SqlDataSource1.SelectParameters(0).DefaultValue = Session("IdPrograma")
