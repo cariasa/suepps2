@@ -9,9 +9,7 @@
 
     <div>
         <table>
-            <tr>
                 <dx:ASPxLabel ID="ASPxLabelVariable" runat="server" ></dx:ASPxLabel>
-            </tr>
             <tr>
                 <td>
                     <dx:ASPxLabel ID="ASPxLabelTitulo" runat="server" Text="Asociación de Instrumento AVANZADO" ></dx:ASPxLabel>
@@ -42,6 +40,9 @@
                                     <Settings FilterMode="DisplayText" />
      
                     
+<EditFormSettings Visible="False"></EditFormSettings>
+     
+                    
                 </dx:GridViewDataComboBoxColumn>
                             
                 <dx:GridViewDataComboBoxColumn VisibleIndex="2" FieldName="IdTipoCondicion" Caption="Tipo Condicion" EditFormSettings-Visible="True">
@@ -55,23 +56,27 @@
                                     <Settings FilterMode="DisplayText" />
      
                     
+<EditFormSettings Visible="True"></EditFormSettings>
+     
+                    
                 </dx:GridViewDataComboBoxColumn>
                 
                 
                 <dx:GridViewDataTextColumn FieldName="NombreCondicion" VisibleIndex="3" Caption="Nombre"><Settings AutoFilterCondition="Contains" /></dx:GridViewDataTextColumn>
                 <dx:GridViewDataTextColumn FieldName="DescripcionCondicion" VisibleIndex="4" Caption="Descripción"><Settings AutoFilterCondition="Contains" /></dx:GridViewDataTextColumn>
                 <dx:GridViewDataCheckColumn FieldName="Raiz" VisibleIndex="5"></dx:GridViewDataCheckColumn>
-                <dx:GridViewDataTextColumn FieldName="Operando1" VisibleIndex="6" Caption="Identificador"></dx:GridViewDataTextColumn>
+                <dx:GridViewDataCheckColumn FieldName="Total" VisibleIndex="6"></dx:GridViewDataCheckColumn>
+                <dx:GridViewDataTextColumn FieldName="Operando1" VisibleIndex="7" Caption="Identificador"></dx:GridViewDataTextColumn>
                 <%--<dx:GridViewDataTextColumn FieldName="Operador" VisibleIndex="7"></dx:GridViewDataTextColumn>--%>
 
-                <dx:GridViewDataComboBoxColumn FieldName="Operador" VisibleIndex="7">
+                <dx:GridViewDataComboBoxColumn FieldName="Operador" VisibleIndex="8">
                     <PropertiesComboBox>
                         <Items>
                             <dx:ListEditItem Text="=" Value="=" />
                             <dx:ListEditItem Text="<" Value="<" />
-                            <dx:ListEditItem Text="<=" Value="<=" />
+                            <dx:ListEditItem Text="&le;" Value="<=" />
                             <dx:ListEditItem Text=">" Value=">" />
-                            <dx:ListEditItem Text=">=" Value=">=" />
+                            <dx:ListEditItem Text="&ge;" Value=">=" />
 
                             <dx:ListEditItem Text="Contenido" Value="Contenido" />
 
@@ -82,13 +87,13 @@
                     </PropertiesComboBox>
                 </dx:GridViewDataComboBoxColumn>
                
-                <dx:GridViewDataTextColumn FieldName="Operando2" VisibleIndex="8" Caption="Identificador"></dx:GridViewDataTextColumn>
-                <dx:GridViewDataTextColumn FieldName="CreadoPor" VisibleIndex="9" Visible="false"></dx:GridViewDataTextColumn>
+                <dx:GridViewDataTextColumn FieldName="Operando2" VisibleIndex="9" Caption="Identificador"></dx:GridViewDataTextColumn>
+                <dx:GridViewDataTextColumn FieldName="CreadoPor" VisibleIndex="10" Visible="false"></dx:GridViewDataTextColumn>
                 <dx:GridViewDataDateColumn FieldName="FechaCreacion" VisibleIndex="10" Visible="false"></dx:GridViewDataDateColumn>
                 <dx:GridViewDataTextColumn FieldName="ActualizadoPor" VisibleIndex="11" Visible="false"></dx:GridViewDataTextColumn>
                 <dx:GridViewDataDateColumn FieldName="FechaActualizacion" VisibleIndex="12" Visible="false"></dx:GridViewDataDateColumn>
                 <dx:GridViewDataCheckColumn FieldName="Activo" VisibleIndex="13" Visible="false"></dx:GridViewDataCheckColumn>
-                <dx:GridViewCommandColumn>
+                <dx:GridViewCommandColumn Caption="Acción">
                     <NewButton Visible="true"></NewButton>
                     <EditButton Visible="true"></EditButton>
                     <DeleteButton Visible="true"></DeleteButton>
@@ -98,11 +103,13 @@
                 <AllButton Visible="True" Text="Todos">
                 </AllButton>
             </SettingsPager>
+
+<Settings ShowFilterRow="True"></Settings>
         </dx:ASPxGridView>
         <asp:SqlDataSource runat="server" ID="SqlDataSourceCondiciones" ConnectionString='<%$ ConnectionStrings:SUEPPSConnectionString %>' 
             SelectCommand="SELECT * FROM [Condiciones] WHERE [IdVariable]=@IdVariable AND [Activo]=1"
-            InsertCommand="INSERT INTO [Condiciones] (IdVariable, IdTipoCondicion, NombreCondicion, DescripcionCondicion, Raiz, Operando1, Operador,  Operando2, CreadoPor, FechaCreacion) VALUES (@IdVariable, @IdTipoCondicion, @NombreCondicion, @DescripcionCondicion, @Raiz, @Operando1, @Operador,  @Operando2, 'SUEPPS', getDate())" 
-            UpdateCommand="UPDATE [Condiciones] SET [IdTipoCondicion]=@IdTipoCondicion, NombreCondicion=@NombreCondicion, DescripcionCondicion=@DescripcionCondicion, Raiz=@Raiz, Operando1=@Operando1, Operador=@Operador, Operando2=@Operando2, ActualizadoPor='SUEPPS', FechaActualizacion=getDate() WHERE IdCondicion=@IdCondicion"
+            InsertCommand="INSERT INTO [Condiciones] (IdVariable, IdTipoCondicion, NombreCondicion, DescripcionCondicion, Raiz, Total, Operando1, Operador,  Operando2, CreadoPor, FechaCreacion) VALUES (@IdVariable, @IdTipoCondicion, @NombreCondicion, @DescripcionCondicion, @Raiz, @Total, @Operando1, @Operador,  @Operando2, 'SUEPPS', getDate())" 
+            UpdateCommand="UPDATE [Condiciones] SET [IdTipoCondicion]=@IdTipoCondicion, NombreCondicion=@NombreCondicion, DescripcionCondicion=@DescripcionCondicion, Raiz=@Raiz, Total=@Total, Operando1=@Operando1, Operador=@Operador, Operando2=@Operando2, ActualizadoPor='SUEPPS', FechaActualizacion=getDate() WHERE IdCondicion=@IdCondicion"
             DeleteCommand="UPDATE [Condiciones] SET [Activo]=0 WHERE IdCondicion=@IdCondicion">
             <SelectParameters>
                <asp:SessionParameter SessionField="IdVariable" Name="IdVariable" Type="Int32"></asp:SessionParameter>
@@ -113,6 +120,7 @@
                 <asp:FormParameter Name="NombreCondicion" />
                 <asp:FormParameter Name="DescripcionCondicion" />
                 <asp:FormParameter Name="Raiz" />
+                <asp:FormParameter Name="Total" />
                 <asp:FormParameter Name="Operando1" />
                 <asp:FormParameter Name="Operador" />
                 <asp:FormParameter Name="Operando2" />

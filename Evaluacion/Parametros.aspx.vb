@@ -117,6 +117,11 @@ Partial Class Evaluacion_Parametros
         End If
 
         SqlDataSourceFormulas.InsertCommand = "INSERT INTO [FormulaIndicador] (IdIndicador, IdVariableNumerador, IdVariableDenominador, UsaVariableMacroNumerador, UsaVariableMacroDenominador, Factor, DescripcionFormula, CreadoPor, FechaCreacion) VALUES (" + Session("idIndicador").ToString + "," + Session("idVariableNumerador").ToString + "," + Session("idvariableDenominador").ToString + "," + unum.ToString + "," + uden.ToString + "," + ASPxTextBoxFactor.Text + ",'" + ASPxTextBoxDes.Text + "'," + usuario + ",getDate())"
+        'Revisar si IdVariableDenominador tiene una condición Q o C en la tabla de variables (O sea que no sea Total)
+        'Si el denominador no es un contador de la muestra, su condición debe ser heredada al numerador, esto es mediante COPIA de esas condiciones
+        'En condiciones nuevas
+        'Para lograr esto se CREA una condición más de tipo C con operador AND que pegue con la raíz del denominador, y con la
+        'raíz del denominador, y este nuevo nodo deberá convertirse en la raíz del numerador
         SqlDataSourceFormulas.Insert()
         ASPxGridViewFormulas.DataBind()
 
