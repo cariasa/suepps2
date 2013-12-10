@@ -47,9 +47,10 @@
                 </Columns>
             </dx:ASPxGridView>
             <asp:SqlDataSource runat="server" ID="SqlDataSourceSUEPPS" ConnectionString='<%$ ConnectionStrings:SUEPPSConnectionString %>' 
-                SelectCommand="SELECT [IdVariable], [NombreVariable], [Descripcion], [Unidad], [CreadoPor], [FechaCreacion], [ActualizadoPor], [FechaActualizacion], [Activo] FROM [Variables]"
+                SelectCommand="SELECT [IdVariable], [NombreVariable], [Descripcion], [Unidad], [CreadoPor], [FechaCreacion], [ActualizadoPor], [FechaActualizacion], [Activo] FROM [Variables] ORDER BY  [FechaCreacion]"
                 InsertCommand="INSERT INTO [Variables] ([NombreVariable], [Descripcion], [Unidad], [CreadoPor], [FechaCreacion]) VALUES (@NombreVariable, @Descripcion, @Unidad, 'SUEPPS', getDate())"
-                UpdateCommand="UPDATE [Variables] SET [NombreVariable]=@NombreVariable, [Descripcion]=@Descripcion, [Unidad]=@Unidad, [ActualizadoPor]='SUEPPS', [FechaActualizacion] =getDate()"
+                UpdateCommand="UPDATE [Variables] SET [NombreVariable]=@NombreVariable, [Descripcion]=@Descripcion, [Unidad]=@Unidad, [ActualizadoPor]='SUEPPS', [FechaActualizacion] =getDate() WHERE [IdVariable]=@IdVariable"
+                DeleteCommand="UPDATE [Activo] = 0 WHERE [IdVariable]=IdVariable"
                 >
             </asp:SqlDataSource>
                 </dx:ContentControl>
