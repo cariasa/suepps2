@@ -59,7 +59,7 @@ Partial Class RevisionSocial_MonitoreoCualitativo
 
                     If (NC.Requerida = True And box1.Text = " ") Then
 
-                        MsgBox("Es Requerida Abierta no puede estar en blanco")
+                        'MsgBox("Es Requerida Abierta no puede estar en blanco")
 
                         Return False
 
@@ -81,7 +81,7 @@ Partial Class RevisionSocial_MonitoreoCualitativo
 
                     If NC.Requerida = True And Mul.SelectedValue.Length = 0 Then
 
-                        MsgBox("Es Requerida Linker no puede estar en blanco")
+                        'MsgBox("Es Requerida Linker no puede estar en blanco")
 
                         Return False
 
@@ -142,7 +142,7 @@ Partial Class RevisionSocial_MonitoreoCualitativo
 
                     If NC.Requerida = True And Mul.Text = " " Then
 
-                        MsgBox("Es Requerida Opcion no puede estar en blanco")
+                        'MsgBox("Es Requerida Opcion no puede estar en blanco")
 
                         Return False
 
@@ -162,7 +162,7 @@ Partial Class RevisionSocial_MonitoreoCualitativo
 
                         If (bandera = False) Then
 
-                            MsgBox("Opcion no valida verifique una que exista")
+                            'MsgBox("Opcion no valida verifique una que exista")
 
                             Return False
 
@@ -355,7 +355,7 @@ Partial Class RevisionSocial_MonitoreoCualitativo
 
                 Next
 
-                MsgBox("Guardado con Éxito")
+                'MsgBox("Guardado con Éxito")
 
             End If
 
