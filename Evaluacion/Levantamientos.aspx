@@ -59,27 +59,23 @@
                         <Templates>
                         <DetailRow>
 
-                            <dx:ASPxGridView ID="ASPxGridView3" runat="server" KeyFieldName="IdAplicacionInstrumento" IsDetailGrid="true" OnBeforePerformDataSelect="ASPxGridView3_BeforePerformDataSelect" Width="100%" DataSourceID="SqlDataSource3" OnHtmlDataCellPrepared="ASPxGridView3_HtmlDataCellPrepared" >
+                            <dx:ASPxGridView ID="ASPxGridView3" runat="server" KeyFieldName="IdAplicacionInstrumento" IsDetailGrid="true" OnBeforePerformDataSelect="ASPxGridView3_BeforePerformDataSelect"  OnHtmlDataCellPrepared="ASPxGridView3_HtmlDataCellPrepared" Width="100%" DataSourceID="SqlDataSource3" >
 
                                 <Columns>
 
-             
                                      <dx:GridViewDataTextColumn FieldName="IdAplicacionInstrumento" Caption="IdAplicacion" ReadOnly="True" VisibleIndex="0" Visible="false" >
                                      </dx:GridViewDataTextColumn>
                                     <dx:GridViewDataTextColumn FieldName="DescripcionMomento" Caption="Levantamiento" VisibleIndex="1">
                                     </dx:GridViewDataTextColumn>
-                                     <dx:GridViewDataTextColumn FieldName="UsaFSU" Caption="Fuente" VisibleIndex="2" >
+                                     <dx:GridViewDataTextColumn FieldName="ProcesoEvaluacion" Caption="Fuente" VisibleIndex="2" >
                                     </dx:GridViewDataTextColumn>
                                      <dx:GridViewDataTextColumn FieldName="FechaAplicacion" Caption="Fecha" VisibleIndex="3">
                                     </dx:GridViewDataTextColumn>
-                                     <dx:GridViewDataTextColumn Caption="Calculado" VisibleIndex="4">
+                                     <dx:GridViewDataTextColumn FieldName="FechaCalculo" Caption="Fecha Cálculo" VisibleIndex="5">
                                     </dx:GridViewDataTextColumn>
-                                     <dx:GridViewDataTextColumn Caption="Fecha Cálculo" VisibleIndex="5">
+                                     <dx:GridViewDataTextColumn  Name="Calculado" Caption="Calculado" VisibleIndex="4">
                                     </dx:GridViewDataTextColumn>
-                                     <dx:GridViewDataTextColumn  FieldName="IdInstrumentoDeEvaluacion" Caption="IdInstrumentoDeEvaluacion" VisibleIndex="6" Visible="false">
-                                    </dx:GridViewDataTextColumn>
-
-
+  
                                 </Columns>
 
                                   <SettingsPager>
@@ -103,7 +99,7 @@
                                 <dx:GridViewDataTextColumn FieldName="DescripcionIndicador" Caption="Indicador" VisibleIndex="1" >
                                      </dx:GridViewDataTextColumn>
 
-                                <dx:GridViewDataTextColumn Caption="Valor" VisibleIndex="2">
+                                <dx:GridViewDataTextColumn FieldName="ValorIndicador" Caption="Valor" VisibleIndex="2">
                                     </dx:GridViewDataTextColumn>
 
                                     <dx:GridViewDataTextColumn Caption="Oficial" VisibleIndex="3">
@@ -116,6 +112,78 @@
                 <AllButton Visible="True" Text="Todos">
                 </AllButton>
             </SettingsPager>
+
+                                 <SettingsDetail ShowDetailRow="True" />
+                        <Templates>
+                        <DetailRow>
+
+                            <dx:ASPxGridView ID="ASPxGridView7"  runat="server" IsDetailGrid="true" KeyFieldName="IdIndicadoresEvaluacionPorPrograma"  Width="100%" DataSourceID="SqlDataSource7" OnBeforePerformDataSelect="ASPxGridView7_BeforePerformDataSelect">
+
+                                <Columns>
+                                    <dx:GridViewDataTextColumn FieldName="IdIndicadoresEvaluacionPorPrograma" Caption="#" ReadOnly="True" VisibleIndex="0" Visible="false" >
+                                     </dx:GridViewDataTextColumn>
+                                <dx:GridViewDataTextColumn FieldName="DescripcionSexo" Caption="Sexo" VisibleIndex="1" >
+                                     </dx:GridViewDataTextColumn>
+                                <dx:GridViewDataTextColumn FieldName="Valor" Caption="Valor" VisibleIndex="3">
+                                    </dx:GridViewDataTextColumn>
+
+                                </Columns>
+
+                                  <SettingsPager>
+                <AllButton Visible="True" Text="Todos">
+                </AllButton>
+            </SettingsPager>
+                                
+
+                                </dx:ASPxGridView>
+
+                            <br />
+
+                            <dx:ASPxGridView ID="ASPxGridView5"  runat="server" IsDetailGrid="true" KeyFieldName="IdIndicadoresEvaluacionPorPrograma"  Width="100%" DataSourceID="SqlDataSource5" OnBeforePerformDataSelect="ASPxGridView5_BeforePerformDataSelect">
+
+                                <Columns>
+                                <dx:GridViewDataTextColumn FieldName="IdIndicadoresEvaluacionPorPrograma" Caption="#" ReadOnly="True" VisibleIndex="0" Visible="false" >
+                                     </dx:GridViewDataTextColumn>
+                                <dx:GridViewDataTextColumn FieldName="DescripcionDepartamento" Caption="Departamento" VisibleIndex="1" >
+                                     </dx:GridViewDataTextColumn>
+                                <dx:GridViewDataTextColumn FieldName="Valor" Caption="Valor" VisibleIndex="2">
+                                    </dx:GridViewDataTextColumn>
+
+                                </Columns>
+
+                                  <SettingsPager>
+                <AllButton Visible="True" Text="Todos">
+                </AllButton>
+            </SettingsPager>
+                                </dx:ASPxGridView>
+
+                            <br />
+
+                                 <dx:ASPxGridView ID="ASPxGridView6"  runat="server" IsDetailGrid="true" KeyFieldName="IdIndicadoresEvaluacionPorPrograma"  Width="100%" DataSourceID="SqlDataSource6" OnBeforePerformDataSelect="ASPxGridView6_BeforePerformDataSelect">
+
+                                <Columns>
+                                <dx:GridViewDataTextColumn FieldName="IdIndicadoresEvaluacionPorPrograma" Caption="#" ReadOnly="True" VisibleIndex="0" Visible="false" >
+                                     </dx:GridViewDataTextColumn>
+                                <dx:GridViewDataTextColumn FieldName="DescripcionDepartamento" Caption="Departamento" VisibleIndex="1" >
+                                     </dx:GridViewDataTextColumn>
+                                <dx:GridViewDataTextColumn FieldName="DescripcionMunicipio" Caption="Municipio" VisibleIndex="2" >
+                                 </dx:GridViewDataTextColumn>
+                                <dx:GridViewDataTextColumn FieldName="Valor" Caption="Valor" VisibleIndex="3">
+                                    </dx:GridViewDataTextColumn>
+
+                                </Columns>
+
+                                  <SettingsPager>
+                <AllButton Visible="True" Text="Todos">
+                </AllButton>
+            </SettingsPager>
+                                </dx:ASPxGridView>
+
+
+
+                            </DetailRow>
+
+                         </Templates>
 
                             </dx:ASPxGridView>
 
@@ -175,7 +243,37 @@
         <asp:SqlDataSource ID="SqlDataSource4" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" >
 
             <SelectParameters>
-                     <asp:SessionParameter Name="IdPrograma" />
+                     <asp:SessionParameter Name="IdAplicacion" />
+                     
+                </SelectParameters>
+
+        </asp:SqlDataSource>
+
+        <asp:SqlDataSource ID="SqlDataSource5" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" >
+
+            <SelectParameters>
+                 <asp:SessionParameter Name="IdAplicacion" />
+                <asp:SessionParameter Name="IdIndicador" />
+                     
+                </SelectParameters>
+
+        </asp:SqlDataSource>
+
+         <asp:SqlDataSource ID="SqlDataSource6" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" >
+
+            <SelectParameters>
+                 <asp:SessionParameter Name="IdAplicacion" />
+                <asp:SessionParameter Name="IdIndicador" />
+                     
+                </SelectParameters>
+
+        </asp:SqlDataSource>
+
+        <asp:SqlDataSource ID="SqlDataSource7" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" >
+
+            <SelectParameters>
+                 <asp:SessionParameter Name="IdAplicacion" />
+                <asp:SessionParameter Name="IdIndicador" />
                      
                 </SelectParameters>
 
