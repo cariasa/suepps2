@@ -33,4 +33,9 @@ Partial Class Evaluacion_Default
             End If
         End Using
     End Sub
+
+    Protected Sub btnXlsExport_Click(sender As Object, e As EventArgs) Handles btnXlsExport.Click
+        Dim filename As String = "DatosIndicadores"
+        ASPxPivotGridExporter1.ExportXlsToResponse(filename, True)
+    End Sub
 End Class
