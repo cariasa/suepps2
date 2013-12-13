@@ -41,14 +41,26 @@ Partial Class Evaluacion_Levantamientos
        "join vProyectos Pro ON PIM.IdPrograma=Pro.codigo_ficha " & _
        "join InstrumentosDeEvaluacion IE ON Pro.codigo_ficha= IE.IdPrograma where Pol.[IdPolitica]=@IdPolitica "
 
-            Me.SqlDataSource3.SelectCommand = " select AI.IdAplicacionInstrumento,MA.DescripcionMomento,AI.UsaFSU,AI.FechaAplicacion,IE.IdInstrumentoDeEvaluacion from InstrumentosDeEvaluacion IE " & _
-            "join AplicacionInstrumento AI on IE.IdInstrumentoDeEvaluacion= AI.IdInstrumentoDeEvaluacion " & _
-            "join MomentosDeAplicacion MA on MA.IdMomentoDeAplicacion=IdMomentoAplicacion where AI.[IdInstrumentoDeEvaluacion]=@IdInstrumento and AI.[Activo]=1 "
+            Me.SqlDataSource3.SelectCommand = " select AI.IdAplicacionInstrumento,MA.DescripcionMomento,PE.ProcesoEvaluacion,AI.FechaAplicacion,VIP.FechaCalculo from InstrumentosDeEvaluacion IE" & _
+            " join AplicacionInstrumento AI on IE.IdInstrumentoDeEvaluacion= AI.IdInstrumentoDeEvaluacion" & _
+            " join ProcesosEvaluacion PE on PE.IdProcesoEvaluacion=IE.IdProcesoEvaluacion" & _
+            " join MomentosDeAplicacion MA on MA.IdMomentoDeAplicacion=AI.IdMomentoAplicacion" & _
+            " join vProyectos P on IE.IdPrograma=P.codigo_ficha" & _
+            " join IndicadoresEvaluacionPorPrograma IEP on IE.IdPrograma = IEP.IdPrograma" & _
+            " join Indicadores I on IEP.IdIndicador = I.IdIndicador" & _
+            " left join ValoresIndicadorPorLevantamiento VIP on AI.IdAplicacionInstrumento=VIP.IdAplicacionInstrumento" & _
+            " AND IEP.IdIndicadoresEvaluacionPorPrograma=VIP.IdIndicadoresEvaluacionPorPrograma where AI.[IdInstrumentoDeEvaluacion]=@IdInstrumento and AI.[Activo]=1 group by AI.IdAplicacionInstrumento,MA.DescripcionMomento,PE.ProcesoEvaluacion,AI.FechaAplicacion,VIP.FechaCalculo  "
 
-            Me.SqlDataSource4.SelectCommand = "select distinct(IND.IdIndicador),IND.DescripcionIndicador from IndicadoresEvaluacionPorPrograma INE " & _
-                "join Indicadores IND on IND.IdIndicador= INE.IdIndicador where INE.[IdPrograma]= @IdPrograma"
-
-
+            Me.SqlDataSource4.SelectCommand = "select I.IdIndicador,I.DescripcionIndicador,VIP.ValorIndicador from AplicacionInstrumento AI" & _
+            " join MomentosDeAplicacion ME on AI.IdMomentoAplicacion=ME.IdMomentoDeAplicacion" & _
+            " join InstrumentosDeEvaluacion IE on AI.IdInstrumentoDeEvaluacion=IE.IdInstrumentoDeEvaluacion" & _
+            " join ProcesosEvaluacion PE on IE.IdProcesoEvaluacion=PE.IdProcesoEvaluacion" & _
+            " join vProyectos P on IE.IdPrograma=P.codigo_ficha" & _
+            " join IndicadoresEvaluacionPorPrograma IEP on IE.IdPrograma = IEP.IdPrograma" & _
+            " join Indicadores I on IEP.IdIndicador = I.IdIndicador" & _
+            " left join ValoresIndicadorPorLevantamiento VIP " & _
+            " on AI.IdAplicacionInstrumento=VIP.IdAplicacionInstrumento " & _
+            " AND IEP.IdIndicadoresEvaluacionPorPrograma=VIP.IdIndicadoresEvaluacionPorPrograma where AI.IdAplicacionInstrumento= @IdAplicacion"
 
         End Using
 
@@ -84,36 +96,100 @@ Partial Class Evaluacion_Levantamientos
 
     End Sub
 
+
+    Protected Sub ASPxGridView4_BeforePerformDataSelect(sender As Object, e As EventArgs)
+
+        Session("IdAplicacion") = CType(sender, ASPxGridView).GetMasterRowKeyValue()
+
+        Me.SqlDataSource4.SelectParameters(0).DefaultValue = Session("IdAplicacion")
+        Me.SqlDataSource4.DataBind()
+
+
+    End Sub
+
     Protected Sub ASPxGridView3_HtmlDataCellPrepared(sender As Object, e As ASPxGridViewTableDataCellEventArgs)
 
-        If e.DataColumn.FieldName = "UsaFSU" Then
+        If e.DataColumn.FieldName = "FechaCalculo" Then
 
             If IsDBNull(e.CellValue) Then
 
+                Session("bandera") = False
 
             Else
 
-                If e.CellValue.ToString() = "True" Then
+                Session("bandera") = True
 
-                    e.Cell.Text = "Revisión Social Integral"
-
-                Else
-
-                    e.Cell.Text = "Gestión Pública"
-
-
-                End If
             End If
 
+        End If
+
+        If e.DataColumn.Name = "Calculado" Then
+
+            If Session("bandera") = True Then
+
+                e.Cell.Text = "No"
+
+            Else
+                e.Cell.Text = "Si"
+
+            End If
 
         End If
 
     End Sub
 
-    Protected Sub ASPxGridView4_BeforePerformDataSelect(sender As Object, e As EventArgs)
 
-        Me.SqlDataSource4.SelectParameters(0).DefaultValue = Session("IdPrograma")
-        Me.SqlDataSource4.DataBind()
+    Protected Sub ASPxGridView5_BeforePerformDataSelect(sender As Object, e As EventArgs)
+
+        Me.SqlDataSource5.SelectCommand = "select IEP.IdIndicadoresEvaluacionPorPrograma,D.DescripcionDepartamento,VD.Valor from AplicacionInstrumento AI " & _
+        " join InstrumentosDeEvaluacion IE on AI.IdInstrumentoDeEvaluacion=IE.IdInstrumentoDeEvaluacion" & _
+        " join IndicadoresEvaluacionPorPrograma IEP on IE.IdPrograma = IEP.IdPrograma" & _
+        " left join ValoresDepartamento VD on AI.IdAplicacionInstrumento=VD.IdAplicacionInstrumento AND IEP.IdIndicadoresEvaluacionPorPrograma=VD.IdIndicadorEvaluacionPorPrograma" & _
+        " left join vDepartamentos D on VD.IdDepartamento = D.IdDepartamento where AI.IdAplicacionInstrumento = @IdAplicacion and IEP.IdIndicador=@IdIndicador"
+
+        Session("IdIndicador") = CType(sender, ASPxGridView).GetMasterRowKeyValue()
+
+        Me.SqlDataSource5.SelectParameters(0).DefaultValue = Session("IdAplicacion")
+        Me.SqlDataSource5.SelectParameters(1).DefaultValue = Session("IdIndicador")
+        Me.SqlDataSource5.DataBind()
+
+        
+
+
+    End Sub
+
+    Protected Sub ASPxGridView6_BeforePerformDataSelect(sender As Object, e As EventArgs)
+
+        Me.SqlDataSource6.SelectCommand = "select IEP.IdIndicadoresEvaluacionPorPrograma,D.DescripcionDepartamento,M.DescripcionMunicipio,VM.Valor from AplicacionInstrumento AI" & _
+       " join InstrumentosDeEvaluacion IE on AI.IdInstrumentoDeEvaluacion=IE.IdInstrumentoDeEvaluacion" & _
+       " join IndicadoresEvaluacionPorPrograma IEP on IE.IdPrograma = IEP.IdPrograma" & _
+       " left join ValoresMunicipio VM on AI.IdAplicacionInstrumento=VM.IdAplicacionInstrumento AND IEP.IdIndicadoresEvaluacionPorPrograma=VM.IdIndicadorEvaluacionPorPrograma" & _
+       " left join vMunicipios M on VM.IdMunicipio=M.IdMunicipio and VM.IdDepartamento=M.IdDepartamento" & _
+       " left join vDepartamentos D on VM.IdDepartamento=D.IdDepartamento where AI.IdAplicacionInstrumento = @IdAplicacion and IEP.IdIndicador=@IdIndicador"
+
+        Session("IdIndicador") = CType(sender, ASPxGridView).GetMasterRowKeyValue()
+
+        Me.SqlDataSource6.SelectParameters(0).DefaultValue = Session("IdAplicacion")
+        Me.SqlDataSource6.SelectParameters(1).DefaultValue = Session("IdIndicador")
+        Me.SqlDataSource6.DataBind()
+
+
+
+    End Sub
+
+    Protected Sub ASPxGridView7_BeforePerformDataSelect(sender As Object, e As EventArgs)
+
+        Me.SqlDataSource7.SelectCommand = "select IEP.IdIndicadoresEvaluacionPorPrograma,S.DescripcionSexo,VS.Valor from AplicacionInstrumento AI" & _
+    " join InstrumentosDeEvaluacion IE on AI.IdInstrumentoDeEvaluacion=IE.IdInstrumentoDeEvaluacion" & _
+    " join IndicadoresEvaluacionPorPrograma IEP on IE.IdPrograma = IEP.IdPrograma" & _
+    " left join ValoresSexo VS on AI.IdAplicacionInstrumento=VS.IdAplicacionInstrumento AND IEP.IdIndicadoresEvaluacionPorPrograma=VS.IdIndicadorEvaluacionPorPrograma" & _
+    " left join vSexo S on VS.IdSexo = S.IdSexo where AI.IdAplicacionInstrumento = @IdAplicacion and IEP.IdIndicador=@IdIndicador"
+
+        Session("IdIndicador") = CType(sender, ASPxGridView).GetMasterRowKeyValue()
+
+        Me.SqlDataSource7.SelectParameters(0).DefaultValue = Session("IdAplicacion")
+        Me.SqlDataSource7.SelectParameters(1).DefaultValue = Session("IdIndicador")
+        Me.SqlDataSource7.DataBind()
 
 
     End Sub
