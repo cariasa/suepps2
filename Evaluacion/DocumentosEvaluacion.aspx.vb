@@ -45,7 +45,7 @@ Partial Class Evaluacion_DocumentosEvaluacion
         End Using
     End Sub
     Protected Sub uplImage_FileUploadComplete(ByVal sender As Object, ByVal e As FileUploadCompleteEventArgs)
-        Dim Ruta As String = "Uploads\Evaluacion\"
+        Dim Ruta As String = "..\Uploads\Evaluacion\"
         Dim unico As String = Format(Date.Now, "yyyyMMdd_HHmmss_") + e.UploadedFile.FileName
         Dim fileName As String = Path.Combine(MapPath(UploadDirectory), unico)
 
@@ -61,6 +61,8 @@ Partial Class Evaluacion_DocumentosEvaluacion
 
         SqlDataSourceDetalleDocumentosEvaluacion.InsertCommand = "INSERT INTO [DetalleDocumentosEvaluacion] ([IdDocumentoEvaluacion], [Enlace], [NombreDocumento], [CreadoPor], [FechaCreacion]) VALUES (" + Session("IdDocumentoEvaluacion").ToString + ",'" + enlace + "','" + e.UploadedFile.FileName + "','" + Membership.GetUser.UserName.ToString + "',getDate())"
         SqlDataSourceDetalleDocumentosEvaluacion.Insert()
+        SqlDataSourceDetalleDocumentosEvaluacion.DataBind()
+        'TryCast(ASPxGridViewDocumentosEvaluacion.FindDetailRowTemplateControl(ASPxGridViewDocumentosEvaluacion.FocusedRowIndex(), "ASPxGridViewDetalleDocumentosEvaluacion"), ASPxGridView).DataBind()
 
         ASPxGridViewDocumentosEvaluacion.DataBind()
 
@@ -89,5 +91,11 @@ Partial Class Evaluacion_DocumentosEvaluacion
         Session("IdDocumentoEvaluacion") = CType(sender, ASPxGridView).GetMasterRowKeyValue()
         SqlDataSourceDetalleDocumentosEvaluacion.SelectParameters(0).DefaultValue = Session("IdDocumentoEvaluacion")
         SqlDataSourceDetalleDocumentosEvaluacion.DeleteParameters(0).DefaultValue = Session("IdDocumentoEvaluacion")
+    End Sub
+
+    Protected Sub SqlDataSourceDetalleDocumentosEvaluacion_Inserted(sender As Object, e As SqlDataSourceStatusEventArgs)
+
+        SqlDataSourceDetalleDocumentosEvaluacion.SelectParameters(0).DefaultValue = Session("IdDocumentoEvaluacion")
+        SqlDataSourceDetalleDocumentosEvaluacion.DataBind()
     End Sub
 End Class

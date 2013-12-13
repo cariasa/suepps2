@@ -24,8 +24,7 @@
             }
 
             alert("Archivo Subido");
-
-            detailGrid.PerformCallback();
+            ASPxGridViewDocumentosEvaluacion.PerformCallback();
         }
         function Uploader_OnFilesUploadComplete(args) {
             UpdateUploadButton();
@@ -39,10 +38,10 @@
 
 
 
-        </script>
+    </script>
     <div>
 
-        <dx:ASPxGridView ID="ASPxGridViewDocumentosEvaluacion" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSourceDocumentosEvaluacion" KeyFieldName="IdDocumentoEvaluacion" OnCustomCallback="grid_custom" OnLoad="ASPxGridViewDocumentosEvaluacion_Load">
+        <dx:ASPxGridView ClientInstanceName="ASPxGridViewDocumentosEvaluacion" ID="ASPxGridViewDocumentosEvaluacion" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSourceDocumentosEvaluacion" KeyFieldName="IdDocumentoEvaluacion" OnCustomCallback="grid_custom" OnLoad="ASPxGridViewDocumentosEvaluacion_Load">
             <Columns>
                 <dx:GridViewDataTextColumn FieldName="IdDocumentoEvaluacion" ReadOnly="True" VisibleIndex="0">
                     <EditFormSettings Visible="False"></EditFormSettings>
@@ -58,128 +57,127 @@
                 <dx:GridViewDataCheckColumn FieldName="Activo" VisibleIndex="9" Visible="false"></dx:GridViewDataCheckColumn>
                 <dx:GridViewCommandColumn VisibleIndex="10" HeaderStyle-HorizontalAlign="Center" Caption="Acción" CellStyle-HorizontalAlign="NotSet">
 
-                            <EditButton Visible="true" />
-                            <NewButton Visible="true" />
-                            <HeaderStyle HorizontalAlign="Center"></HeaderStyle>
-                            
-                    </dx:GridViewCommandColumn>
+                    <EditButton Visible="true" />
+                    <NewButton Visible="true" />
+                    <HeaderStyle HorizontalAlign="Center"></HeaderStyle>
+
+                </dx:GridViewCommandColumn>
             </Columns>
             <SettingsPager>
-                       <AllButton Visible="True" Text="Todos">
-                       </AllButton>
-                    </SettingsPager>
+                <AllButton Visible="True" Text="Todos">
+                </AllButton>
+            </SettingsPager>
 
-                <SettingsDetail ShowDetailRow="True" AllowOnlyOneMasterRowExpanded="true"></SettingsDetail>
-                <SettingsBehavior AllowFocusedRow="True" />
-                <Templates>
-                    <DetailRow>
-                        <dx:ASPxPanel ID="Panel1" runat="server">
+            <SettingsDetail ShowDetailRow="True" AllowOnlyOneMasterRowExpanded="true"></SettingsDetail>
+            <SettingsBehavior AllowFocusedRow="True" />
+            <Templates>
+                <DetailRow>
+                    <dx:ASPxPanel ID="Panel1" runat="server">
 
-        <PanelCollection>
-            <dx:PanelContent>
-
-
-
-                <table id="Table1">
-                    <tr>
-                        <td class="content">
-                            <table>
-                                <tr>
-                                    <td style="padding-right: 20px; vertical-align: top;">
-                                        <table>
-                                            <tr>                                         
-                                                <td class="caption">
-                                                    <dx:ASPxLabel ID="ASPxLabel1" runat="server" Text="Documento:">
-                                                    </dx:ASPxLabel>
-                                                </td>
-                                                <td>
-                                                    <dx:ASPxUploadControl ID="ASPxUploadControl1" runat="server" ClientInstanceName="uploader" ShowProgressPanel="false"
-                                                        NullText="Seleccionar archivo..." Size="35" OnFileUploadComplete="uplImage_FileUploadComplete">
-                                                        <ClientSideEvents FileUploadComplete="function(s, e) { Uploader_OnFileUploadComplete(e); }"
-                                                            FilesUploadComplete="function(s, e) { Uploader_OnFilesUploadComplete(e); }"
-                                                            FileUploadStart="function(s, e) { Uploader_OnUploadStart(); }"
-                                                            TextChanged="function(s, e) { UpdateUploadButton(); }"></ClientSideEvents>
-                                                        <ValidationSettings MaxFileSize="4194304">
-                                                        </ValidationSettings>
-                                                    </dx:ASPxUploadControl>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td class="note">
-                                                    <dx:ASPxLabel ID="lblAllowebMimeType" runat="server" Text="Subir Archivos de Evaluación"
-                                                        Font-Size="8pt">
-                                                    </dx:ASPxLabel>
-                                                    <br />
-                                                    <dx:ASPxLabel ID="ASPxLabel2" runat="server" Text="Tamaño Máximo de Archivos: 4Mb" Font-Size="8pt">
-                                                    </dx:ASPxLabel>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2" class="buttonCell">
-                                                    <dx:ASPxButton ID="ASPxButton1" runat="server" AutoPostBack="False" Text="Registrar" ClientInstanceName="btnUpload"
-                                                        Width="80px" ClientEnabled="False" Style="margin: 0 auto;">
-                                                        <ClientSideEvents Click="function(s, e) { uploader.Upload(); }" />
-                                                    </dx:ASPxButton>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                </table>
+                        <PanelCollection>
+                            <dx:PanelContent>
 
 
-            </dx:PanelContent>
-        </PanelCollection>
 
-    </dx:ASPxPanel>
-    </div>
-    <div>
+                                <table id="Table1">
+                                    <tr>
+                                        <td class="content">
+                                            <table>
+                                                <tr>
+                                                    <td style="padding-right: 20px; vertical-align: top;">
+                                                        <table>
+                                                            <tr>
+                                                                <td class="caption">
+                                                                    <dx:ASPxLabel ID="ASPxLabel1" runat="server" Text="Documento:">
+                                                                    </dx:ASPxLabel>
+                                                                </td>
+                                                                <td>
+                                                                    <dx:ASPxUploadControl ID="ASPxUploadControl1" runat="server" ClientInstanceName="uploader" ShowProgressPanel="false"
+                                                                        NullText="Seleccionar archivo..." Size="35" OnFileUploadComplete="uplImage_FileUploadComplete">
+                                                                        <ClientSideEvents FileUploadComplete="function(s, e) { Uploader_OnFileUploadComplete(e); }"
+                                                                            FilesUploadComplete="function(s, e) { Uploader_OnFilesUploadComplete(e); }"
+                                                                            FileUploadStart="function(s, e) { Uploader_OnUploadStart(); }"
+                                                                            TextChanged="function(s, e) { UpdateUploadButton(); }"></ClientSideEvents>
+                                                                        <ValidationSettings MaxFileSize="4194304">
+                                                                        </ValidationSettings>
+                                                                    </dx:ASPxUploadControl>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td></td>
+                                                                <td class="note">
+                                                                    <dx:ASPxLabel ID="lblAllowebMimeType" runat="server" Text="Subir Archivos de Evaluación"
+                                                                        Font-Size="8pt">
+                                                                    </dx:ASPxLabel>
+                                                                    <br />
+                                                                    <dx:ASPxLabel ID="ASPxLabel2" runat="server" Text="Tamaño Máximo de Archivos: 4Mb" Font-Size="8pt">
+                                                                    </dx:ASPxLabel>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="2" class="buttonCell">
+                                                                    <dx:ASPxButton ID="ASPxButton1" runat="server" AutoPostBack="False" Text="Registrar" ClientInstanceName="btnUpload"
+                                                                        Width="80px" ClientEnabled="False" Style="margin: 0 auto;">
+                                                                        <ClientSideEvents Click="function(s, e) { uploader.Upload(); }" />
+                                                                    </dx:ASPxButton>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
 
-        <dx:ASPxGridView ID="ASPxGridViewDetalleDocumentosEvaluacion" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSourceDetalleDocumentosEvaluacion" IsDetailGrid="true" OnBeforePerformDataSelect="ASPxGridViewDetalleDocumentosEvaluacion_BeforePerformDataSelect">
-            <Columns>
-                <dx:GridViewDataTextColumn FieldName="IdDetalleDocumentoEvaluacion" ReadOnly="True" VisibleIndex="0">
-                    <EditFormSettings Visible="False"></EditFormSettings>
-                </dx:GridViewDataTextColumn>
-                <dx:GridViewDataTextColumn FieldName="IdDocumentoEvaluacion" VisibleIndex="1"></dx:GridViewDataTextColumn>
-                <%--<dx:GridViewDataTextColumn FieldName="Enlace" VisibleIndex="2"></dx:GridViewDataTextColumn>--%>
-                <dx:GridViewDataTextColumn FieldName="Enlace" VisibleIndex="2">
-                                    <DataItemTemplate>
-                                        <dx:ASPxHyperLink ID="ASPxHyperLink1" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "NombreDocumento")%>' NavigateUrl='<%# DataBinder.Eval(Container.DataItem, "Enlace")%>'> 
-                                        </dx:ASPxHyperLink>
-                                    
-                                    </DataItemTemplate>
-                </dx:GridViewDataTextColumn>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
 
-                <dx:GridViewDataTextColumn FieldName="NombreDocumento" VisibleIndex="3" Visible="false"></dx:GridViewDataTextColumn>
-                <dx:GridViewDataTextColumn FieldName="CreadoPor" VisibleIndex="4" Visible="false"></dx:GridViewDataTextColumn>
-                <dx:GridViewDataDateColumn FieldName="FechaCreacion" VisibleIndex="5" Visible="false"></dx:GridViewDataDateColumn>
-                <dx:GridViewDataTextColumn FieldName="ActualizadoPor" VisibleIndex="6" Visible="false"></dx:GridViewDataTextColumn>
-                <dx:GridViewDataDateColumn FieldName="FechaActualizacion" VisibleIndex="7" Visible="false"></dx:GridViewDataDateColumn>
-                <dx:GridViewDataCheckColumn FieldName="Activo" VisibleIndex="8" Visible="false"></dx:GridViewDataCheckColumn>
-                <dx:GridViewCommandColumn VisibleIndex="10" HeaderStyle-HorizontalAlign="Center" Caption="Acción" CellStyle-HorizontalAlign="NotSet">
 
-                            <DeleteButton Visible="true"></DeleteButton>
-                            <HeaderStyle HorizontalAlign="Center"></HeaderStyle>
-                            
-                    </dx:GridViewCommandColumn>
-            </Columns>
-            <SettingsPager>
-                       <AllButton Visible="True" Text="Todos">
-                       </AllButton>
-                    </SettingsPager>
+                            </dx:PanelContent>
+                        </PanelCollection>
+
+                    </dx:ASPxPanel>
+
+
+
+                    <dx:ASPxGridView ID="ASPxGridViewDetalleDocumentosEvaluacion" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSourceDetalleDocumentosEvaluacion" IsDetailGrid="true" OnBeforePerformDataSelect="ASPxGridViewDetalleDocumentosEvaluacion_BeforePerformDataSelect">
+                        <Columns>
+                            <dx:GridViewDataTextColumn FieldName="IdDetalleDocumentoEvaluacion" ReadOnly="True" VisibleIndex="0">
+                                <EditFormSettings Visible="False"></EditFormSettings>
+                            </dx:GridViewDataTextColumn>
+                            <dx:GridViewDataTextColumn FieldName="IdDocumentoEvaluacion" VisibleIndex="1"></dx:GridViewDataTextColumn>
+                            <%--<dx:GridViewDataTextColumn FieldName="Enlace" VisibleIndex="2"></dx:GridViewDataTextColumn>--%>
+                            <dx:GridViewDataTextColumn FieldName="Enlace" VisibleIndex="2">
+                                <DataItemTemplate>
+                                    <dx:ASPxHyperLink ID="ASPxHyperLink1" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "NombreDocumento")%>' NavigateUrl='<%# DataBinder.Eval(Container.DataItem, "Enlace")%>'>
+                                    </dx:ASPxHyperLink>
+
+                                </DataItemTemplate>
+                            </dx:GridViewDataTextColumn>
+
+                            <dx:GridViewDataTextColumn FieldName="NombreDocumento" VisibleIndex="3" Visible="false"></dx:GridViewDataTextColumn>
+                            <dx:GridViewDataTextColumn FieldName="CreadoPor" VisibleIndex="4" Visible="false"></dx:GridViewDataTextColumn>
+                            <dx:GridViewDataDateColumn FieldName="FechaCreacion" VisibleIndex="5" Visible="false"></dx:GridViewDataDateColumn>
+                            <dx:GridViewDataTextColumn FieldName="ActualizadoPor" VisibleIndex="6" Visible="false"></dx:GridViewDataTextColumn>
+                            <dx:GridViewDataDateColumn FieldName="FechaActualizacion" VisibleIndex="7" Visible="false"></dx:GridViewDataDateColumn>
+                            <dx:GridViewDataCheckColumn FieldName="Activo" VisibleIndex="8" Visible="false"></dx:GridViewDataCheckColumn>
+                            <dx:GridViewCommandColumn VisibleIndex="10" HeaderStyle-HorizontalAlign="Center" Caption="Acción" CellStyle-HorizontalAlign="NotSet">
+
+                                <DeleteButton Visible="true"></DeleteButton>
+                                <HeaderStyle HorizontalAlign="Center"></HeaderStyle>
+
+                            </dx:GridViewCommandColumn>
+                        </Columns>
+                        <SettingsPager>
+                            <AllButton Visible="True" Text="Todos">
+                            </AllButton>
+                        </SettingsPager>
+                    </dx:ASPxGridView>
+                </DetailRow>
+            </Templates>
         </dx:ASPxGridView>
 
 
 
-        
-                    </DetailRow>
-                </Templates>
-        </dx:ASPxGridView>
 
 
 
@@ -188,10 +186,7 @@
 
 
 
-
-        
-        
-        <asp:SqlDataSource runat="server" ID="SqlDataSourceDetalleDocumentosEvaluacion" ConnectionString='<%$ ConnectionStrings:SUEPPSConnectionString %>' 
+        <asp:SqlDataSource runat="server" ID="SqlDataSourceDetalleDocumentosEvaluacion" ConnectionString='<%$ ConnectionStrings:SUEPPSConnectionString %>' OnInserted="SqlDataSourceDetalleDocumentosEvaluacion_Inserted" 
             SelectCommand="SELECT * FROM [DetalleDocumentosEvaluacion] WHERE IdDocumentoEvaluacion = @IdDocumentoEvaluacion AND [Activo]=1"
             DeleteCommand="UPDATE [DetalleDocumentosEvaluacion] SET [Activo] = 0 WHERE IdDocumentoEvaluacion = @IdDocumentoEvaluacion ">
             <SelectParameters>
@@ -201,7 +196,7 @@
                 <asp:SessionParameter Name="IdDocumentoEvaluacion" />
             </DeleteParameters>
         </asp:SqlDataSource>
-        <asp:SqlDataSource runat="server" ID="SqlDataSourceDocumentosEvaluacion" ConnectionString='<%$ ConnectionStrings:SUEPPSConnectionString %>' 
+        <asp:SqlDataSource runat="server" ID="SqlDataSourceDocumentosEvaluacion" ConnectionString='<%$ ConnectionStrings:SUEPPSConnectionString %>'
             SelectCommand="SELECT * FROM [DocumentosEvaluacion] WHERE IdPrograma = @IdPrograma and Activo = 1"
             InsertCommand="INSERT INTO [DocumentosEvaluacion] (IdPrograma, DescripcionDocumento, PalabrasClave, FechaDocumento, CreadoPor, FechaCreacion) VALUES (@IdPrograma, @DescripcionDocumento, @PalabrasClave, @FechaDocumento, 'suepps', getDate())">
             <SelectParameters>
@@ -215,6 +210,6 @@
             </InsertParameters>
         </asp:SqlDataSource>
 
-        
+
     </div>
 </asp:Content>
