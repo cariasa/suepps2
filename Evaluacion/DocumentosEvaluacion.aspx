@@ -42,7 +42,38 @@
         </script>
     <div>
 
-    <dx:ASPxPanel ID="Panel1" runat="server">
+        <dx:ASPxGridView ID="ASPxGridViewDocumentosEvaluacion" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSourceDocumentosEvaluacion" KeyFieldName="IdDocumentoEvaluacion" OnCustomCallback="grid_custom" OnLoad="ASPxGridViewDocumentosEvaluacion_Load">
+            <Columns>
+                <dx:GridViewDataTextColumn FieldName="IdDocumentoEvaluacion" ReadOnly="True" VisibleIndex="0">
+                    <EditFormSettings Visible="False"></EditFormSettings>
+                </dx:GridViewDataTextColumn>
+                <dx:GridViewDataTextColumn FieldName="IdPrograma" VisibleIndex="1" Visible="false"></dx:GridViewDataTextColumn>
+                <dx:GridViewDataTextColumn FieldName="DescripcionDocumento" VisibleIndex="2"></dx:GridViewDataTextColumn>
+                <dx:GridViewDataTextColumn FieldName="PalabrasClave" VisibleIndex="3"></dx:GridViewDataTextColumn>
+                <dx:GridViewDataDateColumn FieldName="FechaDocumento" VisibleIndex="4"></dx:GridViewDataDateColumn>
+                <dx:GridViewDataTextColumn FieldName="CreadoPor" VisibleIndex="5" Visible="false"></dx:GridViewDataTextColumn>
+                <dx:GridViewDataDateColumn FieldName="FechaCreacion" VisibleIndex="6" Visible="false"></dx:GridViewDataDateColumn>
+                <dx:GridViewDataTextColumn FieldName="ActualizadoPor" VisibleIndex="7" Visible="false"></dx:GridViewDataTextColumn>
+                <dx:GridViewDataDateColumn FieldName="FechaActualizacion" VisibleIndex="8" Visible="false"></dx:GridViewDataDateColumn>
+                <dx:GridViewDataCheckColumn FieldName="Activo" VisibleIndex="9" Visible="false"></dx:GridViewDataCheckColumn>
+                <dx:GridViewCommandColumn VisibleIndex="10" HeaderStyle-HorizontalAlign="Center" Caption="Acción" CellStyle-HorizontalAlign="NotSet">
+
+                            <EditButton Visible="true" />
+                            <NewButton Visible="true" />
+                            <HeaderStyle HorizontalAlign="Center"></HeaderStyle>
+                            
+                    </dx:GridViewCommandColumn>
+            </Columns>
+            <SettingsPager>
+                       <AllButton Visible="True" Text="Todos">
+                       </AllButton>
+                    </SettingsPager>
+
+                <SettingsDetail ShowDetailRow="True" AllowOnlyOneMasterRowExpanded="true"></SettingsDetail>
+                <SettingsBehavior AllowFocusedRow="True" />
+                <Templates>
+                    <DetailRow>
+                        <dx:ASPxPanel ID="Panel1" runat="server">
 
         <PanelCollection>
             <dx:PanelContent>
@@ -56,31 +87,7 @@
                                 <tr>
                                     <td style="padding-right: 20px; vertical-align: top;">
                                         <table>
-                                            <tr>
-                                                <td>
-                                                    Nombre Documento
-                                                </td>
-                                                <td>
-                                                    <dx:ASPxTextBox ID="TxtNombre" runat="server"/>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    Descripción
-                                                </td>
-                                                <td>
-                                                    <dx:ASPxTextBox ID="TxtDescripcion" runat="server"/>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    Palabras Clave
-                                                </td>
-                                                <td>
-                                                    <dx:ASPxTextBox ID="TxtPalabras" runat="server"/>
-                                                </td>
-                                            </tr>
-                                            <tr>
+                                            <tr>                                         
                                                 <td class="caption">
                                                     <dx:ASPxLabel ID="ASPxLabel1" runat="server" Text="Documento:">
                                                     </dx:ASPxLabel>
@@ -100,7 +107,7 @@
                                             <tr>
                                                 <td></td>
                                                 <td class="note">
-                                                    <dx:ASPxLabel ID="lblAllowebMimeType" runat="server" Text="Subir Archivos de Planificación"
+                                                    <dx:ASPxLabel ID="lblAllowebMimeType" runat="server" Text="Subir Archivos de Evaluación"
                                                         Font-Size="8pt">
                                                     </dx:ASPxLabel>
                                                     <br />
@@ -133,51 +140,81 @@
     </div>
     <div>
 
-        <dx:ASPxGridView ID="GridDocumentos" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSourceDocumentos" KeyFieldName="IdDocumentoEvaluacion">
+        <dx:ASPxGridView ID="ASPxGridViewDetalleDocumentosEvaluacion" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSourceDetalleDocumentosEvaluacion" IsDetailGrid="true" OnBeforePerformDataSelect="ASPxGridViewDetalleDocumentosEvaluacion_BeforePerformDataSelect">
             <Columns>
-                
-                <dx:GridViewDataTextColumn FieldName="IdDocumentoEvaluacion" ReadOnly="True" VisibleIndex="1" Visible="false">
-                    <EditFormSettings Visible="False" />
+                <dx:GridViewDataTextColumn FieldName="IdDetalleDocumentoEvaluacion" ReadOnly="True" VisibleIndex="0">
+                    <EditFormSettings Visible="False"></EditFormSettings>
                 </dx:GridViewDataTextColumn>
-                <dx:GridViewDataTextColumn FieldName="IdPrograma" VisibleIndex="2" Visible="false">
+                <dx:GridViewDataTextColumn FieldName="IdDocumentoEvaluacion" VisibleIndex="1"></dx:GridViewDataTextColumn>
+                <%--<dx:GridViewDataTextColumn FieldName="Enlace" VisibleIndex="2"></dx:GridViewDataTextColumn>--%>
+                <dx:GridViewDataTextColumn FieldName="Enlace" VisibleIndex="2">
+                                    <DataItemTemplate>
+                                        <dx:ASPxHyperLink ID="ASPxHyperLink1" runat="server" Text='<%# DataBinder.Eval(Container.DataItem, "NombreDocumento")%>' NavigateUrl='<%# DataBinder.Eval(Container.DataItem, "Enlace")%>'> 
+                                        </dx:ASPxHyperLink>
+                                    
+                                    </DataItemTemplate>
                 </dx:GridViewDataTextColumn>
-                <dx:GridViewDataTextColumn FieldName="Enlace" VisibleIndex="3">
-                </dx:GridViewDataTextColumn>
-                <dx:GridViewDataTextColumn FieldName="Direccion" VisibleIndex="4" Visible="false">
-                </dx:GridViewDataTextColumn>
-                <dx:GridViewDataTextColumn FieldName="NombreDocumento" VisibleIndex="5">
-                </dx:GridViewDataTextColumn>
-                <dx:GridViewDataTextColumn FieldName="DescripcionDocumento" VisibleIndex="6">
-                </dx:GridViewDataTextColumn>
-                <dx:GridViewDataTextColumn FieldName="PalabrasClave" VisibleIndex="7">
-                </dx:GridViewDataTextColumn>
-                <dx:GridViewDataTextColumn FieldName="CreadoPor" VisibleIndex="8" Visible="false">
-                </dx:GridViewDataTextColumn>
-                <dx:GridViewDataDateColumn FieldName="FechaCreacion" VisibleIndex="9" Visible="false">
-                </dx:GridViewDataDateColumn>
-                <dx:GridViewDataTextColumn FieldName="ActualizadoPor" VisibleIndex="10" Visible="false">
-                </dx:GridViewDataTextColumn>
-                <dx:GridViewDataDateColumn FieldName="FechaActualizacion" VisibleIndex="11" Visible="false">
-                </dx:GridViewDataDateColumn>
-                <dx:GridViewDataCheckColumn FieldName="Activo" VisibleIndex="12" Visible="false">
-                </dx:GridViewDataCheckColumn>
-                <dx:GridViewCommandColumn VisibleIndex="13" Caption="Acción">
-                    <EditButton Visible="True">
-                    </EditButton>
-                    <DeleteButton Visible="True">
-                    </DeleteButton>
-                    <ClearFilterButton Visible="True">
-                    </ClearFilterButton>
-                </dx:GridViewCommandColumn>
+
+                <dx:GridViewDataTextColumn FieldName="NombreDocumento" VisibleIndex="3" Visible="false"></dx:GridViewDataTextColumn>
+                <dx:GridViewDataTextColumn FieldName="CreadoPor" VisibleIndex="4" Visible="false"></dx:GridViewDataTextColumn>
+                <dx:GridViewDataDateColumn FieldName="FechaCreacion" VisibleIndex="5" Visible="false"></dx:GridViewDataDateColumn>
+                <dx:GridViewDataTextColumn FieldName="ActualizadoPor" VisibleIndex="6" Visible="false"></dx:GridViewDataTextColumn>
+                <dx:GridViewDataDateColumn FieldName="FechaActualizacion" VisibleIndex="7" Visible="false"></dx:GridViewDataDateColumn>
+                <dx:GridViewDataCheckColumn FieldName="Activo" VisibleIndex="8" Visible="false"></dx:GridViewDataCheckColumn>
+                <dx:GridViewCommandColumn VisibleIndex="10" HeaderStyle-HorizontalAlign="Center" Caption="Acción" CellStyle-HorizontalAlign="NotSet">
+
+                            <DeleteButton Visible="true"></DeleteButton>
+                            <HeaderStyle HorizontalAlign="Center"></HeaderStyle>
+                            
+                    </dx:GridViewCommandColumn>
             </Columns>
-            <Settings ShowFilterRow="True" />
+            <SettingsPager>
+                       <AllButton Visible="True" Text="Todos">
+                       </AllButton>
+                    </SettingsPager>
         </dx:ASPxGridView>
-        <asp:SqlDataSource ID="SqlDataSourceDocumentos" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" 
-            SelectCommand="SELECT [IdDocumentoEvaluacion], [IdPrograma], [Enlace], [Direccion], [NombreDocumento], [DescripcionDocumento], [PalabrasClave], [CreadoPor], [FechaCreacion], [ActualizadoPor], [FechaActualizacion], [Activo] FROM [DocumentosEvaluacion] WHERE [Activo]=1"
-            InsertCommand="INSERT INTO [DocumentosEvaluacion] ([IdPrograma], [Enlace], [Direccion], [NombreDocumento], [DescripcionDocumento], [PalabrasClave], [CreadoPor]) VALUES (@IdPrograma, @Enlace, @Direccion, @NombreDocumento, @DescripcionDocumento, @PalabrasClave, @CreadoPor)"
-            UpdateCommand="UPDATE [DocumentosEvaluacion] SET ([NombreDocumento]=@NombreDocumento, [DescripcionDocumento]=@DescripcionDocumento, [PalabrasClave]=@PalabrasClave)">
-            
+
+
+
+        
+                    </DetailRow>
+                </Templates>
+        </dx:ASPxGridView>
+
+
+
+
+
+
+
+
+
+        
+        
+        <asp:SqlDataSource runat="server" ID="SqlDataSourceDetalleDocumentosEvaluacion" ConnectionString='<%$ ConnectionStrings:SUEPPSConnectionString %>' 
+            SelectCommand="SELECT * FROM [DetalleDocumentosEvaluacion] WHERE IdDocumentoEvaluacion = @IdDocumentoEvaluacion AND [Activo]=1"
+            DeleteCommand="UPDATE [DetalleDocumentosEvaluacion] SET [Activo] = 0 WHERE IdDocumentoEvaluacion = @IdDocumentoEvaluacion ">
+            <SelectParameters>
+                <asp:SessionParameter Name="IdDocumentoEvaluacion" />
+            </SelectParameters>
+            <DeleteParameters>
+                <asp:SessionParameter Name="IdDocumentoEvaluacion" />
+            </DeleteParameters>
+        </asp:SqlDataSource>
+        <asp:SqlDataSource runat="server" ID="SqlDataSourceDocumentosEvaluacion" ConnectionString='<%$ ConnectionStrings:SUEPPSConnectionString %>' 
+            SelectCommand="SELECT * FROM [DocumentosEvaluacion] WHERE IdPrograma = @IdPrograma and Activo = 1"
+            InsertCommand="INSERT INTO [DocumentosEvaluacion] (IdPrograma, DescripcionDocumento, PalabrasClave, FechaDocumento, CreadoPor, FechaCreacion) VALUES (@IdPrograma, @DescripcionDocumento, @PalabrasClave, @FechaDocumento, 'suepps', getDate())">
+            <SelectParameters>
+                <asp:SessionParameter Name="IdPrograma" />
+            </SelectParameters>
+            <InsertParameters>
+                <asp:SessionParameter Name="IdPrograma" />
+                <asp:FormParameter Name="DescripcionDocumento" />
+                <asp:FormParameter Name="PalabrasClave" />
+                <asp:FormParameter Name="FechaDocumento" />
+            </InsertParameters>
         </asp:SqlDataSource>
 
+        
     </div>
 </asp:Content>

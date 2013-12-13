@@ -34,12 +34,12 @@ Partial Class Cuantitativo_Default
                 Response.Redirect("~/NoAccess.aspx")
             End If
 
-          Me.SqlDataSource2.SelectCommand = "select DISTINCT(Pol.IdPolitica), Pol.Nombre, Pro.codigo_ficha, Pro.NombreProyecto, Pro.codigo_proyecto from Politicas Pol " & _
-      "join ComponentesDePolitica CP on Pol.IdPolitica=CP.IdPolitica " & _
-      "join MetasDeComponente MC on CP.IdComponentesDePolitica=MC.IdComponentesDePolitica " & _
-      "join IndicadoresDeMeta IM on MC.IdMetasDeComponente=IM.IdMetasDeComponente " & _
-      "join ProgramasPorIndicadorDeMeta PIM on IM.IdIndicadorDeMeta=PIM.IdIndicadorDeMeta " & _
-      "join vProyectos Pro ON PIM.IdPrograma=Pro.codigo_ficha where Pol.[IdPolitica]=@IdPolitica"
+            Me.SqlDataSource2.SelectCommand = "select DISTINCT(Pol.IdPolitica), Pol.Nombre, Pro.codigo_ficha, Pro.NombreProyecto, Pro.codigo_proyecto from Politicas Pol " & _
+        "join ComponentesDePolitica CP on Pol.IdPolitica=CP.IdPolitica " & _
+        "join MetasDeComponente MC on CP.IdComponentesDePolitica=MC.IdComponentesDePolitica " & _
+        "join IndicadoresDeMeta IM on MC.IdMetasDeComponente=IM.IdMetasDeComponente " & _
+        "join ProgramasPorIndicadorDeMeta PIM on IM.IdIndicadorDeMeta=PIM.IdIndicadorDeMeta " & _
+        "join vProyectos Pro ON PIM.IdPrograma=Pro.codigo_ficha where Pol.[IdPolitica]=@IdPolitica"
 
 
         End Using
@@ -65,6 +65,8 @@ Partial Class Cuantitativo_Default
 
         Dim nombreprograma As String = detail.GetRowValues(index, "NombreProyecto").ToString()
 
+
+
         Response.Redirect("InstrumentosEvaluacion.aspx?CodP=" + codprograma + "&NomP=" + nombreprograma)
 
 
@@ -78,7 +80,7 @@ Partial Class Cuantitativo_Default
 
         Dim index As Integer = detail.FocusedRowIndex()
 
-        Dim codprograma As String = detail.GetRowValues(index, "codigo_ficha").ToString()
+        Dim codprograma As String = detail.GetRowValues(index, "codigo_programa").ToString()
 
         Dim nombreprograma As String = detail.GetRowValues(index, "NombreProyecto").ToString()
 
@@ -91,11 +93,14 @@ Partial Class Cuantitativo_Default
 
         Dim index As Integer = detail.FocusedRowIndex()
 
-        Dim codprograma As String = detail.GetRowValues(index, "codigo_ficha").ToString()
+        Dim codprograma As String = detail.GetRowValues(index, "codigo_proyecto").ToString()
 
         Dim nombreprograma As String = detail.GetRowValues(index, "NombreProyecto").ToString()
 
-        Response.Redirect("DocumentosEvaluacion.aspx?CodP=" + codprograma + "&NomP=" + nombreprograma)
+        
+
+        'Response.Redirect("DocumentosEvaluacion.aspx?CodP=" + codprograma + "&NomP=" + nombreprograma)
+        Response.Redirect("DocumentosEvaluacion.aspx?CodP=113" + "&NomP=" + nombreprograma)
 
     End Sub
 End Class
