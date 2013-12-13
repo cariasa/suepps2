@@ -80,7 +80,7 @@ Partial Class Cuantitativo_Default
 
         Dim index As Integer = detail.FocusedRowIndex()
 
-        Dim codprograma As String = detail.GetRowValues(index, "codigo_programa").ToString()
+        Dim codprograma As String = detail.GetRowValues(index, "codigo_ficha").ToString()
 
         Dim nombreprograma As String = detail.GetRowValues(index, "NombreProyecto").ToString()
 
