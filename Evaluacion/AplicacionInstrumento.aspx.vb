@@ -43,4 +43,12 @@ Partial Class Cuantitativo_AplicacionInstrumento
     End Sub
 
   
+    Protected Sub link2_Click(sender As Object, e As EventArgs)
+
+        Dim index As Integer = ASPxGridView1.FocusedRowIndex()
+        Dim idInstrumento As String = ASPxGridView1.GetRowValues(index, "IdInstrumentoDeEvaluacion").ToString
+        Dim idAplicacion As String = ASPxGridView1.GetRowValues(index, "IdAplicacionInstrumento").ToString
+        Response.Redirect("Analisis.aspx?IdInstrumento=" + idInstrumento + "&IdAplicacion=" + idAplicacion)
+
+    End Sub
 End Class

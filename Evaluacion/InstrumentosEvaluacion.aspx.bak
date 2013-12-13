@@ -1,8 +1,8 @@
 ﻿<%@ Page Language="VB" AutoEventWireup="false" CodeFile="InstrumentosEvaluacion.aspx.vb" Inherits="Cuantitativo_InstrumentosEvaluacion" MasterPageFile="~/Site.master" %>
 
-<%@ Register Assembly="DevExpress.Web.v13.2, Version=13.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web.ASPxGridView" TagPrefix="dx" %>
+<%@ Register Assembly="DevExpress.Web.v13.1, Version=13.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web.ASPxGridView" TagPrefix="dx" %>
 
-<%@ Register assembly="DevExpress.Web.v13.2, Version=13.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" namespace="DevExpress.Web.ASPxEditors" tagprefix="dx" %>
+<%@ Register assembly="DevExpress.Web.v13.1, Version=13.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" namespace="DevExpress.Web.ASPxEditors" tagprefix="dx" %>
 
 
 
@@ -32,27 +32,11 @@
                 <dx:GridViewDataTextColumn FieldName="IdPrograma" VisibleIndex="1" Visible="false">
                 </dx:GridViewDataTextColumn>
                 <dx:GridViewDataTextColumn FieldName="NombreInstrumento" Caption="Nombre" VisibleIndex="2">
-                    <EditFormSettings ColumnSpan="2" />
-
                 </dx:GridViewDataTextColumn>
                 <dx:GridViewDataTextColumn FieldName="DescripcionInstrumento" Caption="Descripción" VisibleIndex="3">
-                <EditFormSettings ColumnSpan="2" />
                 </dx:GridViewDataTextColumn>
                 <dx:GridViewDataTextColumn FieldName="Ano" Caption="Año" VisibleIndex="4">
                 </dx:GridViewDataTextColumn>
-                <dx:GridViewDataComboBoxColumn VisibleIndex="5" FieldName="IdProcesoEvaluacion" 
-                    Caption="Proceso">
-                    <EditFormSettings ColumnSpan="2" />
-                        <PropertiesComboBox ValueType="System.String" 
-                
-                            DataSourceID="SqlProceso" 
-                            ValueField="IdProcesoEvaluacion" 
-                            TextField="ProcesoEvaluacion"/>
-                         <Settings AllowAutoFilter="True" />
-                                    <Settings AutoFilterCondition="Contains" />
-                                    <Settings FilterMode="DisplayText" />     
-                  </dx:GridViewDataComboBoxColumn>
-
                 <dx:GridViewDataTextColumn FieldName="CreadoPor" VisibleIndex="5" Visible="false">
                 </dx:GridViewDataTextColumn>
                 <dx:GridViewDataDateColumn FieldName="FechaCreacion" VisibleIndex="6" Visible="false">
@@ -84,9 +68,9 @@
                  </dx:GridViewDataTextColumn>
 
                 <dx:GridViewDataTextColumn VisibleIndex="12" 
-                    Caption="Levantamientos" UnboundType="String">
+                    Caption="Crear Levantamiento" UnboundType="String">
                                       <DataItemTemplate>
-                                          <asp:LinkButton id="link2"  Text="Levantamientos" runat="server" OnClick="link2_Click" /> 
+                                          <asp:LinkButton id="link2"  Text="Crear Levantamiento" runat="server" OnClick="link2_Click" /> 
                                       </DataItemTemplate>  
                                         <Settings AllowAutoFilter="False" />
                                         <EditFormSettings Visible="False" />
@@ -119,7 +103,6 @@
                 <asp:FormParameter Name="NombreInstrumento" />
                 <asp:FormParameter Name="DescripcionInstrumento" />
                 <asp:FormParameter Name="Ano" />
-                <asp:FormParameter Name="IdProcesoEvaluacion" />
             </InsertParameters>
 
             <UpdateParameters>
@@ -127,7 +110,6 @@
                 <asp:FormParameter Name="NombreInstrumento" />
                 <asp:FormParameter Name="DescripcionInstrumento" />
                 <asp:FormParameter Name="Ano" />
-                <asp:FormParameter Name="IdProcesoEvaluacion" />
             </UpdateParameters>
 
             <DeleteParameters>
@@ -135,7 +117,6 @@
             </DeleteParameters>
 
         </asp:SqlDataSource>
-        <asp:SqlDataSource ID="SqlProceso" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" SelectCommand="SELECT [ProcesoEvaluacion],[IdProcesoEvaluacion] FROM [ProcesosEvaluacion]"> </asp:SqlDataSource>
 
     </div>
   
