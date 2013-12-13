@@ -109,6 +109,13 @@ Partial Class Evaluacion_Levantamientos
 
    
     Protected Sub link1_Click(sender As Object, e As EventArgs)
+        'Session("IdLevantamiento") = CType(sender, ASPxGridView).GetMasterRowKeyValue()
+        Dim detail1 As ASPxGridView = TryCast(ASPxGridView1.FindDetailRowTemplateControl(ASPxGridView1.FocusedRowIndex(), "ASPxGridView2"), ASPxGridView)
+        Dim detail2 As ASPxGridView = TryCast(detail1.FindDetailRowTemplateControl(detail1.FocusedRowIndex(), "ASPxGridView3"), ASPxGridView)
+        Dim index As Integer = detail2.FocusedRowIndex()
+        Dim IdLevantamiento As Integer = detail2.GetRowValues(index, "IdAplicacionInstrumento")
+        Dim Calculadora As New CalculadoraIndicadores(SqlDataSource1.ConnectionString, Session("IdPrograma"), IdLevantamiento)
+        Calculadora.Run(Membership.GetUser.UserName.ToString)
 
     End Sub
 End Class
