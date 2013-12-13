@@ -45,7 +45,7 @@ Partial Class Evaluacion_DocumentosEvaluacion
         End Using
     End Sub
     Protected Sub uplImage_FileUploadComplete(ByVal sender As Object, ByVal e As FileUploadCompleteEventArgs)
-        Dim Ruta As String = "Uploads/Politicas/"
+        Dim Ruta As String = "Uploads\Evaluacion\"
         Dim unico As String = Format(Date.Now, "yyyyMMdd_HHmmss_") + e.UploadedFile.FileName
         Dim fileName As String = Path.Combine(MapPath(UploadDirectory), unico)
 
@@ -55,32 +55,39 @@ Partial Class Evaluacion_DocumentosEvaluacion
 
         CodPrograma = Request.QueryString.Get(0)
 
-        SqlDataSourceDocumentos.InsertParameters(0).DefaultValue = CodPrograma
-        SqlDataSourceDocumentos.InsertParameters(1).DefaultValue = Ruta + unico
-        SqlDataSourceDocumentos.InsertParameters(2).DefaultValue = e.UploadedFile.FileName
-        SqlDataSourceDocumentos.InsertParameters(7).DefaultValue = Membership.GetUser.UserName
-        SqlDataSourceDocumentos.Insert()
 
-        'Dim SqlConn As New SqlConnection
-        'SqlConn.ConnectionString = SqlDataSourceDocumentos.ConnectionString
-        'SqlConn.Open()
-        'Dim Command As New SqlCommand("INSERT INTO DocumentosEvaluacion (IdPrograma, Enlace, Direccion, NombreDocumento, DescripcionDocumento, PalabrasClave, CreadoPor) VALUES (@IdPrograma,@Enlace,@Direccion,@NombreDocumento,@DescripcionDocumento,@PalabrasClave,@CreadoPor)", SqlConn)
-        'Command.Parameters.AddWithValue("@IdPrograma", CodPrograma)
-        'Command.Parameters.AddWithValue("@Enlace", Ruta + unico)
-        'Command.Parameters.AddWithValue("@Direccion", e.UploadedFile.FileName)
-        'Command.Parameters.AddWithValue("@NombreDocumento", TxtNombre.Text) 'No está agarrando el texto que hay en ese textbox!!!!
-        'Command.Parameters.AddWithValue("@DescripcionDocumento", TxtDescripcion.Text)
-        'Command.Parameters.AddWithValue("@PalabrasClave", TxtPalabras.Text)
-        'Command.Parameters.AddWithValue("@CreadoPor", Membership.GetUser.UserName)
-        'Command.ExecuteNonQuery()
-        'SqlConn.Close()
-        Me.SqlDataSourceDocumentos.DataBind()
-        Me.GridDocumentos.DataBind()
+        Dim enlace As String = Ruta + unico
+        
 
-        'Me.TxtDescripcion.Text = ""
-        'Me.TxtNombre.Text = ""
-        'Me.TxtPalabras.Text = ""
-        'Me.ASPxUploadControl1.Enabled = True
+        SqlDataSourceDetalleDocumentosEvaluacion.InsertCommand = "INSERT INTO [DetalleDocumentosEvaluacion] ([IdDocumentoEvaluacion], [Enlace], [NombreDocumento], [CreadoPor], [FechaCreacion]) VALUES (" + Session("IdDocumentoEvaluacion").ToString + ",'" + enlace + "','" + e.UploadedFile.FileName + "','" + Membership.GetUser.UserName.ToString + "',getDate())"
+        SqlDataSourceDetalleDocumentosEvaluacion.Insert()
 
+        ASPxGridViewDocumentosEvaluacion.DataBind()
+
+    End Sub
+
+    Protected Sub grid_custom(ByVal sender As Object, ByVal e As ASPxGridViewCustomCallbackEventArgs)
+        Session("IdPrograma") = CInt(Request.QueryString("CodP"))
+        CodPrograma = CInt(Request.QueryString("CodP"))
+
+        SqlDataSourceDocumentosEvaluacion.SelectParameters(0).DefaultValue = CodPrograma
+        SqlDataSourceDocumentosEvaluacion.InsertParameters(0).DefaultValue = Session("IdPrograma")
+        ASPxGridViewDocumentosEvaluacion.DataBind()
+
+    End Sub
+
+    Protected Sub ASPxGridViewDocumentosEvaluacion_Load(sender As Object, e As EventArgs)
+        Session("IdPrograma") = CInt(Request.QueryString("CodP"))
+        CodPrograma = CInt(Request.QueryString("CodP"))
+
+        SqlDataSourceDocumentosEvaluacion.SelectParameters(0).DefaultValue = CodPrograma
+        SqlDataSourceDocumentosEvaluacion.InsertParameters(0).DefaultValue = Session("IdPrograma")
+        ASPxGridViewDocumentosEvaluacion.DataBind()
+    End Sub
+
+    Protected Sub ASPxGridViewDetalleDocumentosEvaluacion_BeforePerformDataSelect(sender As Object, e As EventArgs)
+        Session("IdDocumentoEvaluacion") = CType(sender, ASPxGridView).GetMasterRowKeyValue()
+        SqlDataSourceDetalleDocumentosEvaluacion.SelectParameters(0).DefaultValue = Session("IdDocumentoEvaluacion")
+        SqlDataSourceDetalleDocumentosEvaluacion.DeleteParameters(0).DefaultValue = Session("IdDocumentoEvaluacion")
     End Sub
 End Class
