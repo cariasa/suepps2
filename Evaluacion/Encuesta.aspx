@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Monitoreo Cualitativo" Language="VB" AutoEventWireup="false" CodeFile="Encuesta.aspx.vb" Inherits="RevisionSocial_MonitoreoCualitativo"  MasterPageFile="~/Site.master" %>
+﻿<%@ Page Title="Monitoreo Cualitativo" Language="VB" AutoEventWireup="false" CodeFile="Encuesta.aspx.vb" Inherits="RevisionSocial_MonitoreoCualitativo" MasterPageFile="~/Site.master" %>
 
 <%@ Register Assembly="DevExpress.Web.v13.1, Version=13.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web.ASPxPanel" TagPrefix="dx" %>
 
@@ -11,155 +11,153 @@
 <%@ Register Src="~/MOCA_UE.ascx" TagPrefix="uc1" TagName="MOCA_UE" %>
 
 
-<asp:Content ID="cHeader" ContentPlaceHolderID="HeadContent" Runat="Server">
+<asp:Content ID="cHeader" ContentPlaceHolderID="HeadContent" runat="Server">
 </asp:Content>
-<asp:Content ID="cBody" ContentPlaceHolderID="MainContent" Runat="Server">
+<asp:Content ID="cBody" ContentPlaceHolderID="MainContent" runat="Server">
     <uc1:MOCA_UE runat="server" ID="MOCA_UE01" />
-     
-        <dx:ASPxPanel ID="Panel" runat="server" Width="100%" Height="600%" Border-BorderColor="Gold" Visible="true"  Scrollbars="Vertical" >
-            <PanelCollection>
-                <dx:PanelContent>
-             
-                         <br />
-      
 
-        <br />
-         
+    <dx:ASPxPanel ID="Panel" runat="server" Width="100%" Height="600%" Border-BorderColor="Gold" Visible="true" ScrollBars="Vertical">
+        <PanelCollection>
+            <dx:PanelContent>
+
+                <br />
 
 
-       <dx:ASPxButton ID="ASPxButton1" runat="server" Text="Salvar Encuesta" OnClick="ASPxButton1_Click"></dx:ASPxButton>
-
-        <dx:ASPxGridView ID="ASPxGridView1" runat="server" AutoGenerateColumns="True" Visible="false" DataSourceID="SqlAplicacion" ></dx:ASPxGridView>
-         
-          <asp:SqlDataSource ID="SqlAplicacion" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" SelectCommand="SELECT * FROM [AplicacionInstrumento] where IdAplicacionInstrumento= @IdAplicacionInstrumento and Activo=1">
-
-           <SelectParameters>
-
-               <asp:SessionParameter  Name="IdAplicacionInstrumento" />
-               
-
-            </SelectParameters>
-
-        </asp:SqlDataSource>       
+                <br />
 
 
-        <dx:ASPxGridView ID="GridPreguntas" runat="server" AutoGenerateColumns="False" Visible="false" DataSourceID="SqlPreguntas" KeyFieldName="IdPreguntaPorInstrumento">
-            <Columns>
-                <dx:GridViewDataTextColumn FieldName="IdPreguntaPorInstrumento" ReadOnly="True" VisibleIndex="0">
-                    <EditFormSettings Visible="False" />
-                </dx:GridViewDataTextColumn>
-                <dx:GridViewDataTextColumn FieldName="IdInstrumentoDeEvaluacion" VisibleIndex="1">
-                </dx:GridViewDataTextColumn>
-                <dx:GridViewDataTextColumn FieldName="IdTipoDePregunta" VisibleIndex="2">
-                </dx:GridViewDataTextColumn>
-                <dx:GridViewDataTextColumn FieldName="NombreSeccion" VisibleIndex="3">
-                </dx:GridViewDataTextColumn>
-                <dx:GridViewDataTextColumn FieldName="IdTipoDeRespuesta" VisibleIndex="4">
-                </dx:GridViewDataTextColumn>
-                <dx:GridViewDataTextColumn FieldName="IdAmigable" VisibleIndex="5">
-                </dx:GridViewDataTextColumn>
-                <dx:GridViewDataTextColumn FieldName="PreguntaDeInstrumento" VisibleIndex="6">
-                </dx:GridViewDataTextColumn>
-                <dx:GridViewDataTextColumn FieldName="Orden" VisibleIndex="7">
-                </dx:GridViewDataTextColumn>
-                <dx:GridViewDataTextColumn FieldName="Requerida" VisibleIndex="8">
-                </dx:GridViewDataTextColumn>
-                <dx:GridViewDataTextColumn FieldName="IdSeccionFSU" VisibleIndex="9">
-                </dx:GridViewDataTextColumn>
-
-                
-            </Columns>
-        </dx:ASPxGridView>
-
-        <asp:SqlDataSource ID="SqlPreguntas" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" SelectCommand="SELECT a.IdPreguntaPorInstrumento,a.IdInstrumentoDeEvaluacion,a.IdTipoDePregunta,b.NombreSeccion,a.IdTipoDeRespuesta,a.IdAmigable,a.PreguntaDeInstrumento,a.Orden,a.Requerida,a.IdSeccionFSU FROM [PreguntasPorInstrumento] a join [SeccionesFSU] b on a.IdSeccionFSU=b.IdSeccionFSU  where a.IdInstrumentoDeEvaluacion= @IdInstrumentoDeEvaluacion and a.Activo=1 order by b.NombreSeccion, a.Orden">
-
-           <SelectParameters>
-
-               <asp:SessionParameter  Name="IdInstrumentoDeEvaluacion" />
-               
-
-            </SelectParameters>
-
-        </asp:SqlDataSource>
-
-         <dx:ASPxGridView ID="GridOpciones" runat="server" AutoGenerateColumns="False" Visible="false" DataSourceID="SqlOpcionesPreguntas" KeyFieldName="IdOpcionPreguntaPorInstrumento">
-            <Columns>
-                <dx:GridViewDataTextColumn FieldName="Opcion" VisibleIndex="0">
-                </dx:GridViewDataTextColumn>
-                <dx:GridViewDataTextColumn FieldName="IdOpcionPreguntaPorInstrumento" ReadOnly="True" VisibleIndex="1">
-                </dx:GridViewDataTextColumn>
-                <dx:GridViewDataTextColumn FieldName="IdPreguntaPorInstrumento" VisibleIndex="2">
-                </dx:GridViewDataTextColumn>
-                <dx:GridViewDataTextColumn FieldName="Valor" VisibleIndex="3">
-                </dx:GridViewDataTextColumn>
-                <dx:GridViewDataTextColumn FieldName="SaltaACodigo" VisibleIndex="4">
-                </dx:GridViewDataTextColumn>
-            </Columns>
-        </dx:ASPxGridView>
 
 
-        <asp:SqlDataSource ID="SqlOpcionesPreguntas" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" SelectCommand="SELECT * FROM [OpcionesPreguntaPorInstrumento] where IdPreguntaPorInstrumento=@Pregunta and Activo=1 Order By Valor">
 
-            <SelectParameters>
+                <dx:ASPxGridView ID="ASPxGridView1" runat="server" AutoGenerateColumns="True" Visible="false" DataSourceID="SqlAplicacion"></dx:ASPxGridView>
 
-               <asp:SessionParameter  Name="Pregunta" />
-               
+                <asp:SqlDataSource ID="SqlAplicacion" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" SelectCommand="SELECT * FROM [AplicacionInstrumento] where IdAplicacionInstrumento= @IdAplicacionInstrumento and Activo=1">
 
-            </SelectParameters>
+                    <SelectParameters>
 
-        </asp:SqlDataSource>
+                        <asp:SessionParameter Name="IdAplicacionInstrumento" />
 
 
-            <asp:SqlDataSource ID="SqlDataSourceEncabezado" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" 
-             
-                 InsertCommand="INSERT INTO [EncabezadoRespuesta] ([CodigoFSU],[CodigoDigitador],[IdAplicacionInstrumento],[CreadoPor],[FechaCreacion],[Activo]) VALUES (@CodigoFSU, @CodigoDigitador, @IdAplicacionInstrumento, 'PACO',getDate(),1) 
+                    </SelectParameters>
+
+                </asp:SqlDataSource>
+
+
+                <dx:ASPxGridView ID="GridPreguntas" runat="server" AutoGenerateColumns="False" Visible="false" DataSourceID="SqlPreguntas" KeyFieldName="IdPreguntaPorInstrumento">
+                    <Columns>
+                        <dx:GridViewDataTextColumn FieldName="IdPreguntaPorInstrumento" ReadOnly="True" VisibleIndex="0">
+                            <EditFormSettings Visible="False" />
+                        </dx:GridViewDataTextColumn>
+                        <dx:GridViewDataTextColumn FieldName="IdInstrumentoDeEvaluacion" VisibleIndex="1">
+                        </dx:GridViewDataTextColumn>
+                        <dx:GridViewDataTextColumn FieldName="IdTipoDePregunta" VisibleIndex="2">
+                        </dx:GridViewDataTextColumn>
+                        <dx:GridViewDataTextColumn FieldName="NombreSeccion" VisibleIndex="3">
+                        </dx:GridViewDataTextColumn>
+                        <dx:GridViewDataTextColumn FieldName="IdTipoDeRespuesta" VisibleIndex="4">
+                        </dx:GridViewDataTextColumn>
+                        <dx:GridViewDataTextColumn FieldName="IdAmigable" VisibleIndex="5">
+                        </dx:GridViewDataTextColumn>
+                        <dx:GridViewDataTextColumn FieldName="PreguntaDeInstrumento" VisibleIndex="6">
+                        </dx:GridViewDataTextColumn>
+                        <dx:GridViewDataTextColumn FieldName="Orden" VisibleIndex="7">
+                        </dx:GridViewDataTextColumn>
+                        <dx:GridViewDataTextColumn FieldName="Requerida" VisibleIndex="8">
+                        </dx:GridViewDataTextColumn>
+                        <dx:GridViewDataTextColumn FieldName="IdSeccionFSU" VisibleIndex="9">
+                        </dx:GridViewDataTextColumn>
+
+
+                    </Columns>
+                </dx:ASPxGridView>
+
+                <asp:SqlDataSource ID="SqlPreguntas" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" SelectCommand="SELECT a.IdPreguntaPorInstrumento,a.IdInstrumentoDeEvaluacion,a.IdTipoDePregunta,b.NombreSeccion,a.IdTipoDeRespuesta,a.IdAmigable,a.PreguntaDeInstrumento,a.Orden,a.Requerida,a.IdSeccionFSU FROM [PreguntasPorInstrumento] a join [SeccionesFSU] b on a.IdSeccionFSU=b.IdSeccionFSU  where a.IdInstrumentoDeEvaluacion= @IdInstrumentoDeEvaluacion and a.Activo=1 order by b.NombreSeccion, a.Orden">
+
+                    <SelectParameters>
+
+                        <asp:SessionParameter Name="IdInstrumentoDeEvaluacion" />
+
+
+                    </SelectParameters>
+
+                </asp:SqlDataSource>
+
+                <dx:ASPxGridView ID="GridOpciones" runat="server" AutoGenerateColumns="False" Visible="false" DataSourceID="SqlOpcionesPreguntas" KeyFieldName="IdOpcionPreguntaPorInstrumento">
+                    <Columns>
+                        <dx:GridViewDataTextColumn FieldName="Opcion" VisibleIndex="0">
+                        </dx:GridViewDataTextColumn>
+                        <dx:GridViewDataTextColumn FieldName="IdOpcionPreguntaPorInstrumento" ReadOnly="True" VisibleIndex="1">
+                        </dx:GridViewDataTextColumn>
+                        <dx:GridViewDataTextColumn FieldName="IdPreguntaPorInstrumento" VisibleIndex="2">
+                        </dx:GridViewDataTextColumn>
+                        <dx:GridViewDataTextColumn FieldName="Valor" VisibleIndex="3">
+                        </dx:GridViewDataTextColumn>
+                        <dx:GridViewDataTextColumn FieldName="SaltaACodigo" VisibleIndex="4">
+                        </dx:GridViewDataTextColumn>
+                    </Columns>
+                </dx:ASPxGridView>
+
+
+                <asp:SqlDataSource ID="SqlOpcionesPreguntas" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" SelectCommand="SELECT * FROM [OpcionesPreguntaPorInstrumento] where IdPreguntaPorInstrumento=@Pregunta and Activo=1 Order By Valor">
+
+                    <SelectParameters>
+
+                        <asp:SessionParameter Name="Pregunta" />
+
+
+                    </SelectParameters>
+
+                </asp:SqlDataSource>
+
+
+                <asp:SqlDataSource ID="SqlDataSourceEncabezado" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>"
+                    InsertCommand="INSERT INTO [EncabezadoRespuesta] ([CodigoFSU],[CodigoDigitador],[IdAplicacionInstrumento],[CreadoPor],[FechaCreacion],[Activo]) VALUES (@CodigoFSU, @CodigoDigitador, @IdAplicacionInstrumento, 'PACO',getDate(),1) 
                                 SELECT @IdEncabezadoRespuesta = SCOPE_IDENTITY() "
-                 OnInserted="SqlDataSourceEncabezado_Inserted" >
-                
-                 <InsertParameters>
-                     <asp:SessionParameter Name="CodigoFSU" />
-                     <asp:SessionParameter Name="CodigoDigitador" />
-                     <asp:SessionParameter Name="IdAplicacionInstrumento" />
-                      <asp:Parameter Direction="Output" Name="IdEncabezadoRespuesta" Type="Int32" />
-                 </InsertParameters>
-          </asp:SqlDataSource>
+                    OnInserted="SqlDataSourceEncabezado_Inserted">
+
+                    <InsertParameters>
+                        <asp:SessionParameter Name="CodigoFSU" />
+                        <asp:SessionParameter Name="CodigoDigitador" />
+                        <asp:SessionParameter Name="IdAplicacionInstrumento" />
+                        <asp:Parameter Direction="Output" Name="IdEncabezadoRespuesta" Type="Int32" />
+                    </InsertParameters>
+                </asp:SqlDataSource>
 
 
 
 
 
 
-            <asp:SqlDataSource ID="SqlRespuestas" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" 
-             
-                 InsertCommand="INSERT INTO [RespuestasInstrumento] ([IdPreguntaPorInstrumento],[IdEncabezadoRespuesta],[RespuestaTexto],[RespuestaLikert],[Activo],[CreadoPor],[FechaCreacion]) VALUES (@IdPreguntaPorInstrumento, @IdEncabezadoRespuesta, @RespuestaTexto, @RespuestaLikert, 1, @Usuario, getDate()) 
+                <asp:SqlDataSource ID="SqlRespuestas" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>"
+                    InsertCommand="INSERT INTO [RespuestasInstrumento] ([IdPreguntaPorInstrumento],[IdEncabezadoRespuesta],[RespuestaTexto],[RespuestaLikert],[Activo],[CreadoPor],[FechaCreacion]) VALUES (@IdPreguntaPorInstrumento, @IdEncabezadoRespuesta, @RespuestaTexto, @RespuestaLikert, 1, @Usuario, getDate()) 
                                 SELECT @IdRespuestaInstrumento = SCOPE_IDENTITY() "
-                 OnInserted="SqlRespuestas_Inserted" >
-                
-                 <InsertParameters>
-                      <asp:SessionParameter Name="IdPreguntaPorInstrumento" />
-                     <asp:SessionParameter Name="IdEncabezadoRespuesta" />
-                     <asp:SessionParameter Name="RespuestaTexto" />
-                     <asp:SessionParameter Name="RespuestaLikert" />
-                     <asp:SessionParameter Name="Usuario" />
-                      <asp:Parameter Direction="Output" Name="IdRespuestaInstrumento" Type="Int32" />
-                    
-                 </InsertParameters>
-          </asp:SqlDataSource>
+                    OnInserted="SqlRespuestas_Inserted">
+
+                    <InsertParameters>
+                        <asp:SessionParameter Name="IdPreguntaPorInstrumento" />
+                        <asp:SessionParameter Name="IdEncabezadoRespuesta" />
+                        <asp:SessionParameter Name="RespuestaTexto" />
+                        <asp:SessionParameter Name="RespuestaLikert" />
+                        <asp:SessionParameter Name="Usuario" />
+                        <asp:Parameter Direction="Output" Name="IdRespuestaInstrumento" Type="Int32" />
+
+                    </InsertParameters>
+                </asp:SqlDataSource>
 
 
-             <asp:SqlDataSource ID="SqlRespuestasOpciones" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" ></asp:SqlDataSource>
+                <asp:SqlDataSource ID="SqlRespuestasOpciones" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>"></asp:SqlDataSource>
 
-     
-        
 
-       
 
-    
-                </dx:PanelContent>
-            </PanelCollection>
 
-<Border BorderColor="Gold"></Border>
 
-        </dx:ASPxPanel>
 
+
+            </dx:PanelContent>
+        </PanelCollection>
+
+        <Border BorderColor="Gold"></Border>
+
+    </dx:ASPxPanel>
+    <dx:ASPxButton ID="ASPxButton1" runat="server" Text="Salvar Encuesta" OnClick="ASPxButton1_Click"></dx:ASPxButton>
 </asp:Content>
