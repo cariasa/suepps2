@@ -1,8 +1,8 @@
 ﻿<%@ Page Language="VB" AutoEventWireup="false" CodeFile="Instrumentos.aspx.vb" Inherits="Cuantitativo_Default" MasterPageFile="~/Site.master" %>
 
-<%@ Register Assembly="DevExpress.Web.v13.2, Version=13.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web.ASPxGridView" TagPrefix="dx" %>
+<%@ Register Assembly="DevExpress.Web.v13.1, Version=13.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web.ASPxGridView" TagPrefix="dx" %>
 
-<%@ Register Assembly="DevExpress.Web.v13.2, Version=13.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web.ASPxEditors" TagPrefix="dx" %>
+<%@ Register Assembly="DevExpress.Web.v13.1, Version=13.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web.ASPxEditors" TagPrefix="dx" %>
 
 <%@ Register Src="~/MOCA_UE.ascx" TagPrefix="uc1" TagName="MOCA_UE" %>
 
@@ -43,14 +43,14 @@
                                      </dx:GridViewDataTextColumn>
                                     <dx:GridViewDataTextColumn FieldName="NombreProyecto" Caption="Programa" VisibleIndex="1">
                                     </dx:GridViewDataTextColumn>
-                                     <dx:GridViewDataTextColumn FieldName="codigo_proyecto" Caption="Código del Programa" VisibleIndex="1">
+                                     <dx:GridViewDataTextColumn FieldName="codigo_proyecto" Caption="Código de Programa" VisibleIndex="1">
                                     </dx:GridViewDataTextColumn>
 
                                     
 
                                     <dx:GridViewDataTextColumn VisibleIndex="2" Caption="Acción" UnboundType="String">
                                       <DataItemTemplate>
-                                          <asp:LinkButton id="link1"  Text="Instrumentos" runat="server" OnClick="link1_Click" /> 
+                                          <asp:LinkButton id="link1"  Text="Crear Instrumento" runat="server" OnClick="link1_Click" /> 
                                           <asp:LinkButton id="LinkButton1"  Text="Asociar Indicador" runat="server" OnClick="LinkButton1_Click" /> 
                                       </DataItemTemplate>  
                                         <Settings AllowAutoFilter="False" />
