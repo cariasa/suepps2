@@ -78,7 +78,7 @@
                             <dx:ListEditItem Text=">" Value=">" />
                             <dx:ListEditItem Text="&ge;" Value=">=" />
 
-                            <dx:ListEditItem Text="Contenido" Value="Contenido" />
+                            <dx:ListEditItem Text="&sub;" Value="Contenido" />
 
                             
                             <dx:ListEditItem Text="AND" Value="AND" />
