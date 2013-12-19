@@ -1,4 +1,4 @@
-﻿<%@ Page Language="VB" AutoEventWireup="false" CodeFile="InstrumentosEvaluacion.aspx.vb" Inherits="Cuantitativo_InstrumentosEvaluacion" MasterPageFile="~/Site.master" %>
+﻿<%@ Page Title="Instrumentos de Evaluación" Language="VB" AutoEventWireup="false" CodeFile="InstrumentosEvaluacion.aspx.vb" Inherits="Cuantitativo_InstrumentosEvaluacion" MasterPageFile="~/Site.master" %>
 
 <%@ Register Assembly="DevExpress.Web.v13.1, Version=13.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web.ASPxGridView" TagPrefix="dx" %>
 

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="VB" AutoEventWireup="false" CodeFile="Instrumentos.aspx.vb" Inherits="Cuantitativo_Default" MasterPageFile="~/Site.master" %>
+﻿<%@ Page Title="Selección de Programa" Language="VB" AutoEventWireup="false" CodeFile="Instrumentos.aspx.vb" Inherits="Cuantitativo_Default" MasterPageFile="~/Site.master" %>
 
 <%@ Register Assembly="DevExpress.Web.v13.1, Version=13.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web.ASPxGridView" TagPrefix="dx" %>
 
