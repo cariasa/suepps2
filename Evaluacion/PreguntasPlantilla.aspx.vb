@@ -36,7 +36,9 @@ Partial Class Cuantitativo_PreguntasPlantilla
                 Response.Redirect("~/NoAccess.aspx")
             End If
 
-            Session("IdPlantilla") = Request.QueryString.Get(0)
+            Session("IdPlantilla") = uf.QueryStringDecode(Request.QueryString.Get(0))
+            Session("NomPlantilla") = uf.QueryStringDecode(Request.QueryString.Get(1))
+            ASPxLabelTitulo.Text = "Definir Preguntas de Plantilla " + Session("NomPlantilla")
             SqlDataSource1.SelectParameters(0).DefaultValue = Session("IdPlantilla")
             SqlDataSource1.InsertParameters(0).DefaultValue = Session("IdPlantilla")
             SqlDataSource1.UpdateParameters(0).DefaultValue = Session("IdPlantilla")

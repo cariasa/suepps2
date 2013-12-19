@@ -42,9 +42,9 @@ Partial Class Evaluacion_Condiciones
         End Using
 
 
-        Session("IdVariable") = CInt(Request.QueryString("Variable"))
+        Session("IdVariable") = CInt(uf.QueryStringDecode(Request.QueryString("Variable")))
 
-        ASPxLabelVariable.Text = "Definición de Condiciones para Variable " + Request.QueryString("Nombre")
+        ASPxLabelVariable.Text = "Definición de Condiciones para Variable " + uf.QueryStringDecode(Request.QueryString("Nombre"))
     End Sub
 
 End Class

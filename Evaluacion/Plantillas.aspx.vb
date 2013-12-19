@@ -39,7 +39,8 @@ Partial Class Cuantitativo_Plantilla
 
         Dim index As Integer = ASPxGridView1.FocusedRowIndex()
         Dim codplantilla As String = ASPxGridView1.GetRowValues(index, "IdPlantilla").ToString
-        Response.Redirect("PreguntasPlantilla.aspx?NameP=" + codplantilla)
+        Dim nomplantilla As String = ASPxGridView1.GetRowValues(index, "NombrePlantilla")
+        Response.Redirect("PreguntasPlantilla.aspx?NameP=" + uf.QueryStringEncode(codplantilla) + "&DescP=" + uf.QueryStringEncode(nomplantilla))
 
     End Sub
 

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="VB" AutoEventWireup="false" CodeFile="Plantillas.aspx.vb" Inherits="Cuantitativo_Plantilla" MasterPageFile="~/Site.master" %>
+﻿<%@ Page Title="Plantillas de Instrumentos" Language="VB" AutoEventWireup="false" CodeFile="Plantillas.aspx.vb" Inherits="Cuantitativo_Plantilla" MasterPageFile="~/Site.master" %>
 
 <%@ Register Assembly="DevExpress.Web.v13.1, Version=13.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
     Namespace="DevExpress.Web.ASPxEditors" TagPrefix="dx" %>
@@ -14,7 +14,13 @@
     <uc1:MOCA_UE runat="server" ID="MOCA_UE01" />
 
     <div>
-        
+        <div>
+            <table>
+                <tr>
+                    <td><dx:ASPxLabel ID="ASPxLabelTitulo" runat="server" Font-Size="Large" Text="Definir Plantillas de Instrumentos de Evaluación" /></td>
+                </tr>
+            </table>
+        </div>    
   
 
         <dx:ASPxGridView ID="ASPxGridView1" runat="server" AutoGenerateColumns="False"  Settings-ShowFilterRow="true" Settings-ShowFilterRowMenu="true"

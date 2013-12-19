@@ -36,9 +36,9 @@ Partial Class Evaluacion_ValoresMacro
             End If
         End Using
 
-        Session("Variable") = CInt(Request.QueryString("Variable"))
-        ASPxLabelVariable.Text = "Valores Oficiales de Variable " + Request.QueryString("Nombre")
-        SqlDataSourceVariablesMacro.InsertCommand = "INSERT INTO [VariablesMacro] ([IdVariable], [Valor], [Fuente], [Fecha], [CreadoPor], [FechaCreacion]) VALUES (" + Request.QueryString("Variable") + ", @Valor, @Fuente, @Fecha, 'SUEPPS', getDate())"
+        Session("Variable") = CInt(uf.QueryStringDecode(Request.QueryString("Variable")))
+        ASPxLabelVariable.Text = "Valores Oficiales de Variable " + uf.QueryStringDecode(Request.QueryString("Nombre"))
+        SqlDataSourceVariablesMacro.InsertCommand = "INSERT INTO [VariablesMacro] ([IdVariable], [Valor], [Fuente], [Fecha], [CreadoPor], [FechaCreacion]) VALUES (" + uf.QueryStringDecode(Request.QueryString("Variable")) + ", @Valor, @Fuente, @Fecha, 'SUEPPS', getDate())"
     End Sub
 
     Protected Sub SqlDataSourceVariablesMacro_Deleted(sender As Object, e As SqlDataSourceStatusEventArgs)

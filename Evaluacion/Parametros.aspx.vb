@@ -35,9 +35,9 @@ Partial Class Evaluacion_Parametros
         Dim reader As SqlDataReader = Command.ExecuteReader()
 
         If (reader.Read) Then
-            Response.Redirect("ValoresMacro.aspx?Variable=" + variable + "&Nombre=" + Convert.ToString(reader("NombreVariable")))
+            Response.Redirect("ValoresMacro.aspx?Variable=" + uf.QueryStringEncode(variable) + "&Nombre=" + uf.QueryStringEncode(Convert.ToString(reader("NombreVariable"))))
         Else
-            Response.Redirect("ValoresMacro.aspx?Variable=" + variable + "&Nombre=0")
+            Response.Redirect("ValoresMacro.aspx?Variable=" + uf.QueryStringEncode(variable) + "&Nombre=" + uf.QueryStringEncode("0"))
         End If
         reader.Close()
         SqlConn.Close()
@@ -59,9 +59,9 @@ Partial Class Evaluacion_Parametros
         Dim reader As SqlDataReader = Command.ExecuteReader()
 
         If (reader.Read) Then
-            Response.Redirect("Condiciones.aspx?Variable=" + variable + "&Nombre=" + Convert.ToString(reader("NombreVariable")))
+            Response.Redirect("Condiciones.aspx?Variable=" + uf.QueryStringEncode(variable) + "&Nombre=" + uf.QueryStringEncode(Convert.ToString(reader("NombreVariable"))))
         Else
-            Response.Redirect("Condiciones.aspx?Variable=" + variable + "&Nombre=0")
+            Response.Redirect("Condiciones.aspx?Variable=" + uf.QueryStringEncode(variable) + "&Nombre=" + uf.QueryStringEncode("0"))
         End If
         reader.Close()
         SqlConn.Close()

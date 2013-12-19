@@ -1,4 +1,4 @@
-﻿<%@ Page Language="VB" AutoEventWireup="false" CodeFile="PreguntasPlantilla.aspx.vb" Inherits="Cuantitativo_PreguntasPlantilla"  MasterPageFile="~/Site.master"  %>
+﻿<%@ Page Title="Preguntas de Plantilla" Language="VB" AutoEventWireup="false" CodeFile="PreguntasPlantilla.aspx.vb" Inherits="Cuantitativo_PreguntasPlantilla"  MasterPageFile="~/Site.master"  %>
 
 <%@ Register Assembly="DevExpress.Web.v13.1, Version=13.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web.ASPxEditors" TagPrefix="dx" %>
 
@@ -12,8 +12,20 @@
 <asp:Content ID="cBody" ContentPlaceHolderID="MainContent" Runat="Server">
     <uc1:MOCA_UE runat="server" ID="MOCA_UE01" />
 
+    <div>
         <div>
-
+            <table>
+                <tr>
+                    <td>
+                        <dx:ASPxLabel ID="ASPxLabelTitulo" runat="server" Font-Size="Large" />
+                    </td>
+                    <td>
+                        <dx:ASPxLabel ID="espacio" runat="server" Text=" " Width="50"></dx:ASPxLabel>
+                        <dx:ASPxHyperLink ID="ASPxHyperLinkRegresar" runat="server" Text="Regresar a Plantillas" NavigateUrl="Plantillas.aspx" />
+                    </td>
+                </tr>
+            </table>
+        </div>
 
            
         <dx:ASPxGridView ID="ASPxGridView1" runat="server" AutoGenerateColumns="False" 
