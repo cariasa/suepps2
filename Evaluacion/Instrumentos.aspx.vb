@@ -67,7 +67,7 @@ Partial Class Cuantitativo_Default
 
 
 
-        Response.Redirect("InstrumentosEvaluacion.aspx?CodP=" + codprograma + "&NomP=" + nombreprograma)
+        Response.Redirect("InstrumentosEvaluacion.aspx?CodP=" + uf.QueryStringEncode(codprograma) + "&NomP=" + uf.QueryStringEncode(nombreprograma))
 
 
 
@@ -84,7 +84,7 @@ Partial Class Cuantitativo_Default
 
         Dim nombreprograma As String = detail.GetRowValues(index, "NombreProyecto").ToString()
 
-        Response.Redirect("IndicadoresEvaluacion.aspx?CodP=" + codprograma + "&NomP=" + nombreprograma)
+        Response.Redirect("IndicadoresEvaluacion.aspx?CodP=" + uf.QueryStringEncode(codprograma) + "&NomP=" + uf.QueryStringEncode(nombreprograma))
 
     End Sub
     Protected Sub Documento_Click(sender As Object, e As EventArgs)
@@ -93,14 +93,14 @@ Partial Class Cuantitativo_Default
 
         Dim index As Integer = detail.FocusedRowIndex()
 
-        Dim codprograma As String = detail.GetRowValues(index, "codigo_proyecto").ToString()
+        Dim codprograma As String = detail.GetRowValues(index, "codigo_ficha").ToString()
 
         Dim nombreprograma As String = detail.GetRowValues(index, "NombreProyecto").ToString()
 
         
 
-        'Response.Redirect("DocumentosEvaluacion.aspx?CodP=" + codprograma + "&NomP=" + nombreprograma)
-        Response.Redirect("DocumentosEvaluacion.aspx?CodP=113" + "&NomP=" + nombreprograma)
+        Response.Redirect("DocumentosEvaluacion.aspx?CodP=" + uf.QueryStringEncode(codprograma) + "&NomP=" + uf.QueryStringEncode(nombreprograma))
+        'Response.Redirect("DocumentosEvaluacion.aspx?CodP=113" + "&NomP=" + nombreprograma)
 
     End Sub
 End Class

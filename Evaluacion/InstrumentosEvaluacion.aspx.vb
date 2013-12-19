@@ -34,10 +34,12 @@ Partial Class Cuantitativo_InstrumentosEvaluacion
                 Response.Redirect("~/NoAccess.aspx")
             End If
 
-            Session("IdPrograma") = Request.QueryString.Get(0)
-            Session("NombrePrograma") = Request.QueryString.Get(1)
+            If Session("IdPrograma") Is Nothing Then
+                Session("IdPrograma") = uf.QueryStringDecode(Request.QueryString.Get(0))
+                Session("NombrePrograma") = uf.QueryStringDecode(Request.QueryString.Get(1))
+            End If
 
-            Me.Programa.Text = "Crear Instrumento de Evaluación Programa < " + Session("NombrePrograma") + " >"
+            ASPxLabelTitulo.Text = "Crear Instrumento de Evaluación Programa " + Session("NombrePrograma")
 
             SqlDataSource1.SelectCommand = "SELECT * FROM [InstrumentosDeEvaluacion] where [IdPrograma]=@IdPrograma and [Activo]=1"
             SqlDataSource1.InsertCommand = "Insert INTO [InstrumentosDeEvaluacion] ([IdProcesoEvaluacion], [IdPrograma], [NombreInstrumento],[DescripcionInstrumento],[Ano],[CreadoPor], [FechaCreacion], [Activo]) VALUES (@IdProcesoEvaluacion, @IdPrograma, @NombreInstrumento,@DescripcionInstrumento,@Ano,'PACO', getDate(), 1)"
@@ -56,7 +58,8 @@ Partial Class Cuantitativo_InstrumentosEvaluacion
 
         Dim index As Integer = ASPxGridView1.FocusedRowIndex()
         Dim codInstrumento As String = ASPxGridView1.GetRowValues(index, "IdInstrumentoDeEvaluacion").ToString
-        Response.Redirect("PreguntasInstrumento.aspx?NameP=" + codInstrumento)
+        Dim nomInstrumento As String = ASPxGridView1.GetRowValues(index, "NombreInstrumento").ToString
+        Response.Redirect("PreguntasInstrumento.aspx?NameP=" + uf.QueryStringEncode(codInstrumento) + "&NomInstr=" + uf.QueryStringEncode(nomInstrumento))
 
     End Sub
 
@@ -64,7 +67,8 @@ Partial Class Cuantitativo_InstrumentosEvaluacion
 
         Dim index As Integer = ASPxGridView1.FocusedRowIndex()
         Dim codInstrumento As String = ASPxGridView1.GetRowValues(index, "IdInstrumentoDeEvaluacion").ToString
-        Response.Redirect("AplicacionInstrumento.aspx?NameP=" + codInstrumento)
+        Dim nomInstrumento As String = ASPxGridView1.GetRowValues(index, "NombreInstrumento").ToString
+        Response.Redirect("AplicacionInstrumento.aspx?NameP=" + uf.QueryStringEncode(codInstrumento) + "&NomInstr=" + uf.QueryStringEncode(nomInstrumento))
 
     End Sub
 End Class

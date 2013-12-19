@@ -12,6 +12,13 @@
     <uc1:MOCA_UE runat="server" ID="MOCA_UE01" />
 
     <div>
+        <div>
+            <table>
+                <tr>
+                    <td><dx:ASPxLabel ID="ASPxLabelTitulo" runat="server" Text="Selección de Programa para Instrumentos de Evaluación" Font-Size="Large" /></td>
+                </tr>
+            </table>
+        </div>
 
         <dx:ASPxGridView ClientInstanceName="ASPxGridView1" ID="ASPxGridView1" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource1" KeyFieldName="IdPolitica" SettingsDetail-ShowDetailRow="true">
             <Columns>

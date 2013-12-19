@@ -31,8 +31,12 @@ Partial Class Cuantitativo_AplicacionInstrumento
                 'y sera redireccionado a la Pagina siguiente que le notifica al usuario que no tiene acceso
                 Response.Redirect("~/NoAccess.aspx")
             End If
+            If Session("IdInstrumento") Is Nothing Then
+                Session("IdInstrumento") = uf.QueryStringDecode(Request.QueryString.Get(0))
+                Session("NomInstrumento") = uf.QueryStringDecode(Request.QueryString.Get(1))
 
-        Session("IdInstrumento") = Request.QueryString.Get(0)
+            End If
+            ASPxLabelTitulo.Text = "Levantamientos de Instrumento " + Session("NomInstrumento")
 
             SqlDataSource1.SelectParameters(0).DefaultValue = Session("IdInstrumento")
             SqlDataSource1.InsertParameters(1).DefaultValue = Session("IdInstrumento")
@@ -48,7 +52,7 @@ Partial Class Cuantitativo_AplicacionInstrumento
         Dim index As Integer = ASPxGridView1.FocusedRowIndex()
         Dim idInstrumento As String = ASPxGridView1.GetRowValues(index, "IdInstrumentoDeEvaluacion").ToString
         Dim idAplicacion As String = ASPxGridView1.GetRowValues(index, "IdAplicacionInstrumento").ToString
-        Response.Redirect("Analisis.aspx?IdInstrumento=" + idInstrumento + "&IdAplicacion=" + idAplicacion)
+        Response.Redirect("Analisis.aspx?IdInstrumento=" + uf.QueryStringEncode(idInstrumento) + "&IdAplicacion=" + uf.QueryStringEncode(idAplicacion) + "&NomInstrumento=" + uf.QueryStringEncode(Session("NomInstrumento")))
 
     End Sub
 End Class

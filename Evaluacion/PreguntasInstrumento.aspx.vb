@@ -35,7 +35,9 @@ Partial Class Cuantitativo_PreguntasInstrumento
                 Response.Redirect("~/NoAccess.aspx")
             End If
 
-           Session("IdInstrumento") = Request.QueryString.Get(0)
+            Session("IdInstrumento") = uf.QueryStringDecode(Request.QueryString.Get(0))
+            Session("NomInstrumento") = uf.QueryStringDecode(Request.QueryString.Get(1))
+            ASPxLabelTitulo.Text = "Definir Preguntas de Instrumento " + Session("NomInstrumento")
             SqlDataSource1.SelectParameters(0).DefaultValue = Session("IdInstrumento")
             SqlDataSource1.InsertParameters(0).DefaultValue = Session("IdInstrumento")
 

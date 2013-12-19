@@ -11,7 +11,18 @@
 <asp:Content ID="cBody" ContentPlaceHolderID="MainContent" Runat="Server">
     <uc1:MOCA_UE runat="server" ID="MOCA_UE01" />
     <div>
+        <div>
+            <table>
+                <tr>
+                    <td><dx:ASPxLabel ID="ASPxLabelTitulo" runat="server" Font-Size="Large" /></td>
+                    <td>
+                        <dx:ASPxLabel ID="espacio" runat="server" Text=" " Width="50"></dx:ASPxLabel>
+                        <dx:ASPxHyperLink ID="ASPxHyperLinkRegresar" runat="server" Text="Regresar a Instrumento" NavigateUrl="InstrumentosEvaluacion.aspx" />
 
+                    </td>
+                </tr>
+            </table>
+        </div>
         <div>
             <table>
             <tr>

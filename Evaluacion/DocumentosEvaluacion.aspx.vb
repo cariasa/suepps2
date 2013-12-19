@@ -41,7 +41,7 @@ Partial Class Evaluacion_DocumentosEvaluacion
                 Response.Redirect("~/NoAccess.aspx")
             End If
 
-
+            ASPxLabelTitulo.Text = "Documentos Digitales de Programa " + uf.QueryStringDecode(Request.QueryString.Get(1))
         End Using
     End Sub
     Protected Sub uplImage_FileUploadComplete(ByVal sender As Object, ByVal e As FileUploadCompleteEventArgs)
@@ -53,7 +53,7 @@ Partial Class Evaluacion_DocumentosEvaluacion
 
         Politica = Session("IdPolitica")
 
-        CodPrograma = Request.QueryString.Get(0)
+        CodPrograma = uf.QueryStringDecode(Request.QueryString.Get(0))
 
 
         Dim enlace As String = Ruta + unico
@@ -69,8 +69,8 @@ Partial Class Evaluacion_DocumentosEvaluacion
     End Sub
 
     Protected Sub grid_custom(ByVal sender As Object, ByVal e As ASPxGridViewCustomCallbackEventArgs)
-        Session("IdPrograma") = CInt(Request.QueryString("CodP"))
-        CodPrograma = CInt(Request.QueryString("CodP"))
+        Session("IdPrograma") = CInt(uf.QueryStringDecode(Request.QueryString("CodP")))
+        CodPrograma = CInt(uf.QueryStringDecode(Request.QueryString("CodP")))
 
         SqlDataSourceDocumentosEvaluacion.SelectParameters(0).DefaultValue = CodPrograma
         SqlDataSourceDocumentosEvaluacion.InsertParameters(0).DefaultValue = Session("IdPrograma")
@@ -79,8 +79,8 @@ Partial Class Evaluacion_DocumentosEvaluacion
     End Sub
 
     Protected Sub ASPxGridViewDocumentosEvaluacion_Load(sender As Object, e As EventArgs)
-        Session("IdPrograma") = CInt(Request.QueryString("CodP"))
-        CodPrograma = CInt(Request.QueryString("CodP"))
+        Session("IdPrograma") = CInt(uf.QueryStringDecode(Request.QueryString("CodP")))
+        CodPrograma = CInt(uf.QueryStringDecode(Request.QueryString("CodP")))
 
         SqlDataSourceDocumentosEvaluacion.SelectParameters(0).DefaultValue = CodPrograma
         SqlDataSourceDocumentosEvaluacion.InsertParameters(0).DefaultValue = Session("IdPrograma")

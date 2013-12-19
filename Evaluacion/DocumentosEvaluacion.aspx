@@ -40,6 +40,18 @@
 
     </script>
     <div>
+        <table>
+            <tr>
+                <td><dx:ASPxLabel ID="ASPxLabelTitulo" runat="server" Font-Size="Large" /></td>
+                <td>
+                        <dx:ASPxLabel ID="espacio" runat="server" Text=" " Width="50"></dx:ASPxLabel>
+                        <dx:ASPxHyperLink ID="ASPxHyperLinkRegresar" runat="server" Text="Regresar a Selección" NavigateUrl="Instrumentos.aspx" />
+
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div>
 
         <dx:ASPxGridView ClientInstanceName="ASPxGridViewDocumentosEvaluacion" ID="ASPxGridViewDocumentosEvaluacion" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSourceDocumentosEvaluacion" KeyFieldName="IdDocumentoEvaluacion" OnCustomCallback="grid_custom" OnLoad="ASPxGridViewDocumentosEvaluacion_Load">
             <Columns>

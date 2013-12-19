@@ -34,9 +34,10 @@ Partial Class Evaluacion_Levantamientos
             End If
 
 
-            Session("IdInstrumento") = Request.QueryString.Get(0)
-            Session("IdAplicacion") = Request.QueryString.Get(1)
-
+            Session("IdInstrumento") = uf.QueryStringDecode(Request.QueryString.Get(0))
+            Session("IdAplicacion") = uf.QueryStringDecode(Request.QueryString.Get(1))
+            Session("NomInstrumento") = uf.QueryStringDecode(Request.QueryString.Get(2))
+            ASPxLabelTitulo.Text = "Análisis Cualitativo de Instrumento " + Session("NomInstrumento")
             Me.SqlDataSource3.SelectCommand = " select PI.IdPreguntaPorInstrumento,PI.IdInstrumentoDeEvaluacion,PI.PreguntaDeInstrumento,PI.IdAmigable,PI.IdTipoDePregunta,SF.NombreSeccion,PI.Orden  from PreguntasPorInstrumento PI " & _
             "join SeccionesFSU SF on SF.IdSeccionFSU= PI.IdSeccionFSU " & _
             "where PI.[IdInstrumentoDeEvaluacion]=@IdInstrumento and PI.Activo=1 order by SF.NombreSeccion,PI.Orden "

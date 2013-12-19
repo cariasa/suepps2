@@ -8,7 +8,18 @@
     <uc1:MOCA_UE runat="server" ID="MOCA_UE01" />
     
     <div>
+        <div>
+            <table>
+                <tr>
+                    <td><dx:ASPxLabel ID="ASPxLabelTitulo" runat="server" Font-Size="Large" /></td>
+                    <td>
+                        <dx:ASPxLabel ID="espacio" runat="server" Text=" " Width="50"></dx:ASPxLabel>
+                        <dx:ASPxHyperLink ID="ASPxHyperLinkRegresar" runat="server" Text="Regresar a Levantamientos" NavigateUrl="AplicacionInstrumento.aspx" />
 
+                    </td>
+                </tr>
+            </table>
+        </div>
                 <dx:ASPxGridView ID="ASPxGridView3" runat="server" KeyFieldName="IdPreguntaPorInstrumento"   Width="100%" DataSourceID="SqlDataSource3" >
 
                                 <Columns>

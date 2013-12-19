@@ -17,8 +17,17 @@
     <div>
 
         <div>
+            <table>
+                <tr>
+                    <td><dx:ASPxLabel runat="server" Text=" " ID="ASPxLabelTitulo" Font-Size="Large" /></td>
+                    <td>
+                        <dx:ASPxLabel ID="espacio" runat="server" Text=" " Width="50"></dx:ASPxLabel>
+                        <dx:ASPxHyperLink ID="ASPxHyperLinkRegresar" runat="server" Text="Regresar a Selección" NavigateUrl="Instrumentos.aspx" />
 
-        <dx:ASPxLabel runat="server" Text=" " ID="Programa" />
+                    </td>
+                </tr>
+            </table>
+        
 
         </div>
         
