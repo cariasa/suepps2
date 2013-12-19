@@ -1,4 +1,4 @@
-﻿<%@ Page Title="About Us" Language="VB" MasterPageFile="~/Site.Master" AutoEventWireup="false"
+﻿<%@ Page Title="Acerca de SUEPPS" Language="VB" MasterPageFile="~/Site.Master" AutoEventWireup="false"
     CodeFile="About.aspx.vb" Inherits="About" %>
 
 <asp:Content ID="HeaderContent" runat="server" ContentPlaceHolderID="HeadContent">
