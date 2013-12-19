@@ -1,4 +1,4 @@
-﻿<%@ Page Language="VB" AutoEventWireup="false" CodeFile="AnalisisIndicadores.aspx.vb" Inherits="Evaluacion_Default" MasterPageFile="~/Site.master" %>
+﻿<%@ Page Title="Análisis de Indicadores (Pivot)" Language="VB" AutoEventWireup="false" CodeFile="AnalisisIndicadores.aspx.vb" Inherits="Evaluacion_Default" MasterPageFile="~/Site.master" %>
 
 <%@ Register Assembly="DevExpress.Web.v13.1, Version=13.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web.ASPxGridView" TagPrefix="dx" %>
 

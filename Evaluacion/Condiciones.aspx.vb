@@ -44,8 +44,7 @@ Partial Class Evaluacion_Condiciones
 
         Session("IdVariable") = CInt(Request.QueryString("Variable"))
 
-        ASPxLabelVariable.Text = "Definir Condición de Acumulación de Variable " + Request.QueryString("Nombre")
-
+        ASPxLabelVariable.Text = "Definición de Condiciones para Variable " + Request.QueryString("Nombre")
     End Sub
 
 End Class

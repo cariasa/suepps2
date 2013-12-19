@@ -1,4 +1,4 @@
-﻿<%@ Page Language="VB" AutoEventWireup="false" CodeFile="Parametros.aspx.vb" Inherits="Evaluacion_Parametros" MasterPageFile="~/Site.master" %>
+﻿<%@ Page Title="Parametrización Evaluación" Language="VB" AutoEventWireup="false" CodeFile="Parametros.aspx.vb" Inherits="Evaluacion_Parametros" MasterPageFile="~/Site.master" %>
 
 
 <%@ Register Src="~/MOCA_UE.ascx" TagPrefix="uc1" TagName="MOCA_UE" %>
