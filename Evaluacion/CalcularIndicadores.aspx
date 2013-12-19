@@ -1,4 +1,4 @@
-﻿<%@ Page Language="VB" AutoEventWireup="false" CodeFile="CalcularIndicadores.aspx.vb" Inherits="Evaluacion_Levantamientos" MasterPageFile="~/Site.master" %>
+﻿<%@ Page Title="Calcular Indicadores" Language="VB" AutoEventWireup="false" CodeFile="CalcularIndicadores.aspx.vb" Inherits="Evaluacion_Levantamientos" MasterPageFile="~/Site.master" %>
 
 <%@ Register Src="~/MOCA_UE.ascx" TagPrefix="uc1" TagName="MOCA_UE" %>
 
@@ -8,7 +8,13 @@
     <uc1:MOCA_UE runat="server" ID="MOCA_UE01" />
     
     <div>
-
+        <div>
+            <table>
+                <tr>
+                    <td><dx:ASPxLabel ID="ASPxLabelTitulo" runat="server" Font-Size="Large" Text="Selección de Levantamiento para Calcular Indicadores" /></td>
+                </tr>
+            </table>
+        </div>
         <dx:ASPxGridView ID="ASPxGridView1" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource1" KeyFieldName="IdPolitica" SettingsDetail-ShowDetailRow="true">
             <Columns>
                 <dx:GridViewDataTextColumn FieldName="IdPolitica" ReadOnly="True" VisibleIndex="0" Visible="false">

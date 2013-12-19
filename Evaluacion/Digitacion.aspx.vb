@@ -39,8 +39,9 @@ Partial Class Cuantitativo_DigitarInstrumento
 
 
     Protected Sub LinkButton1_Click(sender As Object, e As EventArgs)
-
-        Response.Redirect("Encuesta.aspx?CodFSU=" + 58.ToString() + "&CodDigitador=" + 10.ToString() + "&IdAplicacion=" + Me.ASPxTextBox1.Text.ToString)
+        Dim CodigoFSU_Temporal As String = "58"
+        Dim Digitador As String = Membership.GetUser.UserName.ToString
+        Response.Redirect("Encuesta.aspx?CodFSU=" + uf.QueryStringEncode(CodigoFSU_Temporal) + "&CodDigitador=" + uf.QueryStringEncode(Digitador) + "&IdAplicacion=" + uf.QueryStringEncode(Me.ASPxTextBox1.Text.ToString))
 
 
     End Sub

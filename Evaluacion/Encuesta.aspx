@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Monitoreo Cualitativo" Language="VB" AutoEventWireup="false" CodeFile="Encuesta.aspx.vb" Inherits="RevisionSocial_MonitoreoCualitativo" MasterPageFile="~/Site.master" %>
+﻿<%@ Page Title="Análisis Cualitativo" Language="VB" AutoEventWireup="false" CodeFile="Encuesta.aspx.vb" Inherits="RevisionSocial_MonitoreoCualitativo" MasterPageFile="~/Site.master" %>
 
 <%@ Register Assembly="DevExpress.Web.v13.1, Version=13.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web.ASPxPanel" TagPrefix="dx" %>
 
@@ -15,7 +15,9 @@
 </asp:Content>
 <asp:Content ID="cBody" ContentPlaceHolderID="MainContent" runat="Server">
     <uc1:MOCA_UE runat="server" ID="MOCA_UE01" />
-
+    <div>
+        <dx:ASPxLabel ID="ASPxLabelTitulo" runat="server" Font-Size="Large" Text="Digitación de Instrumento de Evaluación" />
+    </div>
     <dx:ASPxPanel ID="Panel" runat="server" Width="100%" Height="600%" Border-BorderColor="Gold" Visible="true" ScrollBars="Vertical">
         <PanelCollection>
             <dx:PanelContent>
