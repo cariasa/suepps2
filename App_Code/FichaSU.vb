@@ -9,6 +9,7 @@
     Private IdVivienda As Integer
     Private IdHogar As Integer
     Private IdMiembro As Integer
+    Private IdEncabezadoRespuesta As Integer
 
     Public Sub New(ByVal IdFicha As Integer, ByVal IdVivienda As Integer, ByVal TipoFicha As Char,
                          Optional ByVal IdHogar As Integer = 0, Optional ByVal IdMiembro As Integer = 0)
@@ -20,7 +21,17 @@
         Me.ValoresRespuestasUnicas = New Dictionary(Of String, Integer)
         Me.ValoresRespuestasMultiples = New Dictionary(Of String, ArrayList)
     End Sub
+    Public Sub New(ByVal IdEncabezadoRespuesta As Integer)
+        Me.IdEncabezadoRespuesta = IdEncabezadoRespuesta
+        Me.IdFicha = 0
+        Me.IdVivienda = 0
+        Me.IdMiembro = 0
+        Me.IdHogar = 0
+        Me.TipoFicha = "E"c
+        Me.ValoresRespuestasUnicas = New Dictionary(Of String, Integer)
+        Me.ValoresRespuestasMultiples = New Dictionary(Of String, ArrayList)
 
+    End Sub
     Public Sub SetValorRespuestaUnica(ByVal Pregunta As String, ByRef Valor As Object)
         If Not TypeOf Valor Is DBNull Then
             ValoresRespuestasUnicas(Pregunta) = Valor
@@ -37,8 +48,14 @@
     Public Function GetValorRespuestaUnica(ByVal Pregunta As String) As Integer
         Return ValoresRespuestasUnicas(Pregunta)
     End Function
+    Public Function CheckRespuestaUnica(ByVal Pregunta As String) As Boolean
+        Return ValoresRespuestasUnicas.ContainsKey(Pregunta)
+    End Function
     Public Function GetValoresRespuestaMultiple(ByVal Pregunta As String) As ArrayList
         Return ValoresRespuestasMultiples(Pregunta)
+    End Function
+    Public Function CheckRespuestaMultiple(ByVal Pregunta As String) As Boolean
+        Return ValoresRespuestasMultiples.ContainsKey(Pregunta)
     End Function
     Public Function GetUbicacionGeografica() As VariablesDesagregadas
         Dim Ubicacion As New VariablesDesagregadas

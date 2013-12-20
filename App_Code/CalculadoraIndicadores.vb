@@ -13,6 +13,20 @@ Public Class CalculadoraIndicadores
                                & "JOIN Variables V1 ON FI.IdVariableNumerador = V1.IdVariable " _
                                & "JOIN Variables V2 ON FI.IdVariableDenominador = V2.IdVariable " _
                                & "WHERE IEP.IdPrograma = @IdPrograma"
+    Private QueryRecuperaFichaIE As String = "select		" _
+                                & "	PPI.IdAmigable,	" _
+                                & "	PPI.IdTipoDePregunta,	" _
+                                & "	OPI.Valor	" _
+                                & " from	" _
+                                & "	EncabezadoRespuesta ER	" _
+                                & "	join RespuestasInstrumento RI on ER.IdEncabezadoRespuesta = RI.IdEncabezadoRespuesta	" _
+                                & "	join PreguntasPorInstrumento PPI on RI.IdPreguntaPorInstrumento = PPI.IdPreguntaPorInstrumento	" _
+                                & "	join OpcionesRespuestaInstrumento ORI on RI.IdRespuestaInstrumento = ORI.IdRespuestaInstrumento	" _
+                                & "	join OpcionesPreguntaPorInstrumento OPI on ORI.IdOpcionPreguntaPorInstrumento = OPI.IdOpcionPreguntaPorInstrumento	" _
+                                & "where	" _
+                                & "	ER.IdEncabezadoRespuesta = @IdEncabezadoRespuesta" _
+                                & " order by PPI.IdAmigable"
+
     Private InsertValoresDepartameto As String = "INSERT INTO ValoresDepartamento " _
                                & "(IdAplicacionInstrumento, IdIndicadorEvaluacionPorPrograma, IdDepartamento, Valor, CreadoPor) " _
                                & "VALUES (@IdLevantamiento,@IdIndicadorEvaluacionPorPrograma,@IdDepartamento,@Valor,@CreadoPor)"
@@ -53,6 +67,8 @@ Public Class CalculadoraIndicadores
         Dim VariableMuniAcum As New Dictionary(Of VariableDepartamentoMunicipio, Double)(New VariableDepartamentoMunicipioComparer)
         Dim VariableSexoAcum As New Dictionary(Of VariableSexo, Double)(New VariableSexoComparer)
         For Each f As ParFSU_IE In ListFichasID
+            'Recuperar parte Instrumento de Evaluacion
+            Dim FichaIE As FichaSU = RetrieveSingleFichaIE(f.CodigoIE)
             'Recuperar la parte vivienda de la ficha UNA INSTANCIA
             Dim FichaVivienda As FichaSU = RetrieveSingleFichaForVivienda(f.CodigoFSU)
             'Recuperar los hogares de la ficha       UNA LISTA
@@ -791,4 +807,22 @@ Public Class CalculadoraIndicadores
         End If
         Return Condition
     End Function
+
+    Private Function RetrieveSingleFichaIE(CodigoIE As Integer) As FichaSU
+        Dim Ficha As New FichaSU(CodigoIE)
+        Dim SqlConn As SqlConnection = GetConnection()
+        Dim Command As New SqlCommand(QueryRecuperaFichaIE, SqlConn)
+        Command.Parameters.AddWithValue("@IdEncabezadoRespuesta", CodigoIE)
+        Dim Reader As SqlDataReader = Command.ExecuteReader
+        While Reader.Read
+            Dim TipoPregunta As Integer = Reader("IdTipoPregunta")
+            If TipoPregunta = 4 Or TipoPregunta = 6 Or TipoPregunta = 7 Then
+                Ficha.SetValorRespuestaUnica(Reader("IdAmigable"), Reader("Valor"))
+            Else
+                Ficha.AddValorRespuestaMultiple(Reader("IdAmigable"), Reader("Valor"))
+            End If
+        End While
+        Return Ficha
+    End Function
+
 End Class

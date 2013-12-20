@@ -115,49 +115,72 @@
                 'Se verifica SourceQName para sacar el campo que viene de FSU
                 'Luego se ve si el valor del campo que viene de FSU tiene el valor guardado en QValues de ser así
                 'retorna true, de lo contrario false
-                Dim Respuesta As Integer
-                Respuesta = FSU.GetValorRespuestaUnica(SourceQName)
-                'QOperation = {=, <, <=, >, >=, C}
-                If QOperation = "=" Then
-                    If Convert.ToUInt64(QValues) = Respuesta Then
-                        Return True
+                If FSU.CheckRespuestaUnica(SourceQName) Then
+                    Dim Respuesta As Integer
+                    Respuesta = FSU.GetValorRespuestaUnica(SourceQName)
+
+                    'QOperation = {=, <, <=, >, >=, C}
+                    If QOperation = "=" Then
+                        If Convert.ToUInt64(QValues) = Respuesta Then
+                            Return True
+                        Else
+                            Return False
+                        End If
+                    ElseIf QOperation = "<" Then
+                        If Respuesta < Convert.ToUInt64(QValues) Then
+                            Return True
+                        Else
+                            Return False
+                        End If
+                    ElseIf QOperation = "<=" Then
+                        If Respuesta <= Convert.ToUInt64(QValues) Then
+                            Return True
+                        Else
+                            Return False
+                        End If
+                    ElseIf QOperation = ">" Then
+                        If Respuesta > Convert.ToUInt64(QValues) Then
+                            Return True
+                        Else
+                            Return False
+                        End If
+                    ElseIf QOperation = ">=" Then
+                        If Respuesta >= Convert.ToUInt64(QValues) Then
+                            Return True
+                        Else
+                            Return False
+                        End If
                     Else
+                        Dim values As String()
+                        values = QValues.Split(Separator)
+                        For Each v In values
+                            If Convert.ToInt64(v) = Respuesta Then
+                                Return True
+                            End If
+                        Next
                         Return False
                     End If
-                ElseIf QOperation = "<" Then
-                    If Respuesta < Convert.ToUInt64(QValues) Then
-                        Return True
+                ElseIf FSU.CheckRespuestaMultiple(SourceQName) Then
+                    'Si es una respuesta múltiple, en la lista separada por comas deben de venir los valores para retornar true
+                    Dim Respuestas As ArrayList = FSU.GetValoresRespuestaMultiple(SourceQName)
+                    If QOperation = "C" Then
+                        Dim values As String()
+                        values = QValues.Split(Separator)
+                        For Each Respuesta As Integer In Respuestas
+                            For Each v In values
+                                If Convert.ToInt64(v) = Respuesta Then
+                                    Return True
+                                End If
+                            Next
+                        Next
+                        Return False 'Ninguno de los valores esperados está en la lista de respuestas
                     Else
-                        Return False
-                    End If
-                ElseIf QOperation = "<=" Then
-                    If Respuesta <= Convert.ToUInt64(QValues) Then
-                        Return True
-                    Else
-                        Return False
-                    End If
-                ElseIf QOperation = ">" Then
-                    If Respuesta > Convert.ToUInt64(QValues) Then
-                        Return True
-                    Else
-                        Return False
-                    End If
-                ElseIf QOperation = ">=" Then
-                    If Respuesta >= Convert.ToUInt64(QValues) Then
-                        Return True
-                    Else
-                        Return False
+                        Return False 'No usó el operador adecuado para preguntas de selección múltiple
                     End If
                 Else
-                    Dim values As String()
-                    values = QValues.Split(Separator)
-                    For Each v In values
-                        If Convert.ToInt64(v) = Respuesta Then
-                            Return True
-                        End If
-                    Next
-                    Return False
+                    Return False 'No se encontró la pregunta en las preguntas definidas
                 End If
+
             Else
                 'Parecido al anterior pero se verifica el Instrumento de Evaluacion IE
             End If
