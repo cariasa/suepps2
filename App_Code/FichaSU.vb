@@ -32,6 +32,28 @@
         Me.ValoresRespuestasMultiples = New Dictionary(Of String, ArrayList)
 
     End Sub
+    Public Sub MergeIEWithFSU(ByVal OtherFicha As FichaSU)
+        Me.IdFicha = OtherFicha.IdFicha
+        Me.IdVivienda = OtherFicha.IdVivienda
+        Me.IdMiembro = OtherFicha.IdMiembro
+        Me.IdHogar = OtherFicha.IdHogar
+        Me.TipoFicha = OtherFicha.TipoFicha
+        For Each RespuestaUnica As KeyValuePair(Of String, Integer) In OtherFicha.ValoresRespuestasUnicas
+            ValoresRespuestasUnicas.Add(RespuestaUnica.Key, RespuestaUnica.Value)
+        Next
+        For Each RespuestaMultiple As KeyValuePair(Of String, ArrayList) In OtherFicha.ValoresRespuestasMultiples
+            ValoresRespuestasMultiples.Add(RespuestaMultiple.Key, RespuestaMultiple.Value)
+        Next
+    End Sub
+    Public Sub MergeFSUWithIE(ByVal OtherFicha As FichaSU)
+        Me.IdEncabezadoRespuesta = OtherFicha.IdEncabezadoRespuesta
+        For Each RespuestaUnica As KeyValuePair(Of String, Integer) In OtherFicha.ValoresRespuestasUnicas
+            ValoresRespuestasUnicas.Add(RespuestaUnica.Key, RespuestaUnica.Value)
+        Next
+        For Each RespuestaMultiple As KeyValuePair(Of String, ArrayList) In OtherFicha.ValoresRespuestasMultiples
+            ValoresRespuestasMultiples.Add(RespuestaMultiple.Key, RespuestaMultiple.Value)
+        Next
+    End Sub
     Public Sub SetValorRespuestaUnica(ByVal Pregunta As String, ByRef Valor As Object)
         If Not TypeOf Valor Is DBNull Then
             ValoresRespuestasUnicas(Pregunta) = Valor

@@ -92,7 +92,8 @@ Public Class CalculadoraIndicadores
                     ListaFichas = FichasMiembros
                     VariablePoblacion = True
                 End If
-
+                ' A cada una de las fichas de la lista agregar la parte de IE
+                ' Hay que verificar si hay lista de FSU, pues puede venir la IE sola
                 For Each Ficha As FichaSU In ListaFichas
                     Dim VarDepto As VariableDepartamento = Ficha.GetDepartamento
                     VarDepto.Variable = VarTreePair.Key

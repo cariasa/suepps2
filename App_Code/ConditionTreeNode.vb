@@ -111,7 +111,7 @@
                 Return opLeft Or opRight
             End If
         Else
-            If Source = "FSU" Then
+            If Source = "FSU" Or Source = "IE" Then
                 'Se verifica SourceQName para sacar el campo que viene de FSU
                 'Luego se ve si el valor del campo que viene de FSU tiene el valor guardado en QValues de ser así
                 'retorna true, de lo contrario false
