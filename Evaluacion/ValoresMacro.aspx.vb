@@ -38,7 +38,20 @@ Partial Class Evaluacion_ValoresMacro
 
         Session("Variable") = CInt(Request.QueryString("Variable"))
         ASPxLabelVariable.Text = "Valores Oficiales de Variable " + Request.QueryString("Nombre")
-        SqlDataSourceVariablesMacro.InsertCommand = "INSERT INTO [VariablesMacro] ([IdVariable], [Valor], [Fuente], [Fecha], [CreadoPor], [FechaCreacion]) VALUES (" + Request.QueryString("Variable") + ", @Valor, @Fuente, @Fecha, 'SUEPPS', getDate())"
+        SqlDataSourceVariablesMacro.InsertCommand = "INSERT INTO [VariablesMacro] ([IdVariable], [Valor], [Fuente], [Fecha], [CreadoPor], [FechaCreacion]) VALUES ('" + Request.QueryString("Variable") + "', @Valor, @Fuente, @Fecha, '" + Membership.GetUser.UserName.ToString + "', getDate())"
+        SqlDataSourceVariablesMacro.UpdateCommand = "UPDATE [VariablesMacro] SET [Valor]=@Valor, [Fuente]=@Fuente, [Fecha]=@Fecha, [ActualizadoPor]='" + Membership.GetUser.UserName.ToString + "', FechaActualizacion=getDate() WHERE [IdVariableMacro]=@IdVariableMacro"
+        SqlDataSourceVariablesMacro.DeleteCommand = "UPDATE [VariablesMacro] SET [ActualizadoPor]='" + Membership.GetUser.UserName.ToString + "', [FechaActualizacion]=getDate(),[Activo]=0 WHERE [IdVariableMacro]=@IdVariableMacro"
+
+
+        SqlDataSourceValoresDetalleMacro.InsertCommand = "INSERT INTO [ValoresDetalleMacro] ([IdDetalleVariableMacro], [NombreValor], [Valor], [CreadoPor], [FechaCreacion]) VALUES (@IdDetalleVariableMacro, @NombreValor, @Valor, '" + Membership.GetUser.UserName.ToString + "', getDate())"
+        SqlDataSourceValoresDetalleMacro.UpdateCommand = "UPDATE [ValoresDetalleMacro] SET [NombreValor]=@NombreValor, [Valor]=@Valor, [ActualizadoPor]='" + Membership.GetUser.UserName.ToString + "', [FechaActualizacion]=getDate() WHERE IdValorVariableMacro=@IdValorVariableMacro"
+        SqlDataSourceValoresDetalleMacro.DeleteCommand = "UPDATE [ValoresDetalleMacro] SET [ActualizadoPor]='" + Membership.GetUser.UserName.ToString + "', [FechaActualizacion]=getDate(), [Activo]=0 WHERE IdValorVariableMacro=@IdValorVariableMacro"
+
+        SqlDataSourceDetallesVariablesMacro.InsertCommand = "INSERT INTO [DetallesVariableMacro] ([IdVariableMacro], [NombreDetalle], [CreadoPor], [FechaCreacion]) VALUES (@IdVariableMacro, @NombreDetalle, '" + Membership.GetUser.UserName.ToString + "', getDate())"
+        SqlDataSourceDetallesVariablesMacro.UpdateCommand = "UPDATE [DetallesVariableMacro] SET [NombreDetalle]=@NombreDetalle, ActualizadoPor='" + Membership.GetUser.UserName.ToString + "', FechaActualizacion=getDate() WHERE IdDetalleVariableMacro=@IdDetalleVariableMacro"
+        SqlDataSourceDetallesVariablesMacro.DeleteCommand = "UPDATE [DetallesVariableMacro] SET [ActualizadoPor]='" + Membership.GetUser.UserName.ToString + "', [FechaActualizacion]=getDate(), [Activo]=0 WHERE IdDetalleVariableMacro=@IdDetalleVariableMacro"
+
+
     End Sub
 
     Protected Sub SqlDataSourceVariablesMacro_Deleted(sender As Object, e As SqlDataSourceStatusEventArgs)

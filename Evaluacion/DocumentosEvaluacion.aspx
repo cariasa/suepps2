@@ -42,14 +42,14 @@
         </script>
     <div>
 
-        <dx:ASPxGridView ID="ASPxGridViewDocumentosEvaluacion" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSourceDocumentosEvaluacion" KeyFieldName="IdDocumentoEvaluacion" OnCustomCallback="grid_custom" OnLoad="ASPxGridViewDocumentosEvaluacion_Load">
+        <dx:ASPxGridView ID="ASPxGridViewDocumentosEvaluacion" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSourceDocumentosEvaluacion" KeyFieldName="IdDocumentoEvaluacion" OnCustomCallback="grid_custom" OnLoad="ASPxGridViewDocumentosEvaluacion_Load" Settings-ShowFilterRow="true">
             <Columns>
                 <dx:GridViewDataTextColumn FieldName="IdDocumentoEvaluacion" ReadOnly="True" VisibleIndex="0">
                     <EditFormSettings Visible="False"></EditFormSettings>
                 </dx:GridViewDataTextColumn>
                 <dx:GridViewDataTextColumn FieldName="IdPrograma" VisibleIndex="1" Visible="false"></dx:GridViewDataTextColumn>
-                <dx:GridViewDataTextColumn FieldName="DescripcionDocumento" VisibleIndex="2"></dx:GridViewDataTextColumn>
-                <dx:GridViewDataTextColumn FieldName="PalabrasClave" VisibleIndex="3"></dx:GridViewDataTextColumn>
+                <dx:GridViewDataTextColumn FieldName="DescripcionDocumento" VisibleIndex="2" Settings-AutoFilterCondition="Contains"></dx:GridViewDataTextColumn>
+                <dx:GridViewDataTextColumn FieldName="PalabrasClave" VisibleIndex="3" Settings-AutoFilterCondition="Contains"></dx:GridViewDataTextColumn>
                 <dx:GridViewDataDateColumn FieldName="FechaDocumento" VisibleIndex="4"></dx:GridViewDataDateColumn>
                 <dx:GridViewDataTextColumn FieldName="CreadoPor" VisibleIndex="5" Visible="false"></dx:GridViewDataTextColumn>
                 <dx:GridViewDataDateColumn FieldName="FechaCreacion" VisibleIndex="6" Visible="false"></dx:GridViewDataDateColumn>
@@ -140,7 +140,7 @@
     </div>
     <div>
 
-        <dx:ASPxGridView ID="ASPxGridViewDetalleDocumentosEvaluacion" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSourceDetalleDocumentosEvaluacion" IsDetailGrid="true" OnBeforePerformDataSelect="ASPxGridViewDetalleDocumentosEvaluacion_BeforePerformDataSelect">
+        <dx:ASPxGridView ID="ASPxGridViewDetalleDocumentosEvaluacion" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSourceDetalleDocumentosEvaluacion" IsDetailGrid="true" OnBeforePerformDataSelect="ASPxGridViewDetalleDocumentosEvaluacion_BeforePerformDataSelect" Settings-ShowFilterRow="true">
             <Columns>
                 <dx:GridViewDataTextColumn FieldName="IdDetalleDocumentoEvaluacion" ReadOnly="True" VisibleIndex="0">
                     <EditFormSettings Visible="False"></EditFormSettings>
@@ -193,7 +193,7 @@
         
         <asp:SqlDataSource runat="server" ID="SqlDataSourceDetalleDocumentosEvaluacion" ConnectionString='<%$ ConnectionStrings:SUEPPSConnectionString %>' 
             SelectCommand="SELECT * FROM [DetalleDocumentosEvaluacion] WHERE IdDocumentoEvaluacion = @IdDocumentoEvaluacion AND [Activo]=1"
-            DeleteCommand="UPDATE [DetalleDocumentosEvaluacion] SET [Activo] = 0 WHERE IdDocumentoEvaluacion = @IdDocumentoEvaluacion ">
+            >
             <SelectParameters>
                 <asp:SessionParameter Name="IdDocumentoEvaluacion" />
             </SelectParameters>
@@ -203,7 +203,7 @@
         </asp:SqlDataSource>
         <asp:SqlDataSource runat="server" ID="SqlDataSourceDocumentosEvaluacion" ConnectionString='<%$ ConnectionStrings:SUEPPSConnectionString %>' 
             SelectCommand="SELECT * FROM [DocumentosEvaluacion] WHERE IdPrograma = @IdPrograma and Activo = 1"
-            InsertCommand="INSERT INTO [DocumentosEvaluacion] (IdPrograma, DescripcionDocumento, PalabrasClave, FechaDocumento, CreadoPor, FechaCreacion) VALUES (@IdPrograma, @DescripcionDocumento, @PalabrasClave, @FechaDocumento, 'suepps', getDate())">
+            >
             <SelectParameters>
                 <asp:SessionParameter Name="IdPrograma" />
             </SelectParameters>

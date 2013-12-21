@@ -192,14 +192,14 @@ Partial Class Evaluacion_Parametros
     End Sub
 
     Protected Sub linkEliminarFormula_Click(sender As Object, e As EventArgs)
-        SqlDataSourceFormulas.DeleteCommand = "UPDATE [FormulaIndicador] SET [Activo]=0 WHERE idFormulaIndicador=" + ASPxGridViewFormulas.GetRowValues(ASPxGridViewFormulas.FocusedRowIndex, "IdFormulaIndicador").ToString
+        SqlDataSourceFormulas.DeleteCommand = "UPDATE [FormulaIndicador] SET [ActualizadoPor]='" + Membership.GetUser.UserName.ToString + "'[FechaActualizacion] = getDate(),[Activo]=0 WHERE idFormulaIndicador=" + ASPxGridViewFormulas.GetRowValues(ASPxGridViewFormulas.FocusedRowIndex, "IdFormulaIndicador").ToString
         SqlDataSourceFormulas.Delete()
         ASPxGridViewFormulas.DataBind()
     End Sub
 
     Protected Sub ASPxButtonGuardarEditar_Click(sender As Object, e As EventArgs)
         Dim usuario As String
-        usuario = "'SUEPPS'"
+        usuario = Membership.GetUser.UserName.ToString
         Dim unum As Integer
         Dim uden As Integer
 
@@ -215,7 +215,7 @@ Partial Class Evaluacion_Parametros
             uden = 0
         End If
 
-        SqlDataSourceFormulas.UpdateCommand = "UPDATE [FormulaIndicador] SET IdIndicador=" + Session("idIndicador").ToString + ", IdVariableNumerador=" + Session("idVariableNumerador").ToString + ", IdVariableDenominador=" + Session("idvariableDenominador").ToString + ", UsaVariableMacroNumerador=" + unum.ToString + ", UsaVariableMacroDenominador=" + uden.ToString + ", Factor=" + ASPxTextBoxFactor.Text + ", DescripcionFormula='" + ASPxTextBoxDes.Text + "', CreadoPor=" + usuario + ", FechaCreacion=getDate() WHERE idFormulaIndicador=" + ASPxGridViewFormulas.GetRowValues(ASPxGridViewFormulas.FocusedRowIndex, "IdFormulaIndicador").ToString
+        SqlDataSourceFormulas.UpdateCommand = "UPDATE [FormulaIndicador] SET IdIndicador=" + Session("idIndicador").ToString + ", IdVariableNumerador=" + Session("idVariableNumerador").ToString + ", IdVariableDenominador=" + Session("idvariableDenominador").ToString + ", UsaVariableMacroNumerador=" + unum.ToString + ", UsaVariableMacroDenominador=" + uden.ToString + ", Factor=" + ASPxTextBoxFactor.Text + ", DescripcionFormula='" + ASPxTextBoxDes.Text + "', CreadoPor='" + usuario + "', FechaCreacion=getDate() WHERE idFormulaIndicador=" + ASPxGridViewFormulas.GetRowValues(ASPxGridViewFormulas.FocusedRowIndex, "IdFormulaIndicador").ToString
         SqlDataSourceFormulas.Update()
         ASPxGridViewFormulas.DataBind()
 
@@ -262,6 +262,10 @@ Partial Class Evaluacion_Parametros
                 Response.Redirect("~/NoAccess.aspx")
             End If
         End Using
+
+        SqlDataSourceSUEPPS.InsertCommand = "INSERT INTO [Variables] ([NombreVariable], [Descripcion], [Unidad], [CreadoPor], [FechaCreacion]) VALUES (@NombreVariable, @Descripcion, @Unidad,'" + Membership.GetUser.UserName.ToString + "', getDate())"
+        SqlDataSourceSUEPPS.UpdateCommand = "UPDATE [Variables] SET [NombreVariable]=@NombreVariable, [Descripcion]=@Descripcion, [Unidad]=@Unidad, [ActualizadoPor]='" + Membership.GetUser.UserName.ToString + "', [FechaActualizacion] =getDate() WHERE [IdVariable]=@IdVariable"
+        SqlDataSourceSUEPPS.DeleteCommand = "UPDATE [Activo] = 0, [ActualizadoPor]='" + Membership.GetUser.UserName.ToString + "', [FechaActualizacion] =getDate() WHERE [IdVariable]=IdVariable"
     End Sub
 
     Protected Sub SqlDataSourceSUEPPS_Inserted(sender As Object, e As SqlDataSourceStatusEventArgs)

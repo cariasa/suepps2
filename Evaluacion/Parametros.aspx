@@ -7,7 +7,7 @@
 </asp:Content>
 <asp:Content ID="cBody" ContentPlaceHolderID="MainContent" Runat="Server">
     <uc1:MOCA_UE runat="server" ID="MOCA_UE01" />
-
+    
     <div>
         <dx:ASPxPageControl ID="carTabPage" runat="server" ActiveTabIndex="0" EnableHierarchyRecreation="True" Height="250">
 
@@ -47,15 +47,13 @@
                     </dx:GridViewDataTextColumn>
                 </Columns>
                     <SettingsPager>
-                <AllButton Visible="True" Text="Todos">
-                </AllButton>
-            </SettingsPager>
+                        <AllButton Visible="True" Text="Todos">
+                        </AllButton>
+                    </SettingsPager>
             </dx:ASPxGridView>
             <asp:SqlDataSource runat="server" ID="SqlDataSourceSUEPPS" ConnectionString='<%$ ConnectionStrings:SUEPPSConnectionString %>' OnInserted="SqlDataSourceSUEPPS_Inserted" OnUpdated="SqlDataSourceSUEPPS_Updated" OnDeleted="SqlDataSourceSUEPPS_Deleted"
-                SelectCommand="SELECT [IdVariable], [NombreVariable], [Descripcion], [Unidad], [CreadoPor], [FechaCreacion], [ActualizadoPor], [FechaActualizacion], [Activo] FROM [Variables] ORDER BY  [FechaCreacion]"
-                InsertCommand="INSERT INTO [Variables] ([NombreVariable], [Descripcion], [Unidad], [CreadoPor], [FechaCreacion]) VALUES (@NombreVariable, @Descripcion, @Unidad, 'SUEPPS', getDate())"
-                UpdateCommand="UPDATE [Variables] SET [NombreVariable]=@NombreVariable, [Descripcion]=@Descripcion, [Unidad]=@Unidad, [ActualizadoPor]='SUEPPS', [FechaActualizacion] =getDate() WHERE [IdVariable]=@IdVariable"
-                DeleteCommand="UPDATE [Activo] = 0 WHERE [IdVariable]=IdVariable"
+                SelectCommand="SELECT [IdVariable], [NombreVariable], [Descripcion], [Unidad], [CreadoPor], [FechaCreacion], [ActualizadoPor], [FechaActualizacion], [Activo] FROM [Variables] WHERE [Activo] = 1 ORDER BY  [FechaCreacion]"
+                
                 >
             </asp:SqlDataSource>
                 </dx:ContentControl>
@@ -101,6 +99,11 @@
                                     <Settings AllowAutoFilter="False" />
                                 </dx:GridViewDataTextColumn>
                             </Columns>
+                            <SettingsPager>
+                        <AllButton Visible="True" Text="Todos">
+                        </AllButton>
+                    </SettingsPager>
+
                         </dx:ASPxGridView>
 
                         <asp:SqlDataSource runat="server" ID="SqlDataSourceIndicadores" ConnectionString='<%$ ConnectionStrings:SUEPPSConnectionString %>' SelectCommand="SELECT [IdIndicador], [IdSectorIndicador], [IdTipoDeIndicador], [DescripcionIndicador] FROM [Indicadores] WHERE IdTipoDeIndicador <> 1 AND IdTipoDeIndicador <> 2"></asp:SqlDataSource>
@@ -131,6 +134,11 @@
                                     <Settings AllowAutoFilter="False" />
                                 </dx:GridViewDataTextColumn>
                             </Columns>
+                            <SettingsPager>
+                        <AllButton Visible="True" Text="Todos">
+                        </AllButton>
+                    </SettingsPager>
+
                         </dx:ASPxGridView>
                         <asp:SqlDataSource runat="server" ID="SqlDataSourceVariables" ConnectionString='<%$ ConnectionStrings:SUEPPSConnectionString %>' SelectCommand="SELECT [IdVariable], [NombreVariable], [Descripcion] FROM [Variables]"></asp:SqlDataSource>
                     </td>

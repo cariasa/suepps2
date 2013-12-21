@@ -127,9 +127,7 @@
 
          <asp:SqlDataSource runat="server" ID="SqlDataSourceValoresDetalleMacro" ConnectionString='<%$ ConnectionStrings:SUEPPSConnectionString %>' 
              SelectCommand="SELECT * FROM [ValoresDetalleMacro] WHERE [IdDetalleVariableMacro]=@IdDetalleVariableMacro AND [Activo]=1"
-             InsertCommand="INSERT INTO [ValoresDetalleMacro] ([IdDetalleVariableMacro], [NombreValor], [Valor], [CreadoPor], [FechaCreacion]) VALUES (@IdDetalleVariableMacro, @NombreValor, @Valor, 'SUEPPS', getDate())" 
-             UpdateCommand="UPDATE [ValoresDetalleMacro] SET [NombreValor]=@NombreValor, [Valor]=@Valor, [ActualizadoPor]='SUEPPS', [FechaActualizacion]=getDate() WHERE IdValorVariableMacro=@IdValorVariableMacro"
-             DeleteCommand="UPDATE [ValoresDetalleMacro] SET [Activo]=0 WHERE IdValorVariableMacro=@IdValorVariableMacro">
+                          >
              <SelectParameters>
                <asp:SessionParameter SessionField="IdDetalleVariableMacro" Name="IdDetalleVariableMacro" Type="Int32"></asp:SessionParameter>
              </SelectParameters>
@@ -142,9 +140,7 @@
 
         <asp:SqlDataSource runat="server" ID="SqlDataSourceDetallesVariablesMacro" ConnectionString='<%$ ConnectionStrings:SUEPPSConnectionString %>' 
             SelectCommand="SELECT * FROM [DetallesVariableMacro] WHERE [IdVariableMacro]=@IdVariableMacro AND [Activo]=1"
-            InsertCommand="INSERT INTO [DetallesVariableMacro] ([IdVariableMacro], [NombreDetalle], [CreadoPor], [FechaCreacion]) VALUES (@IdVariableMacro, @NombreDetalle, 'SUEPPS', getDate())"
-            UpdateCommand="UPDATE [DetallesVariableMacro] SET [NombreDetalle]=@NombreDetalle, ActualizadoPor='SUEPPS', FechaActualizacion=getDate() WHERE IdDetalleVariableMacro=@IdDetalleVariableMacro"
-            DeleteCommand="UPDATE [DetallesVariableMacro] SET [Activo]=0 WHERE IdDetalleVariableMacro=@IdDetalleVariableMacro"
+            
             >
             <SelectParameters>
                <asp:SessionParameter SessionField="IdVariableMacro" Name="IdVariableMacro" Type="Int32"></asp:SessionParameter>
@@ -158,8 +154,7 @@
 
         <asp:SqlDataSource runat="server" ID="SqlDataSourceVariablesMacro" ConnectionString='<%$ ConnectionStrings:SUEPPSConnectionString %>'  OnUpdated="SqlDataSourceVariablesMacro_Updated" OnDeleted="SqlDataSourceVariablesMacro_Deleted" 
             SelectCommand="SELECT * FROM [VariablesMacro] WHERE [Activo]=1"
-            UpdateCommand="UPDATE [VariablesMacro] SET [Valor]=@Valor, [Fuente]=@Fuente, [Fecha]=@Fecha, [ActualizadoPor]='SUEPPS', FechaActualizacion=getDate() WHERE [IdVariableMacro]=@IdVariableMacro"
-            DeleteCommand="UPDATE [VariablesMacro] SET [Activo]=0 WHERE [IdVariableMacro]=@IdVariableMacro"
+            
         >
         </asp:SqlDataSource>
 

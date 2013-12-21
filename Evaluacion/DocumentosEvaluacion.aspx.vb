@@ -41,7 +41,9 @@ Partial Class Evaluacion_DocumentosEvaluacion
                 Response.Redirect("~/NoAccess.aspx")
             End If
 
-
+            SqlDataSourceDetalleDocumentosEvaluacion.DeleteCommand = "UPDATE [DetalleDocumentosEvaluacion] SET [ActualizadoPor]='" + Membership.GetUser.UserName.ToString + "', [FechaActualizacion]=getDate(), [Activo] = 0 WHERE IdDocumentoEvaluacion = @IdDocumentoEvaluacion "
+            SqlDataSourceDocumentosEvaluacion.UpdateCommand = "UPDATE [DocumentosEvaluacion] SET [DescripcionDocumento] = @DescripcionDocumento, [PalabrasClave] = @PalabrasClave, [FechaDocumento]=@FechaDocumento, [ActualizadoPor]='" + Membership.GetUser.UserName.ToString + "', [FechaActualizacion]=getDate() WHERE IdDocumentoEvaluacion = @IdDocumentoEvaluacion "
+            SqlDataSourceDocumentosEvaluacion.InsertCommand = "INSERT INTO [DocumentosEvaluacion] (IdPrograma, DescripcionDocumento, PalabrasClave, FechaDocumento, CreadoPor, FechaCreacion) VALUES (@IdPrograma, @DescripcionDocumento, @PalabrasClave, @FechaDocumento, '" + Membership.GetUser.UserName.ToString + "', getDate())"
         End Using
     End Sub
     Protected Sub uplImage_FileUploadComplete(ByVal sender As Object, ByVal e As FileUploadCompleteEventArgs)

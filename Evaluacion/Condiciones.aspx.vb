@@ -5,7 +5,9 @@ Partial Class Evaluacion_Condiciones
     Inherits System.Web.UI.Page
 
     Protected Sub Page_Init(sender As Object, e As EventArgs) Handles Me.Init
-        
+        SqlDataSourceCondiciones.InsertCommand = "INSERT INTO [Condiciones] (IdVariable, IdTipoCondicion, NombreCondicion, DescripcionCondicion, Raiz, Total, Operando1, Operador,  Operando2, CreadoPor, FechaCreacion) VALUES (@IdVariable, @IdTipoCondicion, @NombreCondicion, @DescripcionCondicion, @Raiz, @Total, @Operando1, @Operador,  @Operando2, '" + Request.QueryString("Variable") + "', getDate())"
+        SqlDataSourceCondiciones.UpdateCommand = "UPDATE [Condiciones] SET [IdTipoCondicion]=@IdTipoCondicion, NombreCondicion=@NombreCondicion, DescripcionCondicion=@DescripcionCondicion, Raiz=@Raiz, Total=@Total, Operando1=@Operando1, Operador=@Operador, Operando2=@Operando2, ActualizadoPor='" + Request.QueryString("Variable") + "', FechaActualizacion=getDate() WHERE IdCondicion=@IdCondicion"
+        SqlDataSourceCondiciones.DeleteCommand = "UPDATE [Condiciones] SET [ActualizadoPor]='" + Membership.GetUser.UserName.ToString + "', [FechaActualizacion]=getDate(), [Activo]=0 WHERE IdCondicion=@IdCondicion"
     End Sub
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
