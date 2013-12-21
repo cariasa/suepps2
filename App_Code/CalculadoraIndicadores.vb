@@ -54,6 +54,7 @@ Public Class CalculadoraIndicadores
         Else
             Throw New Exception("No Hay Levantamiento con ID= " + Convert.ToString(IdLevantamiento))
         End If
+        SqlConn.Close()
     End Sub
 
     Sub Run(ByVal CreadoPor As String)
@@ -64,8 +65,8 @@ Public Class CalculadoraIndicadores
             VariablesConditions = GetConditionsFromFormulas(Formulas)
             'Para pruebas se barrerán las fichas provistas, ignorando el levantamiento
             Dim ListFichasID As ArrayList
-            ' OJO ESTE DEBE RECIBIR IdLevantamiento
-            ListFichasID = GetFichasLevantamiento(50)
+            ' OJO ESTE DEBE RECIBIR IdLevantamiento ****************************************************************************************
+            ListFichasID = GetFichasLevantamiento(IdLevantamiento)
             'Dim ListFichas As New ArrayList
             'Agrega todas las fichas del levantamiento a ListFichas
             'Ya no vamos a traer todas las fichas, las vamos a recuperar de una en una
@@ -366,8 +367,8 @@ Public Class CalculadoraIndicadores
             VariablesConditions = GetConditionsFromFormulas(Formulas)
             'Para pruebas se barrerán las fichas provistas, ignorando el levantamiento
             Dim ListFichasID As ArrayList
-            ' OJO ESTE DEBE RECIBIR IdLevantamiento
-            ListFichasID = GetFichasLevantamiento(50)
+            ' OJO ESTE DEBE RECIBIR IdLevantamiento *****************************************************************************************
+            ListFichasID = GetFichasLevantamiento(IdLevantamiento)
             'Dim ListFichas As New ArrayList
             'Agrega todas las fichas del levantamiento a ListFichas
             'Ya no vamos a traer todas las fichas, las vamos a recuperar de una en una
@@ -842,27 +843,27 @@ Public Class CalculadoraIndicadores
         'En realidad este debería de tener como parámetro el levantamiento y a partir de ahí traer las fichas
         'de dicho levantamiento, que son el par(FichaFSU, FichaIE)
 
-        'Dim SqlConn As SqlConnection
-        'SqlConn = GetConnection()
-        'Dim Command As New SqlCommand("RecuperarFichasPorLevantamiento", SqlConn)
-        'Command.Parameters.AddWithValue("@IdLevantamiento", IdLevantamiento)
-        'Command.CommandType = CommandType.StoredProcedure
-        'Dim Reader As SqlDataReader = Command.ExecuteReader
-        'Dim List As New ArrayList
-        'While Reader.Read
-        '    Dim Ficha As New ParFSU_IE(Reader("CodigoFSU"), Reader("IdEncabezadoRespuesta"))
-        '    List.Add(Ficha)
-        'End While
-        'Reader.Close()
-        'SqlConn.Close()
-        'Return List
+        Dim SqlConn As SqlConnection
+        SqlConn = GetConnection()
+        Dim Command As New SqlCommand("RecuperarFichasPorLevantamiento", SqlConn)
+        Command.Parameters.AddWithValue("@IdLevantamiento", IdLevantamiento)
+        Command.CommandType = CommandType.StoredProcedure
+        Dim Reader As SqlDataReader = Command.ExecuteReader
+        Dim List As New ArrayList
+        While Reader.Read
+            Dim Ficha As New ParFSU_IE(Reader("CodigoFSU"), Reader("IdEncabezadoRespuesta"))
+            List.Add(Ficha)
+        End While
+        Reader.Close()
+        SqlConn.Close()
+        Return List
 
         'Temporalmente la funcion retornara todas las fichas de 1 a IdLevantamiento de la muestra FSU provista
-        Dim List As New ArrayList
-        For i = 1 To IdLevantamiento
-            List.Add(New ParFSU_IE(i, i))
-        Next
-        Return List
+        'Dim List As New ArrayList
+        'For i = 1 To IdLevantamiento
+        '    List.Add(New ParFSU_IE(i, i))
+        'Next
+        'Return List
     End Function
     Private Function GetCondiciones(ByVal IdVariable As Integer) As ArrayList
         Dim SqlConn As SqlConnection
