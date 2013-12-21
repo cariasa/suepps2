@@ -1,4 +1,6 @@
 ﻿Public Class ConditionTreeNode
+    Private EsTotal As Boolean
+    'Verifica si la condición es de una variable que cuenta el total, suma la muestra
     Private NodeLevel As Char
     'NodeLevel determina qué nivel de ficha es necesario recuperar para FSU: V vivienda, H Hogar, M Miembros
     Private NodeType As Char
@@ -29,6 +31,14 @@
         End Get
         Set(ByVal value As Char)
             NodeLevel = value
+        End Set
+    End Property
+    Public Property Total As Boolean
+        Get
+            Return EsTotal
+        End Get
+        Set(value As Boolean)
+            EsTotal = value
         End Set
     End Property
 
@@ -101,6 +111,9 @@
     End Sub
     'Hay que pasar como parametro la Ficha y el Instrumento de Evaluación a verificar
     Public Function Evaluate(ByRef FSU As FichaSU) As Boolean
+        If LogicalOperation = "T" And EsTotal Then
+            Return True
+        End If
         If NodeType = "C" Then
             Dim opLeft, opRight As Boolean
             opLeft = Left.Evaluate(FSU)
