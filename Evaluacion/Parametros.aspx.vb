@@ -100,7 +100,7 @@ Partial Class Evaluacion_Parametros
 
     Protected Sub ASPxButtonGuardar_Click(sender As Object, e As EventArgs)
         Dim usuario As String
-        usuario = "'SUEPPS'"
+        usuario = "'" + Membership.GetUser.UserName.ToString + "'"
         Dim unum As Integer
         Dim uden As Integer
 
@@ -199,7 +199,7 @@ Partial Class Evaluacion_Parametros
 
     Protected Sub ASPxButtonGuardarEditar_Click(sender As Object, e As EventArgs)
         Dim usuario As String
-        usuario = "'SUEPPS'"
+        usuario = "'" + Membership.GetUser.UserName.ToString + "'"
         Dim unum As Integer
         Dim uden As Integer
 
@@ -262,6 +262,11 @@ Partial Class Evaluacion_Parametros
                 Response.Redirect("~/NoAccess.aspx")
             End If
         End Using
+
+        SqlDataSourceSUEPPS.InsertCommand = "INSERT INTO [Variables] ([NombreVariable], [Descripcion], [Unidad], [CreadoPor], [FechaCreacion]) VALUES (@NombreVariable, @Descripcion, @Unidad, '" + Membership.GetUser.UserName.ToString + "', getDate())"
+        SqlDataSourceSUEPPS.UpdateCommand = "UPDATE [Variables] SET [NombreVariable]=@NombreVariable, [Descripcion]=@Descripcion, [Unidad]=@Unidad, [ActualizadoPor]='" + Membership.GetUser.UserName.ToString + "', [FechaActualizacion] =getDate() WHERE [IdVariable]=@IdVariable"
+        SqlDataSourceSUEPPS.DeleteCommand = "UPDATE [Activo] = 0, [ActualizadoPor]='" + Membership.GetUser.UserName.ToString + "', [FechaActualizacion] =getDate() WHERE [IdVariable]=IdVariable"
+
     End Sub
 
     Protected Sub SqlDataSourceSUEPPS_Inserted(sender As Object, e As SqlDataSourceStatusEventArgs)
@@ -274,5 +279,26 @@ Partial Class Evaluacion_Parametros
 
     Protected Sub SqlDataSourceSUEPPS_Deleted(sender As Object, e As SqlDataSourceStatusEventArgs)
         ASPxGridViewVariables.DataBind()
+    End Sub
+
+    Protected Sub linkValoresPrograma_Click(sender As Object, e As EventArgs)
+        Dim index As Integer = ASPxGridViewDefinicionVariables.FocusedRowIndex
+
+        Dim variable As String = ASPxGridViewDefinicionVariables.GetRowValues(index, "IdVariable").ToString
+
+        Dim SqlConn As New SqlConnection
+        SqlConn.ConnectionString = SqlDataSourceFormulas.ConnectionString
+        Dim Command As New SqlCommand("SELECT NombreVariable FROM Variables WHERE IdVariable = " + variable, SqlConn)
+        SqlConn.Open()
+
+        Dim reader As SqlDataReader = Command.ExecuteReader()
+
+        If (reader.Read) Then
+            Response.Redirect("ValoresPorPrograma.aspx?Variable=" + uf.QueryStringEncode(variable) + "&Nombre=" + uf.QueryStringEncode(Convert.ToString(reader("NombreVariable"))))
+        Else
+            Response.Redirect("ValoresPorPrograma.aspx?Variable=" + uf.QueryStringEncode(variable) + "&Nombre=" + uf.QueryStringEncode("0"))
+        End If
+        reader.Close()
+        SqlConn.Close()
     End Sub
 End Class

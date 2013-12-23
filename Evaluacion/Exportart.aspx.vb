@@ -1,15 +1,20 @@
 ﻿
-Imports System.Windows.Forms
+Imports Microsoft.VisualBasic
+Imports System
+Imports DevExpress.Web.ASPxGridView
+Imports System.Web.UI
+Imports DevExpress.Web.ASPxEditors
 
-Partial Class Evaluacion_Condiciones
+Partial Class Evaluacion_Exportart
     Inherits System.Web.UI.Page
 
-    Protected Sub Page_Init(sender As Object, e As EventArgs) Handles Me.Init
-        
+
+
+    Protected Sub ASPxGridViewOpcionesDePregunta_BeforePerformDataSelect(sender As Object, e As EventArgs)
+        Session("IdPreguntaDeMonitoreo") = (TryCast(sender, DevExpress.Web.ASPxGridView.ASPxGridView)).GetMasterRowKeyValue()
     End Sub
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
-
         Using dtMOCA As System.Data.DataTable = fMOCA.CheckPageAccess(3.05) 'este es el Id definido en el MOCA
 
 
@@ -40,14 +45,24 @@ Partial Class Evaluacion_Condiciones
                 Response.Redirect("~/NoAccess.aspx")
             End If
         End Using
+        If (Not IsPostBack) Then
 
-        SqlDataSourceCondiciones.InsertCommand = "INSERT INTO [Condiciones] (IdVariable, IdTipoCondicion, NombreCondicion, DescripcionCondicion, Raiz, Total, Operando1, Operador,  Operando2, CreadoPor, FechaCreacion) VALUES (@IdVariable, @IdTipoCondicion, @NombreCondicion, @DescripcionCondicion, @Raiz, @Total, @Operando1, @Operador,  @Operando2, '" + Membership.GetUser.UserName.ToString + "', getDate())"
-        SqlDataSourceCondiciones.UpdateCommand = "UPDATE [Condiciones] SET [IdTipoCondicion]=@IdTipoCondicion, NombreCondicion=@NombreCondicion, DescripcionCondicion=@DescripcionCondicion, Raiz=@Raiz, Total=@Total, Operando1=@Operando1, Operador=@Operador, Operando2=@Operando2, ActualizadoPor='" + Membership.GetUser.UserName.ToString + "', FechaActualizacion=getDate() WHERE IdCondicion=@IdCondicion"
-        SqlDataSourceCondiciones.DeleteCommand = "UPDATE [Condiciones] SET [Activo]=0 WHERE IdCondicion=@IdCondicion"
+            ASPxGridViewPreguntas.DataBind()
 
-        Session("IdVariable") = CInt(uf.QueryStringDecode(Request.QueryString("Variable")))
 
-        ASPxLabelVariable.Text = "Definición de Condiciones para Variable " + uf.QueryStringDecode(Request.QueryString("Nombre"))
+        End If
     End Sub
 
+    Protected Sub ASPxButtonExportarPreguntas_Click(sender As Object, e As EventArgs)
+        UpdateExportMode()
+        exporter.WriteXlsToResponse()
+
+
+    End Sub
+
+    Protected Sub UpdateExportMode()
+        ASPxGridViewPreguntas.SettingsDetail.ExportMode = GridViewDetailExportMode.All
+    End Sub
+
+   
 End Class

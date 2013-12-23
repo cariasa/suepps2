@@ -40,7 +40,8 @@
                     <dx:GridViewDataTextColumn FieldName="Acción" ShowInCustomizationForm="True" VisibleIndex="4" Caption="Acción" UnboundType="String" >
                         <DataItemTemplate>
                             <asp:LinkButton id="linkValoresMacro"  Text="Valores Oficiales" runat="server" OnClick="sendValoresMacro" /> <br />
-                            <asp:LinkButton ID="linkCondiciones" Text="Condiciones" runat="server" OnClick="linkCondiciones_Click"></asp:LinkButton>
+                            <asp:LinkButton ID="linkCondiciones" Text="Condiciones" runat="server" OnClick="linkCondiciones_Click"></asp:LinkButton> <br />
+                            <asp:LinkButton ID="linkValoresPrograma" Text="Valores Por Programa" runat="server" OnClick="linkValoresPrograma_Click" ></asp:LinkButton>
                         </DataItemTemplate>
                             <Settings AllowAutoFilter="False" /> 
                             <EditFormSettings Visible="False"></EditFormSettings> 
@@ -52,11 +53,8 @@
             </SettingsPager>
             </dx:ASPxGridView>
             <asp:SqlDataSource runat="server" ID="SqlDataSourceSUEPPS" ConnectionString='<%$ ConnectionStrings:SUEPPSConnectionString %>' OnInserted="SqlDataSourceSUEPPS_Inserted" OnUpdated="SqlDataSourceSUEPPS_Updated" OnDeleted="SqlDataSourceSUEPPS_Deleted"
-                SelectCommand="SELECT [IdVariable], [NombreVariable], [Descripcion], [Unidad], [CreadoPor], [FechaCreacion], [ActualizadoPor], [FechaActualizacion], [Activo] FROM [Variables] ORDER BY  [FechaCreacion]"
-                InsertCommand="INSERT INTO [Variables] ([NombreVariable], [Descripcion], [Unidad], [CreadoPor], [FechaCreacion]) VALUES (@NombreVariable, @Descripcion, @Unidad, 'SUEPPS', getDate())"
-                UpdateCommand="UPDATE [Variables] SET [NombreVariable]=@NombreVariable, [Descripcion]=@Descripcion, [Unidad]=@Unidad, [ActualizadoPor]='SUEPPS', [FechaActualizacion] =getDate() WHERE [IdVariable]=@IdVariable"
-                DeleteCommand="UPDATE [Activo] = 0 WHERE [IdVariable]=IdVariable"
-                >
+                SelectCommand="SELECT [IdVariable], [NombreVariable], [Descripcion], [Unidad], [CreadoPor], [FechaCreacion], [ActualizadoPor], [FechaActualizacion], [Activo] FROM [Variables] WHERE [Activo]=1 ORDER BY  [FechaCreacion] "
+                              >
             </asp:SqlDataSource>
                 </dx:ContentControl>
             </ContentCollection>
@@ -101,6 +99,10 @@
                                     <Settings AllowAutoFilter="False" />
                                 </dx:GridViewDataTextColumn>
                             </Columns>
+                            <SettingsPager>
+                                <AllButton Visible="True" Text="Todos">
+                                </AllButton>
+                            </SettingsPager>
                         </dx:ASPxGridView>
 
                         <asp:SqlDataSource runat="server" ID="SqlDataSourceIndicadores" ConnectionString='<%$ ConnectionStrings:SUEPPSConnectionString %>' SelectCommand="SELECT [IdIndicador], [IdSectorIndicador], [IdTipoDeIndicador], [DescripcionIndicador] FROM [Indicadores] WHERE IdTipoDeIndicador <> 1 AND IdTipoDeIndicador <> 2"></asp:SqlDataSource>

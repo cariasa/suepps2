@@ -43,6 +43,9 @@ Partial Class Evaluacion_DocumentosEvaluacion
 
             ASPxLabelTitulo.Text = "Documentos Digitales de Programa " + uf.QueryStringDecode(Request.QueryString.Get(1))
         End Using
+
+        SqlDataSourceDocumentosEvaluacion.InsertCommand = "INSERT INTO [DocumentosEvaluacion] (IdPrograma, DescripcionDocumento, PalabrasClave, FechaDocumento, CreadoPor, FechaCreacion) VALUES (@IdPrograma, @DescripcionDocumento, @PalabrasClave, @FechaDocumento, '" + Membership.GetUser.UserName.ToString + "', getDate())"
+        SqlDataSourceDocumentosEvaluacion.UpdateCommand = "UPDATE [DocumentosEvaluacion] SET [DescripcionDocumento]=@DescripcionDocumento, [PalabrasClave]=@PalabrasClave, [FechaDocumento]=@FechaDocumento WHERE [IdDocumentoEvaluacion]=@IdDocumentoEvaluacion "
     End Sub
     Protected Sub uplImage_FileUploadComplete(ByVal sender As Object, ByVal e As FileUploadCompleteEventArgs)
         Dim Ruta As String = "..\Uploads\Evaluacion\"
