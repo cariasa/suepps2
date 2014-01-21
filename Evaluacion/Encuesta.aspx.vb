@@ -409,7 +409,7 @@ Partial Class RevisionSocial_MonitoreoCualitativo
         End Using
 
         Session("CodFSU") = uf.QueryStringDecode(Request.QueryString.Get(0))
-        Session("CodDigitador") = uf.QueryStringDecode(Request.QueryString.Get(1))
+        Session("CodDigitador") = Membership.GetUser.UserName.ToString 'uf.QueryStringDecode(Request.QueryString.Get(1))
         Session("IdAplicacion") = uf.QueryStringDecode(Request.QueryString.Get(2))
 
         Me.SqlAplicacion.SelectParameters(0).DefaultValue = Session("IdAplicacion")
