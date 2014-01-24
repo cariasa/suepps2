@@ -9,7 +9,7 @@
     <uc1:MOCA_UE runat="server" ID="MOCA_UE01" />
 
     <div>
-        <dx:ASPxPageControl ID="carTabPage" runat="server" ActiveTabIndex="1" EnableHierarchyRecreation="True" >
+        <dx:ASPxPageControl ID="carTabPage" runat="server" ActiveTabIndex="0" EnableHierarchyRecreation="True" >
 
             <ClientSideEvents ActiveTabChanged="function (s,e) {click(e);}" />
 

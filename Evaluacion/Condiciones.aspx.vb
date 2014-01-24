@@ -50,4 +50,8 @@ Partial Class Evaluacion_Condiciones
         ASPxLabelVariable.Text = "Definición de Condiciones para Variable " + uf.QueryStringDecode(Request.QueryString("Nombre"))
     End Sub
 
+    Protected Sub ASPxGridViewCondiciones_InitNewRow(sender As Object, e As DevExpress.Web.Data.ASPxDataInitNewRowEventArgs) Handles ASPxGridViewCondiciones.InitNewRow
+        e.NewValues("Total") = False
+        e.NewValues("Raiz") = False
+    End Sub
 End Class
