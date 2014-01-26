@@ -39,7 +39,7 @@
                     <Settings AllowAutoFilter="True" AutoFilterCondition="Contains" FilterMode="DisplayText" />
                     <EditFormSettings Visible="False" />
                 </dx:GridViewDataComboBoxColumn>
-                <dx:GridViewDataComboBoxColumn Caption="Tipo Condicion" FieldName="IdTipoCondicion" VisibleIndex="2">
+                <dx:GridViewDataComboBoxColumn Caption="Tipo Condición" FieldName="IdTipoCondicion" VisibleIndex="2">
                     <PropertiesComboBox DataSourceID="SqlDataSourceTipoCondicion" TextField="DescripcionTipoCondicion" ValueField="IdTipoCondicion">
                     </PropertiesComboBox>
                     <Settings AllowAutoFilter="True" AutoFilterCondition="Contains" FilterMode="DisplayText" />
