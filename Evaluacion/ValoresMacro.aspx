@@ -92,7 +92,7 @@
                                             <EditFormSettings Visible="False"></EditFormSettings>
                                         </dx:GridViewDataTextColumn>
                                         <dx:GridViewDataTextColumn FieldName="IdDetalleVariableMacro" VisibleIndex="1" Visible="false"></dx:GridViewDataTextColumn>
-                                        <dx:GridViewDataTextColumn FieldName="NombreValor" VisibleIndex="2" Caption="NombreAgregado"></dx:GridViewDataTextColumn>
+                                        <dx:GridViewDataTextColumn FieldName="NombreValor" VisibleIndex="2" Caption="Nombre Agregado"></dx:GridViewDataTextColumn>
                                         <dx:GridViewDataTextColumn FieldName="Valor" VisibleIndex="3"></dx:GridViewDataTextColumn>
                                         <dx:GridViewDataTextColumn FieldName="CreadoPor" VisibleIndex="4" Visible="false"></dx:GridViewDataTextColumn>
                                         <dx:GridViewDataDateColumn FieldName="FechaCreacion" VisibleIndex="5" Visible="false"></dx:GridViewDataDateColumn>
@@ -151,7 +151,7 @@
         </asp:SqlDataSource>
 
         <asp:SqlDataSource runat="server" ID="SqlDataSourceVariablesMacro" ConnectionString='<%$ ConnectionStrings:SUEPPSConnectionString %>' OnUpdated="SqlDataSourceVariablesMacro_Updated" OnDeleted="SqlDataSourceVariablesMacro_Deleted"
-            SelectCommand="SELECT * FROM [VariablesMacro] WHERE [Activo]=1"
+            
             ></asp:SqlDataSource>
 
         <asp:SqlDataSource runat="server" ID="SqlDataSourceVariable" ConnectionString='<%$ ConnectionStrings:SUEPPSConnectionString %>'

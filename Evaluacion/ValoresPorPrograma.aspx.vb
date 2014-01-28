@@ -37,6 +37,7 @@ Partial Class Evaluacion_ValoresPorPrograma
         End Using
 
         Session("Variable") = CInt(uf.QueryStringDecode(Request.QueryString("Variable")))
+        SqlDataSourceVariablesPrograma.SelectCommand = "SELECT * FROM [VariablesPrograma] WHERE [Activo]=1 AND [IdVariable]=" + Session("Variable").ToString
         ASPxLabelVariable.Text = "Valores Por Programa de Variable " + uf.QueryStringDecode(Request.QueryString("Nombre"))
 
         SqlDataSourceVariablesPrograma.InsertCommand = "INSERT INTO [VariablesPrograma] ([IdVariable], [Valor], [Fuente], [Fecha], [CreadoPor], [FechaCreacion]) VALUES (" + Session("Variable").ToString + ", @Valor, @Fuente, @Fecha, '" + Membership.GetUser.UserName.ToString + "', getDate())"

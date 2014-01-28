@@ -1,8 +1,8 @@
 ﻿<%@ Page Title ="Sistema Único de Evaluación de Políticas Públicas" Language="VB" AutoEventWireup="false" CodeFile="Default.aspx.vb" Inherits="Buscar"  MasterPageFile="~/Site.Master" %>
 
-<%@ Register Assembly="DevExpress.Web.v13.1, Version=13.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web.ASPxGridView" TagPrefix="dx" %>
+<%@ Register Assembly="DevExpress.Web.v13.2, Version=13.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web.ASPxGridView" TagPrefix="dx" %>
 
-<%@ Register Assembly="DevExpress.Web.v13.1, Version=13.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web.ASPxEditors" TagPrefix="dx" %>
+<%@ Register Assembly="DevExpress.Web.v13.2, Version=13.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web.ASPxEditors" TagPrefix="dx" %>
 
 <%@ Register Src="~/MOCA_UE.ascx" TagPrefix="uc1" TagName="MOCA_UE" %>
 
@@ -89,7 +89,19 @@
             </Columns>
         </dx:ASPxGridView>
 
-       
+        <dx:ASPxGridView ID="ASPxGridViewDocumentos" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSourceDocumentos" KeyFieldName="IdDocumentoEvaluacion">
+            <Columns>
+                <dx:GridViewDataTextColumn FieldName="IdDocumentoEvaluacion" ReadOnly="True" VisibleIndex="0">
+                    <EditFormSettings Visible="False"></EditFormSettings>
+                </dx:GridViewDataTextColumn>
+                <dx:GridViewDataTextColumn FieldName="DescripcionDocumento" VisibleIndex="1"></dx:GridViewDataTextColumn>
+                <dx:GridViewDataTextColumn FieldName="PalabrasClave" VisibleIndex="2"></dx:GridViewDataTextColumn>
+                <dx:GridViewDataDateColumn FieldName="FechaDocumento" VisibleIndex="3"></dx:GridViewDataDateColumn>
+            </Columns>
+        </dx:ASPxGridView>
+
+
+        <asp:SqlDataSource runat="server" ID="SqlDataSourceDocumentos" ConnectionString='<%$ ConnectionStrings:SUEPPSConnectionString %>' ></asp:SqlDataSource>
         <asp:SqlDataSource ID="SqlInsumos" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" ></asp:SqlDataSource>
 
        

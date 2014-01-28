@@ -37,6 +37,9 @@ Partial Class Evaluacion_ValoresMacro
         End Using
 
         Session("Variable") = CInt(uf.QueryStringDecode(Request.QueryString("Variable")))
+
+        SqlDataSourceVariablesMacro.SelectCommand = "SELECT * FROM [VariablesMacro] WHERE [Activo]=1 AND [IdVariable]=" + Session("Variable").ToString
+
         ASPxLabelVariable.Text = "Valores Oficiales de Variable " + uf.QueryStringDecode(Request.QueryString("Nombre"))
         SqlDataSourceVariablesMacro.InsertCommand = "INSERT INTO [VariablesMacro] ([IdVariable], [Valor], [Fuente], [Fecha], [CreadoPor], [FechaCreacion]) VALUES (" + uf.QueryStringDecode(Request.QueryString("Variable")) + ", @Valor, @Fuente, @Fecha, '" + Membership.GetUser.UserName.ToString + "', getDate())"
 
