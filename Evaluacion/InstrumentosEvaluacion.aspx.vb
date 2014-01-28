@@ -34,18 +34,36 @@ Partial Class Cuantitativo_InstrumentosEvaluacion
                 Response.Redirect("~/NoAccess.aspx")
             End If
 
-            Session("IdPrograma") = Request.QueryString.Get(0)
-            Session("NombrePrograma") = Request.QueryString.Get(1)
+            If Session("IdPrograma") Is Nothing Then
+                Session("IdPrograma") = uf.QueryStringDecode(Request.QueryString.Get(0))
+                Session("NombrePrograma") = uf.QueryStringDecode(Request.QueryString.Get(1))
+            End If
 
-            Me.Programa.Text = "Crear Instrumento de Evaluación Programa < " + Session("NombrePrograma") + " >"
+            ASPxLabelTitulo.Text = "Crear Instrumento de Evaluación Programa " + Session("NombrePrograma")
 
-            SqlDataSource1.SelectCommand = "SELECT * FROM [InstrumentosDeEvaluacion] where [IdPrograma]=@IdPrograma and [Activo]=1"
-            SqlDataSource1.InsertCommand = "Insert INTO [InstrumentosDeEvaluacion] ([IdPrograma], [NombreInstrumento],[DescripcionInstrumento],[Ano],[CreadoPor], [FechaCreacion], [Activo]) VALUES (@IdPrograma, @NombreInstrumento,@DescripcionInstrumento,@Ano,'PACO', getDate(), 1)"
-            SqlDataSource1.UpdateCommand = "UPDATE [InstrumentosDeEvaluacion] SET [NombreInstrumento]=@NombreInstrumento, [DescripcionInstrumento]=@DescripcionInstrumento,[ActualizadoPor]='PACO',[FechaActualizacion]=getDate(),[Ano]=@Ano WHERE [IdInstrumentoDeEvaluacion]=@IdInstrumentoDeEvaluacion"
-            SqlDataSource1.DeleteCommand = "UPDATE [InstrumentosDeEvaluacion] SET [Activo]=0 WHERE [IdInstrumentoDeEvaluacion]=@IdInstrumentoDeEvaluacion"
+            Session("IdInstrumento") = Nothing
 
-            SqlDataSource1.SelectParameters(0).DefaultValue = Session("IdPrograma")
-            SqlDataSource1.InsertParameters(0).DefaultValue = Session("IdPrograma")
+            SqlInstrumento.SelectCommand = "SELECT * FROM [InstrumentosDeEvaluacion] where [IdPrograma]=@IdPrograma and [Activo]=1"
+            'SqlInstrumento.InsertCommand = "Insert INTO [InstrumentosDeEvaluacion] ([IdProcesoEvaluacion], [IdPrograma], [NombreInstrumento],[DescripcionInstrumento],[Ano],[CreadoPor], [FechaCreacion], [Activo],[IdTipoDeInstrumento]) VALUES (@IdProcesoEvaluacion, @IdPrograma, @NombreInstrumento,@DescripcionInstrumento,@Ano,@Usuario, getDate(), 1,@IdTipoDeInstrumento)"
+            'SqlInstrumento.UpdateCommand = "UPDATE [InstrumentosDeEvaluacion] SET [IdProcesoEvaluacion]=@IdProcesoEvaluacion, [NombreInstrumento]=@NombreInstrumento, [DescripcionInstrumento]=@DescripcionInstrumento,[ActualizadoPor]=@Usuario,[FechaActualizacion]=getDate(),[Ano]=@Ano,[IdTipoDeInstrumento]=@IdTipoDeInstrumento WHERE [IdInstrumentoDeEvaluacion]=@IdInstrumentoDeEvaluacion"
+            SqlInstrumento.DeleteCommand = "UPDATE [InstrumentosDeEvaluacion] SET [Activo]=0 WHERE [IdInstrumentoDeEvaluacion]=@IdInstrumentoDeEvaluacion"
+
+            SqlInstrumento.SelectParameters(0).DefaultValue = Session("IdPrograma")
+            SqlInstrumento.InsertParameters(0).DefaultValue = Session("IdPrograma")
+            SqlInstrumento.InsertParameters(5).DefaultValue = Membership.GetUser.UserName
+            SqlInstrumento.UpdateParameters(5).DefaultValue = Membership.GetUser.UserName
+
+            SqlInstrumento.InsertCommand = "SET @AP = (SELECT IdInstrumentoDeEvaluacion FROM [InstrumentosDeEvaluacion] " & _
+       "where IdPrograma = @IdPrograma and IdTipoDeInstrumento=@IdTipoDeInstrumento and Ano=@Ano " & _
+        " and Activo=1" & _
+           ")" & _
+       "IF (@AP is NULL)" & _
+           "BEGIN " & _
+   "Insert INTO [InstrumentosDeEvaluacion] ([IdProcesoEvaluacion], [IdPrograma], [NombreInstrumento],[DescripcionInstrumento],[Ano],[CreadoPor], [FechaCreacion], [Activo],[IdTipoDeInstrumento]) VALUES (@IdProcesoEvaluacion, @IdPrograma, @NombreInstrumento,@DescripcionInstrumento,@Ano,@Usuario, getDate(), 1,@IdTipoDeInstrumento)" & _
+    "END"
+            '-------------------------
+            SqlInstrumento.UpdateCommand = "UPDATE [InstrumentosDeEvaluacion] SET [IdProcesoEvaluacion]=@IdProcesoEvaluacion, [NombreInstrumento]=@NombreInstrumento, [DescripcionInstrumento]=@DescripcionInstrumento,[ActualizadoPor]=@Usuario,[FechaActualizacion]=getDate(),[Ano]=@Ano,[IdTipoDeInstrumento]=@IdTipoDeInstrumento WHERE [IdInstrumentoDeEvaluacion]=@IdInstrumentoDeEvaluacion and NOT EXISTS (SELECT c.IdEncabezadoRespuesta FROM [InstrumentosDeEvaluacion] a join [AplicacionInstrumento] b on a.IdInstrumentoDeEvaluacion=b.IdInstrumentoDeEvaluacion join [EncabezadoRespuesta] c on c.IdAplicacionInstrumento=b.IdAplicacionInstrumento where a.Activo=1 and b.Activo=1 and C.Activo=1 and a.IdInstrumentoDeEvaluacion=@IdInstrumentoDeEvaluacion) "
+
 
 
         End Using
@@ -54,17 +72,20 @@ Partial Class Cuantitativo_InstrumentosEvaluacion
 
     Protected Sub link1_Click(sender As Object, e As EventArgs)
 
-        Dim index As Integer = ASPxGridView1.FocusedRowIndex()
-        Dim codInstrumento As String = ASPxGridView1.GetRowValues(index, "IdInstrumentoDeEvaluacion").ToString
-        Response.Redirect("PreguntasInstrumento.aspx?NameP=" + codInstrumento)
+        Dim index As Integer = GridInstrumentos.FocusedRowIndex()
+        Dim codInstrumento As String = GridInstrumentos.GetRowValues(index, "IdInstrumentoDeEvaluacion").ToString
+        Dim nomInstrumento As String = GridInstrumentos.GetRowValues(index, "NombreInstrumento").ToString
+        Response.Redirect("PreguntasInstrumento.aspx?NameP=" + uf.QueryStringEncode(codInstrumento) + "&NomInstr=" + uf.QueryStringEncode(nomInstrumento))
 
     End Sub
 
     Protected Sub link2_Click(sender As Object, e As EventArgs)
 
-        Dim index As Integer = ASPxGridView1.FocusedRowIndex()
-        Dim codInstrumento As String = ASPxGridView1.GetRowValues(index, "IdInstrumentoDeEvaluacion").ToString
-        Response.Redirect("AplicacionInstrumento.aspx?NameP=" + codInstrumento)
+        Dim index As Integer = GridInstrumentos.FocusedRowIndex()
+        Dim codInstrumento As String = GridInstrumentos.GetRowValues(index, "IdInstrumentoDeEvaluacion").ToString
+        Dim nomInstrumento As String = GridInstrumentos.GetRowValues(index, "NombreInstrumento").ToString
+        Response.Redirect("AplicacionInstrumento.aspx?NameP=" + uf.QueryStringEncode(codInstrumento) + "&NomInstr=" + uf.QueryStringEncode(nomInstrumento))
 
     End Sub
+
 End Class

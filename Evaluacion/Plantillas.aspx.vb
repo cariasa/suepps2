@@ -32,14 +32,20 @@ Partial Class Cuantitativo_Plantilla
                 Response.Redirect("~/NoAccess.aspx")
             End If
         End Using
+
+        SqlPlantilla.InsertParameters(0).DefaultValue = Membership.GetUser.UserName
+        SqlPlantilla.UpdateParameters(0).DefaultValue = Membership.GetUser.UserName
+
+
     End Sub
 
 
     Protected Sub send(ByVal sender As Object, ByVal e As EventArgs)
 
-        Dim index As Integer = ASPxGridView1.FocusedRowIndex()
-        Dim codplantilla As String = ASPxGridView1.GetRowValues(index, "IdPlantilla").ToString
-        Response.Redirect("PreguntasPlantilla.aspx?NameP=" + codplantilla)
+        Dim index As Integer = GridPlantilla.FocusedRowIndex()
+        Dim codplantilla As String = GridPlantilla.GetRowValues(index, "IdPlantilla").ToString()
+        Dim nomplantilla As String = GridPlantilla.GetRowValues(index, "NombrePlantilla")
+        Response.Redirect("PreguntasPlantilla.aspx?NameP=" + uf.QueryStringEncode(codplantilla) + "&DescP=" + uf.QueryStringEncode(nomplantilla))
 
     End Sub
 

@@ -1,4 +1,4 @@
-﻿<%@ Page Language="VB" AutoEventWireup="false" CodeFile="Instrumentos.aspx.vb" Inherits="Cuantitativo_Default" MasterPageFile="~/Site.master" %>
+﻿<%@ Page Title="Selección de Programa" Language="VB" AutoEventWireup="false" CodeFile="Instrumentos.aspx.vb" Inherits="Cuantitativo_Default" MasterPageFile="~/Site.master" %>
 
 <%@ Register Assembly="DevExpress.Web.v13.1, Version=13.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web.ASPxGridView" TagPrefix="dx" %>
 
@@ -12,8 +12,15 @@
     <uc1:MOCA_UE runat="server" ID="MOCA_UE01" />
 
     <div>
+        <div>
+            <table>
+                <tr>
+                    <td><dx:ASPxLabel ID="ASPxLabelTitulo" runat="server" Text="Selección de Programa para Instrumentos de Evaluación" Font-Size="Large" /></td>
+                </tr>
+            </table>
+        </div>
 
-        <dx:ASPxGridView ID="ASPxGridView1" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource1" KeyFieldName="IdPolitica" SettingsDetail-ShowDetailRow="true">
+        <dx:ASPxGridView ClientInstanceName="ASPxGridView1" ID="ASPxGridView1" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource1" KeyFieldName="IdPolitica" SettingsDetail-ShowDetailRow="true">
             <Columns>
                 <dx:GridViewDataTextColumn FieldName="IdPolitica" ReadOnly="True" VisibleIndex="0" Visible="false">
                     <EditFormSettings Visible="False" />
@@ -43,15 +50,16 @@
                                      </dx:GridViewDataTextColumn>
                                     <dx:GridViewDataTextColumn FieldName="NombreProyecto" Caption="Programa" VisibleIndex="1">
                                     </dx:GridViewDataTextColumn>
-                                     <dx:GridViewDataTextColumn FieldName="codigo_proyecto" Caption="Código de Programa" VisibleIndex="1">
+                                     <dx:GridViewDataTextColumn FieldName="codigo_proyecto" Caption="Código del Programa" VisibleIndex="1">
                                     </dx:GridViewDataTextColumn>
 
                                     
 
                                     <dx:GridViewDataTextColumn VisibleIndex="2" Caption="Acción" UnboundType="String">
                                       <DataItemTemplate>
-                                          <asp:LinkButton id="link1"  Text="Crear Instrumento" runat="server" OnClick="link1_Click" /> 
+                                          <asp:LinkButton id="link1"  Text="Instrumentos" runat="server" OnClick="link1_Click" /> 
                                           <asp:LinkButton id="LinkButton1"  Text="Asociar Indicador" runat="server" OnClick="LinkButton1_Click" /> 
+                                          <asp:LinkButton id="AsociarDocumento" Text="Documentos" runat="server" OnClick="Documento_Click" />
                                       </DataItemTemplate>  
                                         <Settings AllowAutoFilter="False" />
                                         <EditFormSettings Visible="False" />

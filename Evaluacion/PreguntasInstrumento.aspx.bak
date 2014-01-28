@@ -1,4 +1,4 @@
-﻿<%@ Page Language="VB" AutoEventWireup="false" CodeFile="PreguntasInstrumento.aspx.vb" Inherits="Cuantitativo_PreguntasInstrumento" MasterPageFile="~/Site.master"  %>
+﻿<%@ Page Title="Preguntas de Instrumento de Evaluación" Language="VB" AutoEventWireup="false" CodeFile="PreguntasInstrumento.aspx.vb" Inherits="Cuantitativo_PreguntasInstrumento" MasterPageFile="~/Site.master"  %>
 
 <%@ Register Assembly="DevExpress.Web.v13.1, Version=13.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web.ASPxGridView" TagPrefix="dx" %>
 
@@ -11,7 +11,18 @@
 <asp:Content ID="cBody" ContentPlaceHolderID="MainContent" Runat="Server">
     <uc1:MOCA_UE runat="server" ID="MOCA_UE01" />
     <div>
+        <div>
+            <table>
+                <tr>
+                    <td><dx:ASPxLabel ID="ASPxLabelTitulo" runat="server" Font-Size="Large" /></td>
+                    <td>
+                        <dx:ASPxLabel ID="espacio" runat="server" Text=" " Width="50"></dx:ASPxLabel>
+                        <dx:ASPxHyperLink ID="ASPxHyperLinkRegresar" runat="server" Text="Regresar a Instrumento" NavigateUrl="InstrumentosEvaluacion.aspx" />
 
+                    </td>
+                </tr>
+            </table>
+        </div>
         <div>
             <table>
             <tr>
@@ -262,7 +273,7 @@
 
         <asp:SqlDataSource ID="SqlDataSource1" runat="server" OnInserted="SqlDataSource1_Inserted"
             ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" 
-            SelectCommand="SELECT * FROM [PreguntasPorInstrumento] WHERE [Activo]=1 and [IdInstrumentoDeEvaluacion]= @IdInstrumentoDeEvaluacion"
+            SelectCommand="SELECT * FROM [PreguntasPorInstrumento] a join [SeccionesFSU] b on a.IdSeccionFSU=b.IdSeccionFSU WHERE a.[Activo]=1 and a.[IdInstrumentoDeEvaluacion]= @IdInstrumentoDeEvaluacion Order by b.NombreSeccion,a.Orden"
             InsertCommand="Insert INTO [PreguntasPorInstrumento] ([IdInstrumentoDeEvaluacion], [IdTipoDePregunta],[IdSeccionFSU],[PreguntaDeInstrumento],[Orden],[Requerida],[IdTipoDeRespuesta],[CreadoPor], [FechaCreacion], [Activo],[IdAmigable]) VALUES (@IdInstrumentoDeEvaluacion, @IdTipoDePregunta,@IdSeccionFSU,@PreguntaDeInstrumento,@Orden,@Requerida,@IdTipoDeRespuesta,'PACO', getDate(), 1,@IdAmigable)  SELECT @IdPreguntaPorInstrumento = SCOPE_IDENTITY()"
             UpdateCommand="Update [PreguntasPorInstrumento] SET [IdTipoDePregunta]=@IdTipoDePregunta,[IdSeccionFSU]=@IdSeccionFSU,[PreguntaDeInstrumento]=@PreguntaDeInstrumento,[Orden]=@Orden,[Requerida]=@Requerida,[IdTipoDeRespuesta]=@IdTipoDeRespuesta,[ActualizadoPor]='PACO', [FechaActualizacion]=getDate(),[IdAmigable]=@IdAmigable WHERE [IdPreguntaPorInstrumento] = @IdPreguntaPorInstrumento"
             DeleteCommand="Update [PreguntasPorInstrumento] SET [Activo]=0 WHERE [IdPreguntaPorInstrumento] = @IdPreguntaPorInstrumento"

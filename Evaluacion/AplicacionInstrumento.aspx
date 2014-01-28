@@ -1,8 +1,8 @@
-﻿<%@ Page Language="VB" AutoEventWireup="false" CodeFile="AplicacionInstrumento.aspx.vb" Inherits="Cuantitativo_AplicacionInstrumento" MasterPageFile="~/Site.master" %>
+﻿<%@ Page Title="Levantamientos de Instrumentos de Evaluación" Language="VB" AutoEventWireup="false" CodeFile="AplicacionInstrumento.aspx.vb" Inherits="Cuantitativo_AplicacionInstrumento" MasterPageFile="~/Site.master" %>
 
-<%@ Register Assembly="DevExpress.Web.v13.2, Version=13.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web.ASPxGridView" TagPrefix="dx" %>
+<%@ Register Assembly="DevExpress.Web.v13.2, Version=13.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web.ASPxGridView" TagPrefix="dx" %>
 
-<%@ Register assembly="DevExpress.Web.v13.2, Version=13.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" namespace="DevExpress.Web.ASPxEditors" tagprefix="dx" %>
+<%@ Register assembly="DevExpress.Web.v13.2, Version=13.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" namespace="DevExpress.Web.ASPxEditors" tagprefix="dx" %>
 
 <%@ Register Src="~/MOCA_UE.ascx" TagPrefix="uc1" TagName="MOCA_UE" %>
 
@@ -11,10 +11,21 @@
 <asp:Content ID="cBody" ContentPlaceHolderID="MainContent" Runat="Server">
     <uc1:MOCA_UE runat="server" ID="MOCA_UE01" />
     <div>
+        <div>
+            <table>
+                <tr>
+                    <td><dx:ASPxLabel ID="ASPxLabelTitulo" runat="server" Font-Size="Large" /></td>
+                    <td>
+                        <dx:ASPxLabel ID="espacio" runat="server" Text=" " Width="50"></dx:ASPxLabel>
+                        <dx:ASPxHyperLink ID="ASPxHyperLinkRegresar" runat="server" Text="Regresar a Instrumento" NavigateUrl="InstrumentosEvaluacion.aspx" />
 
-        <dx:ASPxGridView ID="ASPxGridView1" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource1" KeyFieldName="IdAplicacionInstrumento">
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <dx:ASPxGridView ID="GridAplicacion" runat="server" AutoGenerateColumns="False" DataSourceID="SqlAplicacion" KeyFieldName="IdAplicacionInstrumento">
             <Columns>
-                <dx:GridViewDataTextColumn FieldName="IdAplicacionInstrumento" ReadOnly="True" VisibleIndex="4" Visible="true" Caption="CodigoDeDigitacion">
+                <dx:GridViewDataTextColumn FieldName="IdAplicacionInstrumento" ReadOnly="True" VisibleIndex="4" Visible="true" Caption="Código de Digitación">
                     <EditFormSettings Visible="False" />
                 </dx:GridViewDataTextColumn>
 
@@ -76,12 +87,12 @@
         </dx:ASPxGridView>
 
 
-        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" 
+        <asp:SqlDataSource ID="SqlAplicacion" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" 
             
             
             SelectCommand="SELECT * FROM [AplicacionInstrumento] where [IdInstrumentoDeEvaluacion]=@IdInstrumentoDeEvaluacion and [Activo]=1"
-            InsertCommand="INSERT INTO [AplicacionInstrumento] ([IdMomentoAplicacion],[IdInstrumentoDeEvaluacion],[FechaAplicacion],[UsaFSU],[CreadoPor],[FechaCreacion],[Activo]) VALUES (@IdMomentoAplicacion,@IdInstrumentoDeEvaluacion,@FechaAplicacion,@UsaFSU,'PACO', getDate(), 1)"
-            UpdateCommand="UPDATE [AplicacionInstrumento] SET [IdMomentoAplicacion]=@IdMomentoAplicacion,[FechaAplicacion]=@FechaAplicacion,[UsaFSU]=@UsaFSU, [ActualizadoPor]='PACO', [FechaActualizacion]=getDate() WHERE [IdAplicacionInstrumento] = @IdAplicacionInstrumento"
+            InsertCommand="INSERT INTO [AplicacionInstrumento] ([IdMomentoAplicacion],[IdInstrumentoDeEvaluacion],[FechaAplicacion],[UsaFSU],[CreadoPor],[FechaCreacion],[Activo]) VALUES (@IdMomentoAplicacion,@IdInstrumentoDeEvaluacion,@FechaAplicacion,@UsaFSU,@Usuario, getDate(), 1)"
+            UpdateCommand="UPDATE [AplicacionInstrumento] SET [IdMomentoAplicacion]=@IdMomentoAplicacion,[FechaAplicacion]=@FechaAplicacion,[UsaFSU]=@UsaFSU, [ActualizadoPor]=@Usuario, [FechaActualizacion]=getDate() WHERE [IdAplicacionInstrumento] = @IdAplicacionInstrumento"
             DeleteCommand="UPDATE [AplicacionInstrumento] SET [Activo]=0 WHERE [IdAplicacionInstrumento] = @IdAplicacionInstrumento"
                   
             >
@@ -97,6 +108,7 @@
                 <asp:SessionParameter Name="IdInstrumentoDeEvaluacion" />
                 <asp:FormParameter Name="FechaAplicacion" />
                 <asp:FormParameter Name="UsaFSU" />
+                <asp:SessionParameter Name="Usuario" />
 
             </InsertParameters>
 
@@ -105,6 +117,7 @@
                 <asp:FormParameter Name="FechaAplicacion" />
                 <asp:FormParameter Name="UsaFSU" />
                 <asp:FormParameter Name="IdAplicacionInstrumento" />
+                <asp:SessionParameter Name="Usuario" />
                
 
             </UpdateParameters>

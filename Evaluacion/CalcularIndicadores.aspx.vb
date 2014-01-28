@@ -33,7 +33,7 @@ Partial Class Evaluacion_Levantamientos
                 Response.Redirect("~/NoAccess.aspx")
             End If
 
-            Me.SqlDataSource2.SelectCommand = "select DISTINCT(Pol.IdPolitica), Pol.Nombre, Pro.codigo_ficha, Pro.NombreProyecto, Pro.codigo_proyecto,IE.Ano,IE.NombreInstrumento,IE.IdInstrumentoDeEvaluacion from Politicas Pol " & _
+            Me.SqlPrograma.SelectCommand = "select DISTINCT(Pol.IdPolitica), Pol.Nombre, Pro.codigo_ficha, Pro.NombreProyecto, Pro.codigo_proyecto,IE.Ano,IE.NombreInstrumento,IE.IdInstrumentoDeEvaluacion from Politicas Pol " & _
        "join ComponentesDePolitica CP on Pol.IdPolitica=CP.IdPolitica " & _
        "join MetasDeComponente MC on CP.IdComponentesDePolitica=MC.IdComponentesDePolitica " & _
        "join IndicadoresDeMeta IM on MC.IdMetasDeComponente=IM.IdMetasDeComponente " & _
@@ -41,7 +41,7 @@ Partial Class Evaluacion_Levantamientos
        "join vProyectos Pro ON PIM.IdPrograma=Pro.codigo_ficha " & _
        "join InstrumentosDeEvaluacion IE ON Pro.codigo_ficha= IE.IdPrograma where Pol.[IdPolitica]=@IdPolitica "
 
-            Me.SqlDataSource3.SelectCommand = " select AI.IdAplicacionInstrumento,MA.DescripcionMomento,AI.UsaFSU,AI.FechaAplicacion,IE.IdInstrumentoDeEvaluacion from InstrumentosDeEvaluacion IE " & _
+            Me.SqlAplicacion.SelectCommand = " select AI.IdAplicacionInstrumento,MA.DescripcionMomento,AI.UsaFSU,AI.FechaAplicacion,IE.IdInstrumentoDeEvaluacion from InstrumentosDeEvaluacion IE " & _
             "join AplicacionInstrumento AI on IE.IdInstrumentoDeEvaluacion= AI.IdInstrumentoDeEvaluacion " & _
             "join MomentosDeAplicacion MA on MA.IdMomentoDeAplicacion=IdMomentoAplicacion where AI.[IdInstrumentoDeEvaluacion]=@IdInstrumento and AI.[Activo]=1 "
 
@@ -55,10 +55,10 @@ Partial Class Evaluacion_Levantamientos
     Protected Sub ASPxGridView2_BeforePerformDataSelect(sender As Object, e As EventArgs)
 
         Session("IdPolitica") = CType(sender, ASPxGridView).GetMasterRowKeyValue()
-        Me.SqlDataSource2.SelectParameters(0).DefaultValue = Session("IdPolitica")
-        Me.SqlDataSource2.DataBind()
+        Me.SqlPrograma.SelectParameters(0).DefaultValue = Session("IdPolitica")
+        Me.SqlPrograma.DataBind()
 
-        Session("indexpolitica") = ASPxGridView1.FocusedRowIndex()
+        Session("indexpolitica") = GridPolitica.FocusedRowIndex()
 
     End Sub
 
@@ -67,10 +67,10 @@ Partial Class Evaluacion_Levantamientos
     Protected Sub ASPxGridView3_BeforePerformDataSelect(sender As Object, e As EventArgs)
 
         Session("IdInstrumento") = CType(sender, ASPxGridView).GetMasterRowKeyValue()
-        Me.SqlDataSource3.SelectParameters(0).DefaultValue = Session("IdInstrumento")
-        Me.SqlDataSource3.DataBind()
+        Me.SqlAplicacion.SelectParameters(0).DefaultValue = Session("IdInstrumento")
+        Me.SqlAplicacion.DataBind()
 
-        Dim detail As ASPxGridView = TryCast(ASPxGridView1.FindDetailRowTemplateControl(ASPxGridView1.FocusedRowIndex(), "ASPxGridView2"), ASPxGridView)
+        Dim detail As ASPxGridView = TryCast(GridPolitica.FindDetailRowTemplateControl(GridPolitica.FocusedRowIndex(), "GridPrograma"), ASPxGridView)
 
         Dim index As Integer = detail.FocusedRowIndex()
 
@@ -109,6 +109,13 @@ Partial Class Evaluacion_Levantamientos
 
    
     Protected Sub link1_Click(sender As Object, e As EventArgs)
+        'Session("IdLevantamiento") = CType(sender, ASPxGridView).GetMasterRowKeyValue()
+        Dim detail1 As ASPxGridView = TryCast(GridPolitica.FindDetailRowTemplateControl(GridPolitica.FocusedRowIndex(), "GridPrograma"), ASPxGridView)
+        Dim detail2 As ASPxGridView = TryCast(detail1.FindDetailRowTemplateControl(detail1.FocusedRowIndex(), "GridAplicacion"), ASPxGridView)
+        Dim index As Integer = detail2.FocusedRowIndex()
+        Dim IdLevantamiento As Integer = detail2.GetRowValues(index, "IdAplicacionInstrumento")
+        Dim Calculadora As New CalculadoraIndicadores(SqlPolitica.ConnectionString, Session("IdPrograma"), IdLevantamiento)
+        Calculadora.Run(Membership.GetUser.UserName.ToString)
 
     End Sub
 End Class

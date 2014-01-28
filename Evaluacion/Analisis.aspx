@@ -1,4 +1,4 @@
-﻿<%@ Page Language="VB" AutoEventWireup="false" CodeFile="Analisis.aspx.vb" Inherits="Evaluacion_Levantamientos" MasterPageFile="~/Site.master" %>
+﻿<%@ Page Title="Análisis Cualitativo Evaluación" Language="VB" AutoEventWireup="false" CodeFile="Analisis.aspx.vb" Inherits="Evaluacion_Levantamientos" MasterPageFile="~/Site.master" %>
 
 <%@ Register Src="~/MOCA_UE.ascx" TagPrefix="uc1" TagName="MOCA_UE" %>
 
@@ -8,8 +8,19 @@
     <uc1:MOCA_UE runat="server" ID="MOCA_UE01" />
     
     <div>
+        <div>
+            <table>
+                <tr>
+                    <td><dx:ASPxLabel ID="ASPxLabelTitulo" runat="server" Font-Size="Large" /></td>
+                    <td>
+                        <dx:ASPxLabel ID="espacio" runat="server" Text=" " Width="50"></dx:ASPxLabel>
+                        <dx:ASPxHyperLink ID="ASPxHyperLinkRegresar" runat="server" Text="Regresar a Levantamientos" NavigateUrl="AplicacionInstrumento.aspx" />
 
-                <dx:ASPxGridView ID="ASPxGridView3" runat="server" KeyFieldName="IdPreguntaPorInstrumento"   Width="100%" DataSourceID="SqlDataSource3" >
+                    </td>
+                </tr>
+            </table>
+        </div>
+                <dx:ASPxGridView ID="GridPreguntas" runat="server" KeyFieldName="IdPreguntaPorInstrumento"   Width="100%" DataSourceID="SqlPreguntas" >
 
                                 <Columns>
 
@@ -76,6 +87,10 @@
                                         
 
                                     </Columns>
+                                 <SettingsPager>
+                <AllButton Visible="True" Text="Todos">
+                </AllButton>
+            </SettingsPager>
 
                                     <SettingsBehavior AllowFocusedRow="True" />
 
@@ -94,6 +109,10 @@
                                              </dx:GridViewDataTextColumn>
                                     
                                              </Columns>
+                                              <SettingsPager>
+                <AllButton Visible="True" Text="Todos">
+                </AllButton>
+            </SettingsPager>
                                           </dx:ASPxGridView>
                                      </DetailRow>
                                  </Templates>
@@ -101,7 +120,7 @@
 
                             </dx:ASPxGridView>
 
-                            <dx:ASPxGridView ID="ASPxGridView1" runat="server" AutoGenerateColumns="False" DataSourceID="SqlAnalisisCualitativo" 
+                            <dx:ASPxGridView ID="GridCualitativo" runat="server" AutoGenerateColumns="False" DataSourceID="SqlAnalisisCualitativo" 
                                      KeyFieldName="IdAnalisisCualitativo" OnBeforePerformDataSelect="ASPxGridView1_BeforePerformDataSelect" IsDetailGrid="true" Width="100%" 
                                      >
                                     <Columns>
@@ -126,6 +145,10 @@
                     <HeaderStyle HorizontalAlign="Center"></HeaderStyle>
                 </dx:GridViewCommandColumn>
                                     </Columns>
+                                 <SettingsPager>
+                <AllButton Visible="True" Text="Todos">
+                </AllButton>
+            </SettingsPager>
                             </dx:ASPxGridView>
 
 
@@ -180,7 +203,7 @@
        <asp:SqlDataSource runat="server" ID="SqlDataSourceCategoriasPregunta" ConnectionString='<%$ ConnectionStrings:SUEPPSConnectionString %>' SelectCommand="SELECT [IdCategoriaDePregunta], [DescripcionCategoriaDePregunta] FROM [CategoriasDePregunta] where Activo=1"></asp:SqlDataSource>
 
      
-         <asp:SqlDataSource ID="SqlDataSource3" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" >
+         <asp:SqlDataSource ID="SqlPreguntas" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" >
 
             <SelectParameters>
                      <asp:SessionParameter Name="IdInstrumento" />

@@ -8,29 +8,49 @@
         Acerca del Sistema Único de Evaluación de Políticas Públicas Sociales
         (SUEPPS)
     </h2>
-    <p>
+    
         <table style="width:100%;">
             <tr>
                 <td>
                 <br />
                     <asp:Image ID="Image2" runat="server" 
-                        ImageUrl="~/Imagenes/ViviendasBarroHonduras.jpg" />
+                        ImageUrl="~/Imagenes/suepps-logo.png" />
                 </td>
                 <td>
                     &nbsp;</td>
                 <td align="justify" valign="top">
-                    <p>Producto hondureño desarrollado cien por ciento por hondureños.</p>
+                    Producto hondureño desarrollado cien por ciento por hondureños.
 
                 </td>
             </tr>
             <tr>
                 <td>
-                    &nbsp;</td>
+                    </td>
                 <td>
                     &nbsp;</td>
                 <td>
                     &nbsp;</td>
             </tr>
         </table>
-    </p>
+    <div>
+    <table>
+        <tr>
+            <td>Instituciones Colaboradoras</td>
+        </tr>
+        <tr>
+            <td>
+                <asp:Image ID="Image3" runat="server" 
+                        ImageUrl="~/Imagenes/logounitec.jpg" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+<asp:Image ID="Image1" runat="server" 
+                        ImageUrl="~/Imagenes/bancomundial.jpg" />
+            </td>
+        </tr>
+    </table>
+
+    </div>
+    
 </asp:Content>

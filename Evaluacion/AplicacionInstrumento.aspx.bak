@@ -1,4 +1,4 @@
-﻿<%@ Page Language="VB" AutoEventWireup="false" CodeFile="AplicacionInstrumento.aspx.vb" Inherits="Cuantitativo_AplicacionInstrumento" MasterPageFile="~/Site.master" %>
+﻿<%@ Page Title="Levantamientos de Instrumentos de Evaluación" Language="VB" AutoEventWireup="false" CodeFile="AplicacionInstrumento.aspx.vb" Inherits="Cuantitativo_AplicacionInstrumento" MasterPageFile="~/Site.master" %>
 
 <%@ Register Assembly="DevExpress.Web.v13.1, Version=13.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web.ASPxGridView" TagPrefix="dx" %>
 
@@ -11,7 +11,18 @@
 <asp:Content ID="cBody" ContentPlaceHolderID="MainContent" Runat="Server">
     <uc1:MOCA_UE runat="server" ID="MOCA_UE01" />
     <div>
+        <div>
+            <table>
+                <tr>
+                    <td><dx:ASPxLabel ID="ASPxLabelTitulo" runat="server" Font-Size="Large" /></td>
+                    <td>
+                        <dx:ASPxLabel ID="espacio" runat="server" Text=" " Width="50"></dx:ASPxLabel>
+                        <dx:ASPxHyperLink ID="ASPxHyperLinkRegresar" runat="server" Text="Regresar a Instrumento" NavigateUrl="InstrumentosEvaluacion.aspx" />
 
+                    </td>
+                </tr>
+            </table>
+        </div>
         <dx:ASPxGridView ID="ASPxGridView1" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource1" KeyFieldName="IdAplicacionInstrumento">
             <Columns>
                 <dx:GridViewDataTextColumn FieldName="IdAplicacionInstrumento" ReadOnly="True" VisibleIndex="4" Visible="true" Caption="CodigoDeDigitacion">
@@ -55,8 +66,24 @@
                                             <DeleteButton Visible="true" />
 
                                         </dx:GridViewCommandColumn>
+                <dx:GridViewDataTextColumn VisibleIndex="12" Caption="Análisis Cualitativo" UnboundType="String">
+                                      <DataItemTemplate>
+                                          <asp:LinkButton id="link2"  Text="Análisis Cualitativo" runat="server" OnClick="link2_Click" /> 
+                                      </DataItemTemplate>  
+                                        <Settings AllowAutoFilter="False" />
+                                        <EditFormSettings Visible="False" />
+                 </dx:GridViewDataTextColumn>
+
                 
             </Columns>
+
+            <SettingsBehavior AllowFocusedRow="True" />
+
+             <SettingsPager>
+                 <AllButton Visible="True" Text="Todos">
+                 </AllButton>
+             </SettingsPager>
+
         </dx:ASPxGridView>
 
 

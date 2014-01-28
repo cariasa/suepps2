@@ -34,11 +34,13 @@ Partial Class Cuantitativo_IndicadoresEvaluación
                 Response.Redirect("~/NoAccess.aspx")
             End If
 
-           Session("IdPrograma") = Request.QueryString.Get(0)
-
+            Session("IdPrograma") = uf.QueryStringDecode(Request.QueryString.Get(0))
+            Session("NomPrograma") = uf.QueryStringDecode(Request.QueryString.Get(1))
+            ASPxLabelTitulo.Text = "Asociar Indicadores de Evaluación a Programa " + Session("NomPrograma")
             SqlDataSourceIndicadoresEvaluacion.SelectParameters(0).DefaultValue = Session("IdPrograma")
             SqlDataSourceIndicadoresEvaluacion.DataBind()
-            ASPxGridView1.DataBind()
+            SqlDataSourceIndicadoresEvaluacion.InsertParameters(2).DefaultValue = Membership.GetUser.UserName
+            GrisIndicadoresEvaluacion.DataBind()
 
         End Using
     End Sub
@@ -65,7 +67,7 @@ Partial Class Cuantitativo_IndicadoresEvaluación
         SqlDataSourceIndicadoresEvaluacion.InsertParameters(1).DefaultValue = Session("IdPrograma")
         SqlDataSourceIndicadoresEvaluacion.Insert()
         SqlDataSourceIndicadoresEvaluacion.DataBind()
-        ASPxGridView1.DataBind()
+        GrisIndicadoresEvaluacion.DataBind()
 
     End Sub
 

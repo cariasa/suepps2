@@ -1,4 +1,4 @@
-﻿<%@ Page Language="VB" AutoEventWireup="false" CodeFile="Digitacion.aspx.vb" Inherits="Cuantitativo_DigitarInstrumento" MasterPageFile="~/Site.master" %>
+﻿<%@ Page Title="Digitación de Instrumentos de Evaluación" Language="VB" AutoEventWireup="false" CodeFile="Digitacion.aspx.vb" Inherits="Cuantitativo_DigitarInstrumento" MasterPageFile="~/Site.master" %>
 
 <%@ Register Assembly="DevExpress.Web.v13.1, Version=13.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web.ASPxEditors" TagPrefix="dx" %>
 

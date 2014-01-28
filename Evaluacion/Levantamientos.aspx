@@ -1,4 +1,4 @@
-﻿<%@ Page Language="VB" AutoEventWireup="false" CodeFile="Levantamientos.aspx.vb" Inherits="Evaluacion_Levantamientos" MasterPageFile="~/Site.master" %>
+﻿<%@ Page Title="Levantamientos por Programa" Language="VB" AutoEventWireup="false" CodeFile="Levantamientos.aspx.vb" Inherits="Evaluacion_Levantamientos" MasterPageFile="~/Site.master" %>
 
 <%@ Register Src="~/MOCA_UE.ascx" TagPrefix="uc1" TagName="MOCA_UE" %>
 
@@ -6,7 +6,13 @@
 </asp:Content>
 <asp:Content ID="cBody" ContentPlaceHolderID="MainContent" Runat="Server">
     <uc1:MOCA_UE runat="server" ID="MOCA_UE01" />
-    
+    <div>
+        <table>
+            <tr>
+                <td><dx:ASPxLabel ID="ASPxLabelTitulo" runat="server" Font-Size="Large" Text="Consultar Levantamientos por Programa"/></td>
+            </tr>
+        </table>
+    </div>
     <div>
 
         <dx:ASPxGridView ID="ASPxGridView1" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource1" KeyFieldName="IdPolitica" SettingsDetail-ShowDetailRow="true">
