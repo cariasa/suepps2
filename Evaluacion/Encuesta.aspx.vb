@@ -452,7 +452,11 @@ Partial Class RevisionSocial_MonitoreoCualitativo
                 SqlDataSourceEncabezado.InsertParameters(1).DefaultValue = Session("CodDigitador")
                 SqlDataSourceEncabezado.InsertParameters(2).DefaultValue = Session("IdAplicacion")
                 SqlDataSourceEncabezado.InsertParameters(3).DefaultValue = Membership.GetUser.UserName
+                SqlDataSourceEncabezado.InsertParameters("IdVivienda").DefaultValue = uf.QueryStringDecode(Request.QueryString.Get("IdVivienda"))
+                SqlDataSourceEncabezado.InsertParameters("IdHogar").DefaultValue = uf.QueryStringDecode(Request.QueryString.Get("IdHogar"))
+                SqlDataSourceEncabezado.InsertParameters("IdMiembro").DefaultValue = uf.QueryStringDecode(Request.QueryString.Get("IdMiembro"))
                 SqlDataSourceEncabezado.Insert()
+                'Agregar campos de ancla
 
                 Dim ContenedorObjetos As ArrayList
                 Dim ContenedorOpciones As ArrayList

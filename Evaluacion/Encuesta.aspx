@@ -113,7 +113,7 @@
 
 
                 <asp:SqlDataSource ID="SqlDataSourceEncabezado" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>"
-                    InsertCommand="INSERT INTO [EncabezadoRespuesta] ([CodigoFSU],[CodigoDigitador],[IdAplicacionInstrumento],[CreadoPor],[FechaCreacion],[Activo]) VALUES (@CodigoFSU, @CodigoDigitador, @IdAplicacionInstrumento, @Usuario,getDate(),1) 
+                    InsertCommand="INSERT INTO [EncabezadoRespuesta] ([CodigoFSU],[CodigoDigitador],[IdAplicacionInstrumento],[CreadoPor],[FechaCreacion],[Activo],[IdVivienda],[IdHogar],[IdMiembro]) VALUES (@CodigoFSU, @CodigoDigitador, @IdAplicacionInstrumento, @Usuario,getDate(),1,@IdVivienda,@IdHogar,@IdMiembro) 
                                 SELECT @IdEncabezadoRespuesta = SCOPE_IDENTITY() "
                     OnInserted="SqlDataSourceEncabezado_Inserted">
 
@@ -122,6 +122,9 @@
                         <asp:SessionParameter Name="CodigoDigitador" />
                         <asp:SessionParameter Name="IdAplicacionInstrumento" />
                         <asp:SessionParameter Name="Usuario" />
+                        <asp:SessionParameter Name="IdVivienda" />
+                        <asp:SessionParameter Name="IdHogar" />
+                        <asp:SessionParameter Name="IdMiembro" />
                         <asp:Parameter Direction="Output" Name="IdEncabezadoRespuesta" Type="Int32" />
                     </InsertParameters>
                 </asp:SqlDataSource>
