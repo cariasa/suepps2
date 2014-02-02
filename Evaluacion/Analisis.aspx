@@ -81,10 +81,8 @@
                                         <dx:GridViewDataTextColumn FieldName="IdRespuestaInstrumento" ReadOnly="True" Caption="#" VisibleIndex="0" Visible="true">
                                             <EditFormSettings Visible="False"></EditFormSettings>
                                         </dx:GridViewDataTextColumn>
-                                        <dx:GridViewDataTextColumn FieldName="RespuestaTexto" VisibleIndex="1" Caption="Respuesta Abierta"></dx:GridViewDataTextColumn>
-                                        <dx:GridViewDataTextColumn FieldName="RespuestaLikert" VisibleIndex="2"  Caption="Respuesta Likert" ></dx:GridViewDataTextColumn>  
-                                        
-                                        
+                                        <dx:GridViewDataTextColumn FieldName="RespuestaTexto" VisibleIndex="1" Caption="Respuesta "></dx:GridViewDataTextColumn>
+                                        <dx:GridViewDataTextColumn FieldName="RespuestaLikert" VisibleIndex="2"  Caption="Respuesta Likert" ></dx:GridViewDataTextColumn>
 
                                     </Columns>
                                  <SettingsPager>

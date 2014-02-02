@@ -80,7 +80,8 @@ Partial Class Cuantitativo_PreguntasPlantilla
 
                 SqlDataSourceOpciones.InsertParameters(0).DefaultValue = command.Parameters("@IdPreguntaPorPlantilla").Value
                 SqlDataSourceOpciones.InsertParameters(1).DefaultValue = "Otro"
-                SqlDataSourceOpciones.InsertParameters(2).DefaultValue = 0
+                SqlDataSourceOpciones.InsertParameters(2).DefaultValue = 99
+                SqlDataSourceOpciones.InsertParameters(4).DefaultValue = Membership.GetUser.UserName
                 SqlDataSourceOpciones.Insert()
                 SqlDataSourceOpciones.DataBind()
 
@@ -92,12 +93,14 @@ Partial Class Cuantitativo_PreguntasPlantilla
                 SqlDataSourceOpciones.InsertParameters(0).DefaultValue = command.Parameters("@IdPreguntaPorPlantilla").Value
                 SqlDataSourceOpciones.InsertParameters(1).DefaultValue = "Si"
                 SqlDataSourceOpciones.InsertParameters(2).DefaultValue = 1
+                SqlDataSourceOpciones.InsertParameters(4).DefaultValue = Membership.GetUser.UserName
                 SqlDataSourceOpciones.Insert()
                 SqlDataSourceOpciones.DataBind()
 
                 SqlDataSourceOpciones.InsertParameters(0).DefaultValue = command.Parameters("@IdPreguntaPorPlantilla").Value
                 SqlDataSourceOpciones.InsertParameters(1).DefaultValue = "No"
                 SqlDataSourceOpciones.InsertParameters(2).DefaultValue = 2
+                SqlDataSourceOpciones.InsertParameters(4).DefaultValue = Membership.GetUser.UserName
                 SqlDataSourceOpciones.Insert()
                 SqlDataSourceOpciones.DataBind()
 

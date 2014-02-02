@@ -112,9 +112,10 @@ Partial Class RevisionSocial_MonitoreoCualitativo
 
         Next
 
-        For j As Integer = 1 To totalotros
 
-            Dim box1 As ASPxTextBox = TryCast(Panel.FindControl("Otro" + CStr(contadorotros)), ASPxTextBox)
+        For j As Integer = 1 To totalotros - 1
+
+            Dim box1 As ASPxTextBox = TryCast(Panel.FindControl("Otro" + CStr(j)), ASPxTextBox)
             box1.Text = ""
 
         Next
@@ -155,7 +156,8 @@ Partial Class RevisionSocial_MonitoreoCualitativo
 
                         Dim IdEncabezado As String = CStr(Session("IdEncabezado"))
 
-                        If (NC.Requerida = True And box1.Text = " ") Then
+
+                        If (NC.Requerida = True And box1.Text = "") Then
 
                             MsgBox("Es Requerida de Fecha no puede estar en blanco")
 
@@ -172,7 +174,7 @@ Partial Class RevisionSocial_MonitoreoCualitativo
 
                         Dim IdEncabezado As String = CStr(Session("IdEncabezado"))
 
-                        If (NC.Requerida = True And box1.Text = " ") Then
+                        If (NC.Requerida = True And box1.Text = "") Then
 
                             MsgBox("Es Requerida Abierta no puede estar en blanco")
 
@@ -202,7 +204,7 @@ Partial Class RevisionSocial_MonitoreoCualitativo
 
                     If NC.Requerida = True And Mul.SelectedValue.Length = 0 Then
 
-                        'MsgBox("Es Requerida Linker no puede estar en blanco")
+                        MsgBox("Es Requerida Linker no puede estar en blanco")
 
                         Return False
 
@@ -228,14 +230,26 @@ Partial Class RevisionSocial_MonitoreoCualitativo
                     Dim Mul As New CheckBoxList()
                     Mul = TryCast(Panel.FindControl(NC.IDComponente), CheckBoxList)
 
+                    Dim Otrobox As New ASPxTextBox
+                    Otrobox = TryCast(Panel.FindControl("Otro" + CStr(contadorotros)), ASPxTextBox)
+
+                    If NC.Requerida = True And Mul.SelectedValue.Length = 0 And Otrobox.Text.Equals(" ") Then
+
+                        MsgBox("Es Requerida Multiple Otro no puede estar en blanco")
+
+                        Return False
+
+
+                    End If
+
                     If Mul.Items.Count > 1 Then
                         For s As Integer = 0 To Mul.Items.Count - 1
-
                             contadoropciones = contadoropciones + 1
                         Next
                     End If
 
                     contadoropciones = contadoropciones + 1
+                    contadorotros = contadorotros + 1
 
                 Else
 
@@ -257,9 +271,21 @@ Partial Class RevisionSocial_MonitoreoCualitativo
                     Dim Mul As New CheckBoxList()
                     Mul = TryCast(Panel.FindControl(NC.IDComponente), CheckBoxList)
 
+
+                    If NC.Requerida = True And Mul.SelectedValue.Length = 0 Then
+
+                        MsgBox("Es Requerida Multiple no puede estar en blanco")
+
+                        Return False
+
+
+                    End If
+
                     If Mul.Items.Count > 1 Then
                         For s As Integer = 0 To Mul.Items.Count - 1
-
+                            'Dim nodoo As NodoOpcion = New NodoOpcion()
+                            'nodoo = ContenedorOpciones(contadoropciones)
+                            'MsgBox(nodoo.Descripcion)
                             contadoropciones = contadoropciones + 1
                         Next
                     End If
@@ -283,7 +309,8 @@ Partial Class RevisionSocial_MonitoreoCualitativo
                     Dim Otrobox As New ASPxTextBox
                     Otrobox = TryCast(Panel.FindControl("Otro" + CStr(contadorotros)), ASPxTextBox)
 
-                    If NC.Requerida = True And Mul.Text = " " And Otrobox.Text = " " Then
+
+                    If NC.Requerida = True And Mul.Text.Equals("") And Otrobox.Text.Equals("") Then
 
                         MsgBox("Es Requerida Opcion no puede estar en blanco")
 
@@ -291,43 +318,56 @@ Partial Class RevisionSocial_MonitoreoCualitativo
 
                     Else
 
-                        If (Mul.Text <> " " And Otrobox.Text = " ") Then
+                        If (Mul.Text <> " " And Otrobox.Text.Equals(" ")) Then
 
                             Dim bandera As Boolean = False
+
+                            'MsgBox("Opciones 1: " + CStr(NC.NumOpciones))
 
                             For s As Integer = 0 To NC.NumOpciones - 1
                                 Dim nodoo As NodoOpcion = New NodoOpcion()
                                 nodoo = ContenedorOpciones(contadoropciones)
-
+                                'MsgBox(nodoo.Descripcion)
                                 If nodoo.Valor = Integer.Parse(Mul.Text) And nodoo.IdPreguntaM.Equals(NC.IdPregunta) Then
                                     bandera = True
                                 End If
                                 contadoropciones = contadoropciones + 1
                             Next
 
+                            contadoropciones = contadoropciones + 1
+                            contadorotros = contadorotros + 1
+
                             If (bandera = False) Then
 
-                                MsgBox("Opcion no valida verifique una que exista")
+                                MsgBox("Opcion no valida verifique una que exista/Unica Otro")
 
                                 Return False
 
-
                             End If
-
-                        ElseIf (Mul.Text = " " And Otrobox.Text <> " ") Then
 
                         ElseIf (Mul.Text <> " " And Otrobox.Text <> " ") Then
 
                             MsgBox("Opciones Varias Verifique")
 
                             Return False
+                        ElseIf (Mul.Text.Equals(" ") And Otrobox.Text <> " ") Then
+
+                            ' MsgBox("Opciones 2: " + CStr(NC.NumOpciones))
+
+                            For s As Integer = 0 To NC.NumOpciones - 1
+                                'Dim nodoo As NodoOpcion = New NodoOpcion()
+                                'nodoo = ContenedorOpciones(contadoropciones)
+                                'MsgBox(nodoo.Descripcion)
+                                contadoropciones = contadoropciones + 1
+                            Next
+
+                            contadorotros = contadorotros + 1
+
 
                         End If
 
 
                     End If
-
-                    contadorotros = contadorotros + 1
 
 
                 Else
@@ -346,9 +386,9 @@ Partial Class RevisionSocial_MonitoreoCualitativo
                     Dim Mul As New ASPxTextBox
                     Mul = TryCast(Panel.FindControl(NC.IDComponente), ASPxTextBox)
 
-                    If NC.Requerida = True And Mul.Text = " " Then
+                    If NC.Requerida = True And Mul.Text = "" Then
 
-                        'MsgBox("Es Requerida Opcion no puede estar en blanco")
+                        MsgBox("Es Requerida Opcion no puede estar en blanco")
 
                         Return False
 
@@ -360,6 +400,8 @@ Partial Class RevisionSocial_MonitoreoCualitativo
                             Dim nodoo As NodoOpcion = New NodoOpcion()
                             nodoo = ContenedorOpciones(contadoropciones)
 
+                            ' MsgBox(nodoo.Descripcion)
+
                             If nodoo.Valor = Integer.Parse(Mul.Text) And nodoo.IdPreguntaM.Equals(NC.IdPregunta) Then
                                 bandera = True
                             End If
@@ -368,7 +410,7 @@ Partial Class RevisionSocial_MonitoreoCualitativo
 
                         If (bandera = False) Then
 
-                            'MsgBox("Opcion no valida verifique una que exista")
+                            MsgBox("Opcion no valida verifique una que exista/SI/UNICA")
 
                             Return False
 
@@ -402,252 +444,327 @@ Partial Class RevisionSocial_MonitoreoCualitativo
 
         If GridAplicacion.VisibleRowCount = 1 Then
 
-            'If Validar() = True Then
-            contadoropciones = 0
-            contadorotros = 1
+            If Validar() = True Then
+                contadoropciones = 0
+                contadorotros = 1
 
-            SqlDataSourceEncabezado.InsertParameters(0).DefaultValue = Session("CodFSU")
-            SqlDataSourceEncabezado.InsertParameters(1).DefaultValue = Session("CodDigitador")
-            SqlDataSourceEncabezado.InsertParameters(2).DefaultValue = Session("IdAplicacion")
-            SqlDataSourceEncabezado.InsertParameters(3).DefaultValue = Membership.GetUser.UserName
-            SqlDataSourceEncabezado.Insert()
+                SqlDataSourceEncabezado.InsertParameters(0).DefaultValue = Session("CodFSU")
+                SqlDataSourceEncabezado.InsertParameters(1).DefaultValue = Session("CodDigitador")
+                SqlDataSourceEncabezado.InsertParameters(2).DefaultValue = Session("IdAplicacion")
+                SqlDataSourceEncabezado.InsertParameters(3).DefaultValue = Membership.GetUser.UserName
+                SqlDataSourceEncabezado.Insert()
 
-            Dim ContenedorObjetos As ArrayList
-            Dim ContenedorOpciones As ArrayList
+                Dim ContenedorObjetos As ArrayList
+                Dim ContenedorOpciones As ArrayList
 
-            ContenedorObjetos = Session("CRespuestas")
-            ContenedorOpciones = Session("COpciones")
-
-
-            Dim size As Integer = ContenedorObjetos.Count
-
-            For i As Integer = 0 To size - 1
-
-                Dim NC As Nodo = New Nodo()
-                NC = ContenedorObjetos(i)
+                ContenedorObjetos = Session("CRespuestas")
+                ContenedorOpciones = Session("COpciones")
 
 
-                If NC.TipoPregunta.Equals("1") Then
+                Dim size As Integer = ContenedorObjetos.Count
 
-                    Dim myControl1 As Control = Panel.FindControl(NC.IDComponente)
-                    If (Not myControl1 Is Nothing) Then
+                For i As Integer = 0 To size - 1
 
-                        If (NC.TipoRespuesta = 4) Then
+                    Dim NC As Nodo = New Nodo()
+                    NC = ContenedorObjetos(i)
 
-                            Dim box1 As ASPxDateEdit
-                            box1 = TryCast(Panel.FindControl(NC.IDComponente), ASPxDateEdit)
 
-                            Dim IdEncabezado As String = CStr(Session("IdEncabezado"))
+                    If NC.TipoPregunta.Equals("1") Then
 
-                            SqlRespuestas.InsertCommand = "INSERT INTO [RespuestasInstrumento] ([IdPreguntaPorInstrumento],[IdEncabezadoRespuesta],[RespuestaFecha],[Activo],[CreadoPor],[FechaCreacion]) VALUES (@IdPreguntaPorInstrumento, @IdEncabezadoRespuesta, @Respuesta, 1, @Usuario, getDate()) SELECT @IdRespuestaInstrumento = SCOPE_IDENTITY()"
+                        Dim myControl1 As Control = Panel.FindControl(NC.IDComponente)
+                        If (Not myControl1 Is Nothing) Then
+
+                            If (NC.TipoRespuesta = 4) Then
+
+                                Dim box1 As ASPxDateEdit
+                                box1 = TryCast(Panel.FindControl(NC.IDComponente), ASPxDateEdit)
+
+                                Dim IdEncabezado As String = CStr(Session("IdEncabezado"))
+
+                                SqlRespuestas.InsertCommand = "INSERT INTO [RespuestasInstrumento] ([IdPreguntaPorInstrumento],[IdEncabezadoRespuesta],[RespuestaFecha],[Activo],[CreadoPor],[FechaCreacion],[RespuestaTexto]) VALUES (@IdPreguntaPorInstrumento, @IdEncabezadoRespuesta, @Respuesta, 1, @Usuario, getDate(),@Respuesta) SELECT @IdRespuestaInstrumento = SCOPE_IDENTITY()"
+                                SqlRespuestas.InsertParameters(0).DefaultValue = NC.IdPregunta
+                                SqlRespuestas.InsertParameters(1).DefaultValue = IdEncabezado
+                                SqlRespuestas.InsertParameters(2).DefaultValue = box1.Text
+                                SqlRespuestas.InsertParameters(3).DefaultValue = Membership.GetUser.UserName
+                                SqlRespuestas.Insert()
+
+
+                            ElseIf (NC.TipoRespuesta = 2) Then
+
+                                Dim box1 As ASPxTextBox
+                                box1 = TryCast(Panel.FindControl(NC.IDComponente), ASPxTextBox)
+
+                                Dim IdEncabezado As String = CStr(Session("IdEncabezado"))
+
+                                SqlRespuestas.InsertCommand = "INSERT INTO [RespuestasInstrumento] ([IdPreguntaPorInstrumento],[IdEncabezadoRespuesta],[RespuestaTexto],[Activo],[CreadoPor],[FechaCreacion]) VALUES (@IdPreguntaPorInstrumento, @IdEncabezadoRespuesta, @Respuesta, 1, @Usuario, getDate()) SELECT @IdRespuestaInstrumento = SCOPE_IDENTITY()"
+                                SqlRespuestas.InsertParameters(0).DefaultValue = NC.IdPregunta
+                                SqlRespuestas.InsertParameters(1).DefaultValue = IdEncabezado
+                                SqlRespuestas.InsertParameters(2).DefaultValue = box1.Text
+                                SqlRespuestas.InsertParameters(3).DefaultValue = Membership.GetUser.UserName
+                                SqlRespuestas.Insert()
+
+                            ElseIf (NC.TipoRespuesta = 1) Then
+                                Dim box1 As ASPxTextBox
+                                box1 = TryCast(Panel.FindControl(NC.IDComponente), ASPxTextBox)
+
+                                Dim IdEncabezado As String = CStr(Session("IdEncabezado"))
+
+                                SqlRespuestas.InsertCommand = "INSERT INTO [RespuestasInstrumento] ([IdPreguntaPorInstrumento],[IdEncabezadoRespuesta],[RespuestaEntera],[Activo],[CreadoPor],[FechaCreacion],[RespuestaTexto]) VALUES (@IdPreguntaPorInstrumento, @IdEncabezadoRespuesta, @Respuesta, 1, @Usuario, getDate(),@Respuesta) SELECT @IdRespuestaInstrumento = SCOPE_IDENTITY()"
+                                SqlRespuestas.InsertParameters(0).DefaultValue = NC.IdPregunta
+                                SqlRespuestas.InsertParameters(1).DefaultValue = IdEncabezado
+                                SqlRespuestas.InsertParameters(2).DefaultValue = box1.Text
+                                SqlRespuestas.InsertParameters(3).DefaultValue = Membership.GetUser.UserName
+                                SqlRespuestas.Insert()
+                            ElseIf (NC.TipoRespuesta = 3) Then
+                                Dim box1 As ASPxTextBox
+                                box1 = TryCast(Panel.FindControl(NC.IDComponente), ASPxTextBox)
+
+                                Dim IdEncabezado As String = CStr(Session("IdEncabezado"))
+
+                                SqlRespuestas.InsertCommand = "INSERT INTO [RespuestasInstrumento] ([IdPreguntaPorInstrumento],[IdEncabezadoRespuesta],[RespuestaReal],[Activo],[CreadoPor],[FechaCreacion],[RespuestaTexto]) VALUES (@IdPreguntaPorInstrumento, @IdEncabezadoRespuesta, @Respuesta, 1, @Usuario, getDate(),@Respuesta]) SELECT @IdRespuestaInstrumento = SCOPE_IDENTITY()"
+                                SqlRespuestas.InsertParameters(0).DefaultValue = NC.IdPregunta
+                                SqlRespuestas.InsertParameters(1).DefaultValue = IdEncabezado
+                                SqlRespuestas.InsertParameters(2).DefaultValue = box1.Text
+                                SqlRespuestas.InsertParameters(3).DefaultValue = Membership.GetUser.UserName
+                                SqlRespuestas.Insert()
+
+                            End If
+
+                        Else
+                            'MsgBox("No encontro")
+                        End If
+
+                    End If
+
+                    If NC.TipoPregunta.Equals("2") Then
+
+                        Dim myControl1 As Control = Panel.FindControl(NC.IDComponente)
+                        If (Not myControl1 Is Nothing) Then
+                            Dim Mul As New RadioButtonList
+                            Mul = TryCast(Panel.FindControl(NC.IDComponente), RadioButtonList)
+
+                            SqlRespuestas.InsertCommand = "INSERT INTO [RespuestasInstrumento] ([IdPreguntaPorInstrumento],[IdEncabezadoRespuesta],[RespuestaLikert],[Activo],[CreadoPor],[FechaCreacion]) VALUES (@IdPreguntaPorInstrumento, @IdEncabezadoRespuesta, @Respuesta, 1, @Usuario, getDate()) SELECT @IdRespuestaInstrumento = SCOPE_IDENTITY()"
+
+
                             SqlRespuestas.InsertParameters(0).DefaultValue = NC.IdPregunta
-                            SqlRespuestas.InsertParameters(1).DefaultValue = IdEncabezado
-                            SqlRespuestas.InsertParameters(2).DefaultValue = box1.Text
+                            SqlRespuestas.InsertParameters(1).DefaultValue = CStr(Session("IdEncabezado"))
+                            SqlRespuestas.InsertParameters(2).DefaultValue = Mul.SelectedValue
                             SqlRespuestas.InsertParameters(3).DefaultValue = Membership.GetUser.UserName
                             SqlRespuestas.Insert()
 
-
-                        ElseIf (NC.TipoRespuesta = 2) Then
-
-                            Dim box1 As ASPxTextBox
-                            box1 = TryCast(Panel.FindControl(NC.IDComponente), ASPxTextBox)
-
-                            Dim IdEncabezado As String = CStr(Session("IdEncabezado"))
-
-                            SqlRespuestas.InsertCommand = "INSERT INTO [RespuestasInstrumento] ([IdPreguntaPorInstrumento],[IdEncabezadoRespuesta],[RespuestaTexto],[Activo],[CreadoPor],[FechaCreacion]) VALUES (@IdPreguntaPorInstrumento, @IdEncabezadoRespuesta, @Respuesta, 1, @Usuario, getDate()) SELECT @IdRespuestaInstrumento = SCOPE_IDENTITY()"
-                            SqlRespuestas.InsertParameters(0).DefaultValue = NC.IdPregunta
-                            SqlRespuestas.InsertParameters(1).DefaultValue = IdEncabezado
-                            SqlRespuestas.InsertParameters(2).DefaultValue = box1.Text
-                            SqlRespuestas.InsertParameters(3).DefaultValue = Membership.GetUser.UserName
-                            SqlRespuestas.Insert()
-
-                        ElseIf (NC.TipoRespuesta = 1) Then
-                            Dim box1 As ASPxTextBox
-                            box1 = TryCast(Panel.FindControl(NC.IDComponente), ASPxTextBox)
-
-                            Dim IdEncabezado As String = CStr(Session("IdEncabezado"))
-
-                            SqlRespuestas.InsertCommand = "INSERT INTO [RespuestasInstrumento] ([IdPreguntaPorInstrumento],[IdEncabezadoRespuesta],[RespuestaEntera],[Activo],[CreadoPor],[FechaCreacion]) VALUES (@IdPreguntaPorInstrumento, @IdEncabezadoRespuesta, @Respuesta, 1, @Usuario, getDate()) SELECT @IdRespuestaInstrumento = SCOPE_IDENTITY()"
-                            SqlRespuestas.InsertParameters(0).DefaultValue = NC.IdPregunta
-                            SqlRespuestas.InsertParameters(1).DefaultValue = IdEncabezado
-                            SqlRespuestas.InsertParameters(2).DefaultValue = box1.Text
-                            SqlRespuestas.InsertParameters(3).DefaultValue = Membership.GetUser.UserName
-                            SqlRespuestas.Insert()
-                        ElseIf (NC.TipoRespuesta = 3) Then
-                            Dim box1 As ASPxTextBox
-                            box1 = TryCast(Panel.FindControl(NC.IDComponente), ASPxTextBox)
-
-                            Dim IdEncabezado As String = CStr(Session("IdEncabezado"))
-
-                            SqlRespuestas.InsertCommand = "INSERT INTO [RespuestasInstrumento] ([IdPreguntaPorInstrumento],[IdEncabezadoRespuesta],[RespuestaReal],[Activo],[CreadoPor],[FechaCreacion]) VALUES (@IdPreguntaPorInstrumento, @IdEncabezadoRespuesta, @Respuesta, 1, @Usuario, getDate()) SELECT @IdRespuestaInstrumento = SCOPE_IDENTITY()"
-                            SqlRespuestas.InsertParameters(0).DefaultValue = NC.IdPregunta
-                            SqlRespuestas.InsertParameters(1).DefaultValue = IdEncabezado
-                            SqlRespuestas.InsertParameters(2).DefaultValue = box1.Text
-                            SqlRespuestas.InsertParameters(3).DefaultValue = Membership.GetUser.UserName
-                            SqlRespuestas.Insert()
+                        Else
 
                         End If
 
-                    Else
-                        'MsgBox("No encontro")
                     End If
 
-                End If
 
-                If NC.TipoPregunta.Equals("2") Then
+                    If NC.TipoPregunta.Equals("5") Then
 
-                    Dim myControl1 As Control = Panel.FindControl(NC.IDComponente)
-                    If (Not myControl1 Is Nothing) Then
-                        Dim Mul As New RadioButtonList
-                        Mul = TryCast(Panel.FindControl(NC.IDComponente), RadioButtonList)
+                        Dim myControl1 As Control = Panel.FindControl(NC.IDComponente)
 
-                        SqlRespuestas.InsertCommand = "INSERT INTO [RespuestasInstrumento] ([IdPreguntaPorInstrumento],[IdEncabezadoRespuesta],[RespuestaLikert],[Activo],[CreadoPor],[FechaCreacion]) VALUES (@IdPreguntaPorInstrumento, @IdEncabezadoRespuesta, @Respuesta, 1, @Usuario, getDate()) SELECT @IdRespuestaInstrumento = SCOPE_IDENTITY()"
+                        If (Not myControl1 Is Nothing) Then
 
 
-                        SqlRespuestas.InsertParameters(0).DefaultValue = NC.IdPregunta
-                        SqlRespuestas.InsertParameters(1).DefaultValue = CStr(Session("IdEncabezado"))
-                        SqlRespuestas.InsertParameters(2).DefaultValue = Mul.SelectedValue
-                        SqlRespuestas.InsertParameters(3).DefaultValue = Membership.GetUser.UserName
-                        SqlRespuestas.Insert()
+                            Dim Mul As New CheckBoxList()
+                            Mul = TryCast(Panel.FindControl(NC.IDComponente), CheckBoxList)
 
-                    Else
+                            SqlRespuestas.InsertCommand = "INSERT INTO [RespuestasInstrumento] ([IdPreguntaPorInstrumento],[IdEncabezadoRespuesta],[Activo],[CreadoPor],[FechaCreacion]) VALUES (@IdPreguntaPorInstrumento, @IdEncabezadoRespuesta,1, @Usuario, getDate()) SELECT @IdRespuestaInstrumento = SCOPE_IDENTITY()"
+
+
+                            SqlRespuestas.InsertParameters(0).DefaultValue = NC.IdPregunta
+                            SqlRespuestas.InsertParameters(1).DefaultValue = CStr(Session("IdEncabezado"))
+                            SqlRespuestas.InsertParameters(3).DefaultValue = Membership.GetUser.UserName
+
+                            SqlRespuestas.Insert()
+
+
+                            If Mul.Items.Count > 1 Then
+                                For s As Integer = 0 To Mul.Items.Count - 1
+                                    If Mul.Items(s).Selected = True Then
+
+
+                                        Dim nodoo As NodoOpcion = New NodoOpcion()
+                                        nodoo = ContenedorOpciones(contadoropciones)
+
+                                        If nodoo.Descripcion.Equals(Mul.Items(s).Text) And nodoo.IdPreguntaM.Equals(NC.IdPregunta) Then
+
+                                            SqlRespuestasOpciones.InsertCommand = "INSERT INTO [OpcionesRespuestaInstrumento] ([IdOpcionPreguntaPorInstrumento],[IdRespuestaInstrumento],[Activo],[CreadoPor],[FechaCreacion]) VALUES (" + nodoo.IdOp + ", " + CStr(Session("IdRespuestaPregunta")) + ",1, '" + Membership.GetUser.UserName + "', getDate())"
+                                            SqlRespuestasOpciones.Insert()
+
+                                        End If
+                                    End If
+                                    contadoropciones = contadoropciones + 1
+                                Next
+                            End If
+
+
+                            Dim boxotro As New ASPxTextBox()
+                            boxotro = TryCast(Panel.FindControl("Otro" + CStr(contadorotros)), ASPxTextBox)
+
+                            Dim nodooo As NodoOpcion = New NodoOpcion()
+                            nodooo = ContenedorOpciones(contadoropciones)
+                            contadoropciones = contadoropciones + 1
+
+                            SqlRespuestasOpciones.InsertCommand = "INSERT INTO [OpcionesRespuestaInstrumento] ([IdOpcionPreguntaPorInstrumento],[IdRespuestaInstrumento],[Activo],[CreadoPor],[FechaCreacion],[Otro]) VALUES (" + nodooo.IdOp + ", " + CStr(Session("IdRespuestaPregunta")) + ",1, '" + Membership.GetUser.UserName + "', getDate(),'" + boxotro.Text + "')"
+                            SqlRespuestasOpciones.Insert()
+                            contadorotros = contadorotros + 1
+
+
+                        Else
+
+                        End If
+
 
                     End If
 
-                End If
+
+                    If NC.TipoPregunta.Equals("3") Then
 
 
-                If NC.TipoPregunta.Equals("5") Then
+                        Dim myControl1 As Control = Panel.FindControl(NC.IDComponente)
 
-                    Dim myControl1 As Control = Panel.FindControl(NC.IDComponente)
-
-                    If (Not myControl1 Is Nothing) Then
+                        If (Not myControl1 Is Nothing) Then
 
 
-                        Dim Mul As New CheckBoxList()
-                        Mul = TryCast(Panel.FindControl(NC.IDComponente), CheckBoxList)
+                            Dim Mul As New CheckBoxList()
+                            Mul = TryCast(Panel.FindControl(NC.IDComponente), CheckBoxList)
 
-                        SqlRespuestas.InsertCommand = "INSERT INTO [RespuestasInstrumento] ([IdPreguntaPorInstrumento],[IdEncabezadoRespuesta],[Activo],[CreadoPor],[FechaCreacion]) VALUES (@IdPreguntaPorInstrumento, @IdEncabezadoRespuesta,1, @Usuario, getDate()) SELECT @IdRespuestaInstrumento = SCOPE_IDENTITY()"
-
-
-                        SqlRespuestas.InsertParameters(0).DefaultValue = NC.IdPregunta
-                        SqlRespuestas.InsertParameters(1).DefaultValue = CStr(Session("IdEncabezado"))
-                        SqlRespuestas.InsertParameters(3).DefaultValue = Membership.GetUser.UserName
-
-                        SqlRespuestas.Insert()
+                            SqlRespuestas.InsertCommand = "INSERT INTO [RespuestasInstrumento] ([IdPreguntaPorInstrumento],[IdEncabezadoRespuesta],[Activo],[CreadoPor],[FechaCreacion]) VALUES (@IdPreguntaPorInstrumento, @IdEncabezadoRespuesta,1, @Usuario, getDate()) SELECT @IdRespuestaInstrumento = SCOPE_IDENTITY()"
 
 
-                        If Mul.Items.Count > 1 Then
-                            For s As Integer = 0 To Mul.Items.Count - 1
-                                If Mul.Items(s).Selected = True Then
+                            SqlRespuestas.InsertParameters(0).DefaultValue = NC.IdPregunta
+                            SqlRespuestas.InsertParameters(1).DefaultValue = CStr(Session("IdEncabezado"))
+                            SqlRespuestas.InsertParameters(3).DefaultValue = Membership.GetUser.UserName
+
+                            SqlRespuestas.Insert()
 
 
+                            If Mul.Items.Count > 1 Then
+                                For s As Integer = 0 To Mul.Items.Count - 1
+                                    If Mul.Items(s).Selected = True Then
+
+
+                                        Dim nodoo As NodoOpcion = New NodoOpcion()
+                                        nodoo = ContenedorOpciones(contadoropciones)
+
+                                        If nodoo.Descripcion.Equals(Mul.Items(s).Text) And nodoo.IdPreguntaM.Equals(NC.IdPregunta) Then
+
+                                            SqlRespuestasOpciones.InsertCommand = "INSERT INTO [OpcionesRespuestaInstrumento] ([IdOpcionPreguntaPorInstrumento],[IdRespuestaInstrumento],[Activo],[CreadoPor],[FechaCreacion]) VALUES (" + nodoo.IdOp + ", " + CStr(Session("IdRespuestaPregunta")) + ",1, '" + Membership.GetUser.UserName + "', getDate())"
+                                            SqlRespuestasOpciones.Insert()
+
+                                        End If
+                                    End If
+                                    contadoropciones = contadoropciones + 1
+                                Next
+                            End If
+                        Else
+
+                        End If
+
+
+                    End If
+
+                    '----------------------------------------------------------------------------------------------------------------------------------
+
+                    If (NC.TipoPregunta.Equals("6")) Then
+
+                        Dim myControl1 As Control = Panel.FindControl(NC.IDComponente)
+                        If (Not myControl1 Is Nothing) Then
+
+                            Dim Mul As New ASPxTextBox
+                            Mul = TryCast(Panel.FindControl(NC.IDComponente), ASPxTextBox)
+
+                            Dim Otrobox As New ASPxTextBox
+                            Otrobox = TryCast(Panel.FindControl("Otro" + CStr(contadorotros)), ASPxTextBox)
+
+
+                            SqlRespuestas.InsertCommand = "INSERT INTO [RespuestasInstrumento] ([IdPreguntaPorInstrumento],[IdEncabezadoRespuesta],[Activo],[CreadoPor],[FechaCreacion]) VALUES (@IdPreguntaPorInstrumento, @IdEncabezadoRespuesta,1, @Usuario, getDate()) SELECT @IdRespuestaInstrumento = SCOPE_IDENTITY()"
+
+
+                            SqlRespuestas.InsertParameters(0).DefaultValue = NC.IdPregunta
+                            SqlRespuestas.InsertParameters(1).DefaultValue = CStr(Session("IdEncabezado"))
+                            SqlRespuestas.InsertParameters(3).DefaultValue = Membership.GetUser.UserName
+                            SqlRespuestas.Insert()
+
+                            Dim almacenarvalor As Integer = contadoropciones
+
+                            If (Mul.Text <> " " And Otrobox.Text = " ") Then
+
+                                For s As Integer = 0 To NC.NumOpciones - 1
                                     Dim nodoo As NodoOpcion = New NodoOpcion()
                                     nodoo = ContenedorOpciones(contadoropciones)
 
-                                    If nodoo.Descripcion.Equals(Mul.Items(s).Text) And nodoo.IdPreguntaM.Equals(NC.IdPregunta) Then
+                                    If nodoo.Valor = Integer.Parse(Mul.Text) And nodoo.IdPreguntaM.Equals(NC.IdPregunta) Then
+                                        'Es una respuesta seleccionada de esa pregunta, insertar opcion 
 
                                         SqlRespuestasOpciones.InsertCommand = "INSERT INTO [OpcionesRespuestaInstrumento] ([IdOpcionPreguntaPorInstrumento],[IdRespuestaInstrumento],[Activo],[CreadoPor],[FechaCreacion]) VALUES (" + nodoo.IdOp + ", " + CStr(Session("IdRespuestaPregunta")) + ",1, '" + Membership.GetUser.UserName + "', getDate())"
                                         SqlRespuestasOpciones.Insert()
+                                        SqlRespuestas.UpdateCommand = "UPDATE [RespuestasInstrumento] SET [RespuestaTexto]='" + nodoo.Descripcion + "',[ActualizadoPor]='" + Membership.GetUser.UserName + "', [FechaActualizacion]=getDate() WHERE  [IdRespuestaInstrumento] = " + Session("IdRespuestaPregunta") + ""
+                                        SqlRespuestas.Update()
+
 
                                     End If
-                                End If
-                                contadoropciones = contadoropciones + 1
-                            Next
-                        End If
+                                    contadoropciones = contadoropciones + 1
+                                Next
 
 
-                        Dim boxotro As New ASPxTextBox()
-                        boxotro = TryCast(Panel.FindControl("Otro" + CStr(contadorotros)), ASPxTextBox)
+                            End If
 
-                        Dim nodooo As NodoOpcion = New NodoOpcion()
-                        nodooo = ContenedorOpciones(contadoropciones)
-                        contadoropciones = contadoropciones + 1
+                            If (Mul.Text = " " And Otrobox.Text <> " ") Then
 
-                        SqlRespuestasOpciones.InsertCommand = "INSERT INTO [OpcionesRespuestaInstrumento] ([IdOpcionPreguntaPorInstrumento],[IdRespuestaInstrumento],[Activo],[CreadoPor],[FechaCreacion],[Otro]) VALUES (" + nodooo.IdOp + ", " + CStr(Session("IdRespuestaPregunta")) + ",1, '" + Membership.GetUser.UserName + "', getDate(),'" + boxotro.Text + "')"
-                        SqlRespuestasOpciones.Insert()
-                        contadorotros = contadorotros + 1
+                                contadoropciones = almacenarvalor
 
-
-                    Else
-
-                    End If
-
-
-                End If
-
-
-                If NC.TipoPregunta.Equals("3") Then
-
-
-                    Dim myControl1 As Control = Panel.FindControl(NC.IDComponente)
-
-                    If (Not myControl1 Is Nothing) Then
-
-
-                        Dim Mul As New CheckBoxList()
-                        Mul = TryCast(Panel.FindControl(NC.IDComponente), CheckBoxList)
-
-                        SqlRespuestas.InsertCommand = "INSERT INTO [RespuestasInstrumento] ([IdPreguntaPorInstrumento],[IdEncabezadoRespuesta],[Activo],[CreadoPor],[FechaCreacion]) VALUES (@IdPreguntaPorInstrumento, @IdEncabezadoRespuesta,1, @Usuario, getDate()) SELECT @IdRespuestaInstrumento = SCOPE_IDENTITY()"
-
-
-                        SqlRespuestas.InsertParameters(0).DefaultValue = NC.IdPregunta
-                        SqlRespuestas.InsertParameters(1).DefaultValue = CStr(Session("IdEncabezado"))
-                        SqlRespuestas.InsertParameters(3).DefaultValue = Membership.GetUser.UserName
-
-                        SqlRespuestas.Insert()
-
-
-                        If Mul.Items.Count > 1 Then
-                            For s As Integer = 0 To Mul.Items.Count - 1
-                                If Mul.Items(s).Selected = True Then
-
-
+                                For s As Integer = 0 To NC.NumOpciones - 1
                                     Dim nodoo As NodoOpcion = New NodoOpcion()
                                     nodoo = ContenedorOpciones(contadoropciones)
 
-                                    If nodoo.Descripcion.Equals(Mul.Items(s).Text) And nodoo.IdPreguntaM.Equals(NC.IdPregunta) Then
+                                    If nodoo.Descripcion = "Otro" And nodoo.IdPreguntaM.Equals(NC.IdPregunta) Then
+                                        'Es una respuesta seleccionada de esa pregunta, insertar opcion 
 
-                                        SqlRespuestasOpciones.InsertCommand = "INSERT INTO [OpcionesRespuestaInstrumento] ([IdOpcionPreguntaPorInstrumento],[IdRespuestaInstrumento],[Activo],[CreadoPor],[FechaCreacion]) VALUES (" + nodoo.IdOp + ", " + CStr(Session("IdRespuestaPregunta")) + ",1, '" + Membership.GetUser.UserName + "', getDate())"
+                                        SqlRespuestasOpciones.InsertCommand = "INSERT INTO [OpcionesRespuestaInstrumento] ([IdOpcionPreguntaPorInstrumento],[IdRespuestaInstrumento],[Activo],[CreadoPor],[FechaCreacion],[Otro]) VALUES (" + nodoo.IdOp + ", " + CStr(Session("IdRespuestaPregunta")) + ",1, '" + Membership.GetUser.UserName + "', getDate(),'" + Otrobox.Text + "')"
                                         SqlRespuestasOpciones.Insert()
+                                        SqlRespuestas.UpdateCommand = "UPDATE [RespuestasInstrumento] SET [RespuestaTexto]='" + Otrobox.Text + "',[ActualizadoPor]='" + Membership.GetUser.UserName + "', [FechaActualizacion]=getDate() WHERE  [IdRespuestaInstrumento] = " + CStr(Session("IdRespuestaPregunta")) + ""
+                                        SqlRespuestas.Update()
 
                                     End If
-                                End If
-                                contadoropciones = contadoropciones + 1
-                            Next
+                                    contadoropciones = contadoropciones + 1
+                                Next
+
+                            End If
+
+                            contadorotros = contadorotros + 1
+
+
+                        Else
+                            'MsgBox("No encontro")
                         End If
-                    Else
 
                     End If
 
-
-                End If
-
-                '----------------------------------------------------------------------------------------------------------------------------------
-
-                If (NC.TipoPregunta.Equals("6")) Then
-
-                    Dim myControl1 As Control = Panel.FindControl(NC.IDComponente)
-                    If (Not myControl1 Is Nothing) Then
-
-                        Dim Mul As New ASPxTextBox
-                        Mul = TryCast(Panel.FindControl(NC.IDComponente), ASPxTextBox)
-
-                        Dim Otrobox As New ASPxTextBox
-                        Otrobox = TryCast(Panel.FindControl("Otro" + CStr(contadorotros)), ASPxTextBox)
+                    '----------------------------------------------------------------------------------------------------------------------------------
 
 
-                        SqlRespuestas.InsertCommand = "INSERT INTO [RespuestasInstrumento] ([IdPreguntaPorInstrumento],[IdEncabezadoRespuesta],[Activo],[CreadoPor],[FechaCreacion]) VALUES (@IdPreguntaPorInstrumento, @IdEncabezadoRespuesta,1, @Usuario, getDate()) SELECT @IdRespuestaInstrumento = SCOPE_IDENTITY()"
+                    If (NC.TipoPregunta.Equals("4") Or NC.TipoPregunta.Equals("7")) Then
+
+                        Dim myControl1 As Control = Panel.FindControl(NC.IDComponente)
+                        If (Not myControl1 Is Nothing) Then
+                            'Dim Mul As New RadioButtonList
+                            'Mul = TryCast(Panel.FindControl(NC.IDComponente), RadioButtonList)
+
+                            Dim Mul As New ASPxTextBox
+                            Mul = TryCast(Panel.FindControl(NC.IDComponente), ASPxTextBox)
+
+                            SqlRespuestas.InsertCommand = "INSERT INTO [RespuestasInstrumento] ([IdPreguntaPorInstrumento],[IdEncabezadoRespuesta],[Activo],[CreadoPor],[FechaCreacion]) VALUES (@IdPreguntaPorInstrumento, @IdEncabezadoRespuesta,1, @Usuario, getDate()) SELECT @IdRespuestaInstrumento = SCOPE_IDENTITY()"
 
 
-                        SqlRespuestas.InsertParameters(0).DefaultValue = NC.IdPregunta
-                        SqlRespuestas.InsertParameters(1).DefaultValue = CStr(Session("IdEncabezado"))
-                        SqlRespuestas.InsertParameters(3).DefaultValue = Membership.GetUser.UserName
-                        SqlRespuestas.Insert()
+                            SqlRespuestas.InsertParameters(0).DefaultValue = NC.IdPregunta
+                            SqlRespuestas.InsertParameters(1).DefaultValue = CStr(Session("IdEncabezado"))
+                            SqlRespuestas.InsertParameters(3).DefaultValue = Membership.GetUser.UserName
+                            SqlRespuestas.InsertParameters(2).DefaultValue =
+                            SqlRespuestas.Insert()
 
-                        Dim almacenarvalor As Integer = contadoropciones
 
-                        If (Mul.Text <> " " And Otrobox.Text = " ") Then
 
                             For s As Integer = 0 To NC.NumOpciones - 1
                                 Dim nodoo As NodoOpcion = New NodoOpcion()
@@ -658,98 +775,32 @@ Partial Class RevisionSocial_MonitoreoCualitativo
 
                                     SqlRespuestasOpciones.InsertCommand = "INSERT INTO [OpcionesRespuestaInstrumento] ([IdOpcionPreguntaPorInstrumento],[IdRespuestaInstrumento],[Activo],[CreadoPor],[FechaCreacion]) VALUES (" + nodoo.IdOp + ", " + CStr(Session("IdRespuestaPregunta")) + ",1, '" + Membership.GetUser.UserName + "', getDate())"
                                     SqlRespuestasOpciones.Insert()
+                                    SqlRespuestas.UpdateCommand = "UPDATE [RespuestasInstrumento] SET [RespuestaTexto]='" + nodoo.Descripcion + "',[ActualizadoPor]='" + Membership.GetUser.UserName + "', [FechaActualizacion]=getDate() WHERE  [IdRespuestaInstrumento] = " + CStr(Session("IdRespuestaPregunta")) + ""
+                                    SqlRespuestas.Update()
+
 
                                 End If
                                 contadoropciones = contadoropciones + 1
                             Next
 
-
+                        Else
+                            'MsgBox("No encontro")
                         End If
 
-                        If (Mul.Text = " " And Otrobox.Text <> " ") Then
-
-                            contadoropciones = almacenarvalor
-
-                            For s As Integer = 0 To NC.NumOpciones - 1
-                                Dim nodoo As NodoOpcion = New NodoOpcion()
-                                nodoo = ContenedorOpciones(contadoropciones)
-
-                                If nodoo.Descripcion = "Otro" And nodoo.IdPreguntaM.Equals(NC.IdPregunta) Then
-                                    'Es una respuesta seleccionada de esa pregunta, insertar opcion 
-
-                                    SqlRespuestasOpciones.InsertCommand = "INSERT INTO [OpcionesRespuestaInstrumento] ([IdOpcionPreguntaPorInstrumento],[IdRespuestaInstrumento],[Activo],[CreadoPor],[FechaCreacion],[Otro]) VALUES (" + nodoo.IdOp + ", " + CStr(Session("IdRespuestaPregunta")) + ",1, '" + Membership.GetUser.UserName + "', getDate(),'" + Otrobox.Text + "')"
-                                    SqlRespuestasOpciones.Insert()
-
-                                End If
-                                contadoropciones = contadoropciones + 1
-                            Next
-
-                        End If
-
-                        contadorotros = contadorotros + 1
-
-
-                    Else
-                        'MsgBox("No encontro")
                     End If
 
-                End If
 
-                '----------------------------------------------------------------------------------------------------------------------------------
+                Next
 
+                'MsgBox("Guardado con Éxito")
 
-                If (NC.TipoPregunta.Equals("4") Or NC.TipoPregunta.Equals("7")) Then
+                Limpiar()
 
-                    Dim myControl1 As Control = Panel.FindControl(NC.IDComponente)
-                    If (Not myControl1 Is Nothing) Then
-                        'Dim Mul As New RadioButtonList
-                        'Mul = TryCast(Panel.FindControl(NC.IDComponente), RadioButtonList)
-
-                        Dim Mul As New ASPxTextBox
-                        Mul = TryCast(Panel.FindControl(NC.IDComponente), ASPxTextBox)
-
-                        SqlRespuestas.InsertCommand = "INSERT INTO [RespuestasInstrumento] ([IdPreguntaPorInstrumento],[IdEncabezadoRespuesta],[Activo],[CreadoPor],[FechaCreacion]) VALUES (@IdPreguntaPorInstrumento, @IdEncabezadoRespuesta,1, @Usuario, getDate()) SELECT @IdRespuestaInstrumento = SCOPE_IDENTITY()"
+            End If
 
 
-                        SqlRespuestas.InsertParameters(0).DefaultValue = NC.IdPregunta
-                        SqlRespuestas.InsertParameters(1).DefaultValue = CStr(Session("IdEncabezado"))
-                        SqlRespuestas.InsertParameters(3).DefaultValue = Membership.GetUser.UserName
-                        SqlRespuestas.Insert()
-
-
-
-                        For s As Integer = 0 To NC.NumOpciones - 1
-                            Dim nodoo As NodoOpcion = New NodoOpcion()
-                            nodoo = ContenedorOpciones(contadoropciones)
-
-                            If nodoo.Valor = Integer.Parse(Mul.Text) And nodoo.IdPreguntaM.Equals(NC.IdPregunta) Then
-                                'Es una respuesta seleccionada de esa pregunta, insertar opcion 
-
-                                SqlRespuestasOpciones.InsertCommand = "INSERT INTO [OpcionesRespuestaInstrumento] ([IdOpcionPreguntaPorInstrumento],[IdRespuestaInstrumento],[Activo],[CreadoPor],[FechaCreacion]) VALUES (" + nodoo.IdOp + ", " + CStr(Session("IdRespuestaPregunta")) + ",1, '" + Membership.GetUser.UserName + "', getDate())"
-                                SqlRespuestasOpciones.Insert()
-
-                            End If
-                            contadoropciones = contadoropciones + 1
-                        Next
-
-                    Else
-                        'MsgBox("No encontro")
-                    End If
-
-                End If
-
-
-            Next
-
-            'MsgBox("Guardado con Éxito")
-
-            Limpiar()
 
         End If
-
-
-
-        'End If
 
 
     End Sub

@@ -178,7 +178,7 @@ Partial Class Cuantitativo_PreguntasInstrumento
 
                 SqlDataSourceOpciones.InsertParameters(0).DefaultValue = command.Parameters("@IdPreguntaPorInstrumento").Value
                 SqlDataSourceOpciones.InsertParameters(1).DefaultValue = "Otro"
-                SqlDataSourceOpciones.InsertParameters(2).DefaultValue = 0
+                SqlDataSourceOpciones.InsertParameters(2).DefaultValue = 99
                 SqlDataSourceOpciones.InsertParameters(4).DefaultValue = Membership.GetUser.UserName
                 SqlDataSourceOpciones.Insert()
                 SqlDataSourceOpciones.DataBind()

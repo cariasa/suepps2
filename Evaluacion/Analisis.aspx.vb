@@ -56,7 +56,7 @@ Partial Class Evaluacion_Levantamientos
 
         Dim Tipo As Integer = Session("IdTipo")
 
-        If (3 = Tipo Or 4 = Tipo Or 5 = Tipo Or 6 = Tipo Or 7 = Tipo) Then
+        If (3 = Tipo Or 5 = Tipo) Then
 
             Return True
         Else
