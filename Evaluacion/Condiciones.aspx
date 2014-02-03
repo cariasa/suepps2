@@ -5,6 +5,18 @@
 <asp:Content ID="cHeader" ContentPlaceHolderID="HeadContent" runat="Server">
 </asp:Content>
 <asp:Content ID="cBody" ContentPlaceHolderID="MainContent" runat="Server">
+    <script type="text/javascript">
+        var command;
+        function OnBeginCallback(s, e) {
+            command = e.command;
+        }
+        function OnEndCallback(s, e) {
+            if (command == "STARTINSERT") {
+                if (s.cpCancelInsert)
+                    alert("Operando1 y Operando2 no pueden ser vacío ");
+            }
+        }
+    </script>
     <uc1:MOCA_UE runat="server" ID="MOCA_UE01" />
     <div>
         <div>
@@ -25,7 +37,7 @@
 
         </div>
 
-        <dx:ASPxGridView ID="ASPxGridViewCondiciones" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSourceCondiciones" KeyFieldName="IdCondicion" Settings-ShowFilterRow="true">
+        <dx:ASPxGridView ID="ASPxGridViewCondiciones" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSourceCondiciones" KeyFieldName="IdCondicion" Settings-ShowFilterRow="true" >
             <Columns>
                 <%--<dx:GridViewDataTextColumn FieldName="Operador" VisibleIndex="7"></dx:GridViewDataTextColumn>--%>
 
@@ -94,8 +106,9 @@
             </SettingsPager>
 
             <Settings ShowFilterRow="True"></Settings>
+            <ClientSideEvents BeginCallback="OnBeginCallback" EndCallback="OnEndCallback" />
         </dx:ASPxGridView>
-        <asp:SqlDataSource runat="server" ID="SqlDataSourceCondiciones" ConnectionString='<%$ ConnectionStrings:SUEPPSConnectionString %>'
+        <asp:SqlDataSource runat="server" ID="SqlDataSourceCondiciones" ConnectionString='<%$ ConnectionStrings:SUEPPSConnectionString %>' 
             SelectCommand="SELECT * FROM [Condiciones] WHERE [IdVariable]=@IdVariable AND [Activo]=1"
             >
             <SelectParameters>

@@ -54,4 +54,7 @@ Partial Class Evaluacion_Condiciones
         e.NewValues("Total") = False
         e.NewValues("Raiz") = False
     End Sub
+
+
+    
 End Class
