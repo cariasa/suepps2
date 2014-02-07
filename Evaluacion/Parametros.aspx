@@ -293,7 +293,6 @@
                             <asp:SqlDataSource runat="server" ID="SqlDataSourceSectores" ConnectionString='<%$ ConnectionStrings:SUEPPSConnectionString %>'
                                 SelectCommand="SELECT IdSectorIndicador, DescripcionSectorIndicador FROM [vROISectorIndicadores]"></asp:SqlDataSource>
 
-
                             <asp:SqlDataSource runat="server" ID="SqlDataSourceIndicadoresCombo" ConnectionString='<%$ ConnectionStrings:SUEPPSConnectionString %>'
                                 SelectCommand="SELECT IdIndicador, DescripcionIndicador FROM [Indicadores]"></asp:SqlDataSource>
 

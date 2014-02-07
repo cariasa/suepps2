@@ -31,7 +31,7 @@
 
 
 
-                <dx:ASPxGridView ID="ASPxGridView1" runat="server" AutoGenerateColumns="True" Visible="false" DataSourceID="SqlAplicacion"></dx:ASPxGridView>
+                <dx:ASPxGridView ID="GridAplicacion" runat="server" AutoGenerateColumns="True" Visible="false" DataSourceID="SqlAplicacion"></dx:ASPxGridView>
 
                 <asp:SqlDataSource ID="SqlAplicacion" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" SelectCommand="SELECT * FROM [AplicacionInstrumento] where IdAplicacionInstrumento= @IdAplicacionInstrumento and Activo=1">
 
@@ -113,7 +113,7 @@
 
 
                 <asp:SqlDataSource ID="SqlDataSourceEncabezado" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>"
-                    InsertCommand="INSERT INTO [EncabezadoRespuesta] ([CodigoFSU],[CodigoDigitador],[IdAplicacionInstrumento],[CreadoPor],[FechaCreacion],[Activo]) VALUES (@CodigoFSU, @CodigoDigitador, @IdAplicacionInstrumento, 'PACO',getDate(),1) 
+                    InsertCommand="INSERT INTO [EncabezadoRespuesta] ([CodigoFSU],[CodigoDigitador],[IdAplicacionInstrumento],[CreadoPor],[FechaCreacion],[Activo],[IdVivienda],[IdHogar],[IdMiembro]) VALUES (@CodigoFSU, @CodigoDigitador, @IdAplicacionInstrumento, @Usuario,getDate(),1,@IdVivienda,@IdHogar,@IdMiembro) 
                                 SELECT @IdEncabezadoRespuesta = SCOPE_IDENTITY() "
                     OnInserted="SqlDataSourceEncabezado_Inserted">
 
@@ -121,6 +121,10 @@
                         <asp:SessionParameter Name="CodigoFSU" />
                         <asp:SessionParameter Name="CodigoDigitador" />
                         <asp:SessionParameter Name="IdAplicacionInstrumento" />
+                        <asp:SessionParameter Name="Usuario" />
+                        <asp:SessionParameter Name="IdVivienda" />
+                        <asp:SessionParameter Name="IdHogar" />
+                        <asp:SessionParameter Name="IdMiembro" />
                         <asp:Parameter Direction="Output" Name="IdEncabezadoRespuesta" Type="Int32" />
                     </InsertParameters>
                 </asp:SqlDataSource>
@@ -131,17 +135,16 @@
 
 
                 <asp:SqlDataSource ID="SqlRespuestas" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>"
-                    InsertCommand="INSERT INTO [RespuestasInstrumento] ([IdPreguntaPorInstrumento],[IdEncabezadoRespuesta],[RespuestaTexto],[RespuestaLikert],[Activo],[CreadoPor],[FechaCreacion]) VALUES (@IdPreguntaPorInstrumento, @IdEncabezadoRespuesta, @RespuestaTexto, @RespuestaLikert, 1, @Usuario, getDate()) 
-                                SELECT @IdRespuestaInstrumento = SCOPE_IDENTITY() "
+                   
                     OnInserted="SqlRespuestas_Inserted">
 
                     <InsertParameters>
                         <asp:SessionParameter Name="IdPreguntaPorInstrumento" />
                         <asp:SessionParameter Name="IdEncabezadoRespuesta" />
-                        <asp:SessionParameter Name="RespuestaTexto" />
-                        <asp:SessionParameter Name="RespuestaLikert" />
+                        <asp:SessionParameter Name="Respuesta" />
                         <asp:SessionParameter Name="Usuario" />
                         <asp:Parameter Direction="Output" Name="IdRespuestaInstrumento" Type="Int32" />
+
 
                     </InsertParameters>
                 </asp:SqlDataSource>

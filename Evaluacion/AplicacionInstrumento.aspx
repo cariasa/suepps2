@@ -23,9 +23,9 @@
                 </tr>
             </table>
         </div>
-        <dx:ASPxGridView ID="ASPxGridView1" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource1" KeyFieldName="IdAplicacionInstrumento">
+        <dx:ASPxGridView ID="GridAplicacion" runat="server" AutoGenerateColumns="False" DataSourceID="SqlAplicacion" KeyFieldName="IdAplicacionInstrumento">
             <Columns>
-                <dx:GridViewDataTextColumn FieldName="IdAplicacionInstrumento" ReadOnly="True" VisibleIndex="4" Visible="true" Caption="CodigoDeDigitacion">
+                <dx:GridViewDataTextColumn FieldName="IdAplicacionInstrumento" ReadOnly="True" VisibleIndex="4" Visible="true" Caption="Código de Digitación">
                     <EditFormSettings Visible="False" />
                 </dx:GridViewDataTextColumn>
 
@@ -87,12 +87,12 @@
         </dx:ASPxGridView>
 
 
-        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" 
+        <asp:SqlDataSource ID="SqlAplicacion" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" 
             
             
             SelectCommand="SELECT * FROM [AplicacionInstrumento] where [IdInstrumentoDeEvaluacion]=@IdInstrumentoDeEvaluacion and [Activo]=1"
-            InsertCommand="INSERT INTO [AplicacionInstrumento] ([IdMomentoAplicacion],[IdInstrumentoDeEvaluacion],[FechaAplicacion],[UsaFSU],[CreadoPor],[FechaCreacion],[Activo]) VALUES (@IdMomentoAplicacion,@IdInstrumentoDeEvaluacion,@FechaAplicacion,@UsaFSU,'PACO', getDate(), 1)"
-            UpdateCommand="UPDATE [AplicacionInstrumento] SET [IdMomentoAplicacion]=@IdMomentoAplicacion,[FechaAplicacion]=@FechaAplicacion,[UsaFSU]=@UsaFSU, [ActualizadoPor]='PACO', [FechaActualizacion]=getDate() WHERE [IdAplicacionInstrumento] = @IdAplicacionInstrumento"
+            InsertCommand="INSERT INTO [AplicacionInstrumento] ([IdMomentoAplicacion],[IdInstrumentoDeEvaluacion],[FechaAplicacion],[UsaFSU],[CreadoPor],[FechaCreacion],[Activo]) VALUES (@IdMomentoAplicacion,@IdInstrumentoDeEvaluacion,@FechaAplicacion,@UsaFSU,@Usuario, getDate(), 1)"
+            UpdateCommand="UPDATE [AplicacionInstrumento] SET [IdMomentoAplicacion]=@IdMomentoAplicacion,[FechaAplicacion]=@FechaAplicacion,[UsaFSU]=@UsaFSU, [ActualizadoPor]=@Usuario, [FechaActualizacion]=getDate() WHERE [IdAplicacionInstrumento] = @IdAplicacionInstrumento"
             DeleteCommand="UPDATE [AplicacionInstrumento] SET [Activo]=0 WHERE [IdAplicacionInstrumento] = @IdAplicacionInstrumento"
                   
             >
@@ -108,6 +108,7 @@
                 <asp:SessionParameter Name="IdInstrumentoDeEvaluacion" />
                 <asp:FormParameter Name="FechaAplicacion" />
                 <asp:FormParameter Name="UsaFSU" />
+                <asp:SessionParameter Name="Usuario" />
 
             </InsertParameters>
 
@@ -116,6 +117,7 @@
                 <asp:FormParameter Name="FechaAplicacion" />
                 <asp:FormParameter Name="UsaFSU" />
                 <asp:FormParameter Name="IdAplicacionInstrumento" />
+                <asp:SessionParameter Name="Usuario" />
                
 
             </UpdateParameters>

@@ -33,17 +33,34 @@
                     <EditFormSettings Visible="False"></EditFormSettings>
                 </dx:GridViewDataTextColumn>
 
-                <dx:GridViewDataComboBoxColumn Caption="Variable" FieldName="IdVariable" VisibleIndex="1" Visible="false">
-                    <PropertiesComboBox DataSourceID="SqlDataSourceVariable" TextField="NombreVariable" ValueField="IdVariable">
-                    </PropertiesComboBox>
-                    <Settings AllowAutoFilter="True" AutoFilterCondition="Contains" FilterMode="DisplayText" />
-                    <EditFormSettings Visible="False" />
+                <dx:GridViewDataComboBoxColumn VisibleIndex="1" FieldName="IdVariable" Caption="Variable" EditFormSettings-Visible="False">
+                    <PropertiesComboBox ValueType="System.String"
+                        DataSourceID="SqlDataSourceVariable"
+                        ValueField="IdVariable"
+                        TextField="NombreVariable" />
+                    <Settings AllowAutoFilter="True" />
+                    <Settings AutoFilterCondition="Contains" />
+                    <Settings FilterMode="DisplayText" />
+
+
+                    <EditFormSettings Visible="False"></EditFormSettings>
+
+
                 </dx:GridViewDataComboBoxColumn>
-                <dx:GridViewDataComboBoxColumn Caption="Tipo Condición" FieldName="IdTipoCondicion" VisibleIndex="2">
-                    <PropertiesComboBox DataSourceID="SqlDataSourceTipoCondicion" TextField="DescripcionTipoCondicion" ValueField="IdTipoCondicion">
-                    </PropertiesComboBox>
-                    <Settings AllowAutoFilter="True" AutoFilterCondition="Contains" FilterMode="DisplayText" />
-                    <EditFormSettings Visible="True" />
+
+                <dx:GridViewDataComboBoxColumn VisibleIndex="2" FieldName="IdTipoCondicion" Caption="Tipo Condicion" EditFormSettings-Visible="True">
+                    <PropertiesComboBox ValueType="System.String"
+                        DataSourceID="SqlDataSourceTipoCondicion"
+                        ValueField="IdTipoCondicion"
+                        TextField="DescripcionTipoCondicion" />
+                    <Settings AllowAutoFilter="True" />
+                    <Settings AutoFilterCondition="Contains" />
+                    <Settings FilterMode="DisplayText" />
+
+
+                    <EditFormSettings Visible="True"></EditFormSettings>
+
+
                 </dx:GridViewDataComboBoxColumn>
 
 
@@ -56,15 +73,17 @@
                 <dx:GridViewDataCheckColumn FieldName="Raiz" VisibleIndex="5"></dx:GridViewDataCheckColumn>
                 <dx:GridViewDataCheckColumn FieldName="Total" VisibleIndex="6"></dx:GridViewDataCheckColumn>
                 <dx:GridViewDataTextColumn FieldName="Operando1" VisibleIndex="7" Caption="Identificador"></dx:GridViewDataTextColumn>
+                <%--<dx:GridViewDataTextColumn FieldName="Operador" VisibleIndex="7"></dx:GridViewDataTextColumn>--%>
+
                 <dx:GridViewDataComboBoxColumn FieldName="Operador" VisibleIndex="8">
                     <PropertiesComboBox>
                         <Items>
                             <dx:ListEditItem Text="=" Value="=" />
-                            <dx:ListEditItem Text="&lt;" Value="&lt;" />
-                            <dx:ListEditItem Text="≤" Value="&lt;=" />
-                            <dx:ListEditItem Text="&gt;" Value="&gt;" />
-                            <dx:ListEditItem Text="≥" Value="&gt;=" />
-                            <dx:ListEditItem Text="⊂" Value="Contenido" />
+                            <dx:ListEditItem Text="<" Value="<" />
+                            <dx:ListEditItem Text="&le;" Value="<=" />
+                            <dx:ListEditItem Text=">" Value=">" />
+                            <dx:ListEditItem Text="&ge;" Value=">=" />
+                            <dx:ListEditItem Text="&sub;" Value="Contenido" />
                             <dx:ListEditItem Text="AND" Value="AND" />
                             <dx:ListEditItem Text="OR" Value="OR" />
                         </Items>
@@ -72,20 +91,15 @@
                 </dx:GridViewDataComboBoxColumn>
 
                 <dx:GridViewDataTextColumn FieldName="Operando2" VisibleIndex="9" Caption="Identificador"></dx:GridViewDataTextColumn>
-                <dx:GridViewDataTextColumn FieldName="CreadoPor" Visible="False" VisibleIndex="10">
-                </dx:GridViewDataTextColumn>
-                <dx:GridViewDataDateColumn FieldName="FechaCreacion" VisibleIndex="10" Visible="False"></dx:GridViewDataDateColumn>
-                <dx:GridViewDataTextColumn FieldName="ActualizadoPor" Visible="False" VisibleIndex="11">
-                </dx:GridViewDataTextColumn>
-                <dx:GridViewDataDateColumn FieldName="FechaActualizacion" VisibleIndex="12" Visible="False"></dx:GridViewDataDateColumn>
-                <dx:GridViewDataCheckColumn FieldName="Activo" VisibleIndex="13" Visible="False"></dx:GridViewDataCheckColumn>
-                <dx:GridViewCommandColumn Caption="Acción" VisibleIndex="14">
-                    <EditButton Visible="True">
-                    </EditButton>
-                    <NewButton Visible="True">
-                    </NewButton>
-                    <DeleteButton Visible="True">
-                    </DeleteButton>
+                <dx:GridViewDataTextColumn FieldName="CreadoPor" VisibleIndex="10" Visible="false"></dx:GridViewDataTextColumn>
+                <dx:GridViewDataDateColumn FieldName="FechaCreacion" VisibleIndex="10" Visible="false"></dx:GridViewDataDateColumn>
+                <dx:GridViewDataTextColumn FieldName="ActualizadoPor" VisibleIndex="11" Visible="false"></dx:GridViewDataTextColumn>
+                <dx:GridViewDataDateColumn FieldName="FechaActualizacion" VisibleIndex="12" Visible="false"></dx:GridViewDataDateColumn>
+                <dx:GridViewDataCheckColumn FieldName="Activo" VisibleIndex="13" Visible="false"></dx:GridViewDataCheckColumn>
+                <dx:GridViewCommandColumn Caption="Acción">
+                    <NewButton Visible="true"></NewButton>
+                    <EditButton Visible="true"></EditButton>
+                    <DeleteButton Visible="true"></DeleteButton>
                 </dx:GridViewCommandColumn>
             </Columns>
             <SettingsPager>

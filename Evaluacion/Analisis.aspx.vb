@@ -38,15 +38,15 @@ Partial Class Evaluacion_Levantamientos
             Session("IdAplicacion") = uf.QueryStringDecode(Request.QueryString.Get(1))
             Session("NomInstrumento") = uf.QueryStringDecode(Request.QueryString.Get(2))
             ASPxLabelTitulo.Text = "Análisis Cualitativo de Instrumento " + Session("NomInstrumento")
-            Me.SqlDataSource3.SelectCommand = " select PI.IdPreguntaPorInstrumento,PI.IdInstrumentoDeEvaluacion,PI.PreguntaDeInstrumento,PI.IdAmigable,PI.IdTipoDePregunta,SF.NombreSeccion,PI.Orden  from PreguntasPorInstrumento PI " & _
+            Me.SqlPreguntas.SelectCommand = " select PI.IdPreguntaPorInstrumento,PI.IdInstrumentoDeEvaluacion,PI.PreguntaDeInstrumento,PI.IdAmigable,PI.IdTipoDePregunta,SF.NombreSeccion,PI.Orden  from PreguntasPorInstrumento PI " & _
             "join SeccionesFSU SF on SF.IdSeccionFSU= PI.IdSeccionFSU " & _
             "where PI.[IdInstrumentoDeEvaluacion]=@IdInstrumento and PI.Activo=1 order by SF.NombreSeccion,PI.Orden "
 
-            Me.SqlDataSource3.SelectParameters(0).DefaultValue = Session("IdInstrumento")
-            Me.SqlDataSource3.DataBind()
-            Me.ASPxGridView3.DataBind()
+            Me.SqlPreguntas.SelectParameters(0).DefaultValue = Session("IdInstrumento")
+            Me.SqlPreguntas.DataBind()
+            Me.GridPreguntas.DataBind()
 
-           
+
 
         End Using
 
@@ -56,29 +56,29 @@ Partial Class Evaluacion_Levantamientos
 
         Dim Tipo As Integer = Session("IdTipo")
 
-        If (3 = Tipo Or 4 = Tipo Or 5 = Tipo Or 6 = Tipo Or 7 = Tipo) Then
+        If (3 = Tipo Or 5 = Tipo) Then
 
             Return True
         Else
             Return False
 
         End If
-  
+
     End Function
 
     Protected Sub GridRespuestas_BeforePerformDataSelect1(sender As Object, e As EventArgs)
 
         Dim index As Integer
 
-        For i As Integer = 0 To ASPxGridView3.VisibleRowCount -1
+        For i As Integer = 0 To GridPreguntas.VisibleRowCount - 1
 
-            If (ASPxGridView3.GetRowValues(i, "IdPreguntaPorInstrumento") = CType(sender, ASPxGridView).GetMasterRowKeyValue()) Then
+            If (GridPreguntas.GetRowValues(i, "IdPreguntaPorInstrumento") = CType(sender, ASPxGridView).GetMasterRowKeyValue()) Then
                 index = i
             End If
 
         Next
 
-        Session("IdTipo") = ASPxGridView3.GetRowValues(index, "IdTipoDePregunta")
+        Session("IdTipo") = GridPreguntas.GetRowValues(index, "IdTipoDePregunta")
 
         SqlRespuestas.SelectParameters(0).DefaultValue = CType(sender, ASPxGridView).GetMasterRowKeyValue()
         SqlRespuestas.SelectParameters(1).DefaultValue = Session("IdAplicacion")

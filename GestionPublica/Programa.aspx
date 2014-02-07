@@ -751,13 +751,25 @@
                                                     <Settings ShowFilterRow="True"></Settings>
                                                 </dx:ASPxGridView>
 
-                                                <asp:SqlDataSource ID="SqlIndicadoresPorPrograma" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>"
-                                                    SelectCommand="SELECT ip.IdPrograma, ip.IdIndicadoresPorPrograma, ip.IdIndicador, ip.FechaCreacion, ip.FechaActualizacion, ip.CreadoPor, ip.ActualizadoPor, ip.Activo, ti.DescripcionTipoDeIndicador FROM [IndicadoresPorPrograma] ip, [TiposDeIndicador] ti, [Indicadores] i WHERE ip.[Activo]=1 AND ip.[IdPrograma] = @p1 AND i.[Activo]= 1 AND i.IdIndicador = ip.IdIndicador AND i.IdTipoDeIndicador = ti.IdTipoDeIndicador"
-                                                    DeleteCommand="UPDATE [IndicadoresPorPrograma] SET [Activo]=0 WHERE [IdIndicadoresPorPrograma]=@IdIndicadoresPorPrograma">
+                                                <asp:SqlDataSource ID="SqlAnoPrograma" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" 
+                                                    
+                                                     DeleteCommand="UPDATE [AnoPrograma] SET [Activo] = 0 WHERE [IdAnoPrograma] = @IdAnoPrograma"
+                                                     SelectCommand="SELECT * FROM [AnoPrograma] where [IdPrograma]=@p1 and [Activo]=1 order by Ano"
+                                                     UpdateCommand="UPDATE [AnoPrograma] SET [Ano]=@Ano WHERE [IdAnoPrograma] = @IdAnoPrograma"
+                                                     OnInserted="SqlAnoPrograma_Inserted">
                                                     <SelectParameters>
                                                         <asp:SessionParameter Name="p1" DbType="Int32" SessionField="p1" />
                                                     </SelectParameters>
-
+                                                    <InsertParameters>
+                                                        <asp:SessionParameter Name="p1" />
+                                                        <asp:SessionParameter Name="Usuario" />
+                                                        <asp:FormParameter Name="Ano" />
+                                                        <asp:SessionParameter Name="AP" />
+                                                    </InsertParameters>
+                                                    <UpdateParameters>
+                                                        <asp:FormParameter Name="IdAnoPrograma" />
+                                                        <asp:FormParameter Name="Ano" />
+                                                    </UpdateParameters>
                                                 </asp:SqlDataSource>
 
 

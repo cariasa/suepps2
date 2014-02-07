@@ -23,8 +23,8 @@
         </div>    
   
 
-        <dx:ASPxGridView ID="ASPxGridView1" runat="server" AutoGenerateColumns="False"  Settings-ShowFilterRow="true" Settings-ShowFilterRowMenu="true"
-            DataSourceID="SqlDataSource1" KeyFieldName="IdPlantilla">
+        <dx:ASPxGridView ID="GridPlantilla" runat="server" AutoGenerateColumns="False"  Settings-ShowFilterRow="true" Settings-ShowFilterRowMenu="true"
+            DataSourceID="SqlPlantilla" KeyFieldName="IdPlantilla">
             <Columns>
        
                 <dx:GridViewDataTextColumn FieldName="IdPlantilla" Caption="Plantilla" ReadOnly="True" 
@@ -129,16 +129,33 @@
 
         </dx:ASPxGridView>
 
-        <asp:SqlDataSource ID="SqlDataSource1" runat="server" 
+        <asp:SqlDataSource ID="SqlPlantilla" runat="server" 
             ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" 
             SelectCommand="SELECT * FROM [Plantillas] WHERE [Activo]=1"
-                UpdateCommand="UPDATE [Plantillas] SET [IdSector]=@IdSector, [IdProcesoEvaluacion]=@IdProcesoEvaluacion, [NombrePlantilla]=@NombrePlantilla, [DescripcionPlantilla]=@DescripcionPlantilla,[ActualizadoPor]='PACO', [FechaActualizacion]=getDate() WHERE  [IdPlantilla] = @IdPlantilla"
-                InsertCommand="INSERT INTO Plantillas (IdSector, IdProcesoEvaluacion, NombrePlantilla, DescripcionPlantilla, CreadoPor, FechaCreacion, Activo) VALUES (@IdSector, @IdProcesoEvaluacion, @NombrePlantilla, @DescripcionPlantilla,'PACO',getDate(),1)"
+                UpdateCommand="UPDATE [Plantillas] SET [IdSector]=@IdSector, [IdProcesoEvaluacion]=@IdProcesoEvaluacion, [NombrePlantilla]=@NombrePlantilla, [DescripcionPlantilla]=@DescripcionPlantilla,[ActualizadoPor]=@Usuario, [FechaActualizacion]=getDate() WHERE  [IdPlantilla] = @IdPlantilla"
+                InsertCommand="INSERT INTO Plantillas (IdSector, IdProcesoEvaluacion, NombrePlantilla, DescripcionPlantilla, CreadoPor, FechaCreacion, Activo) VALUES (@IdSector, @IdProcesoEvaluacion, @NombrePlantilla, @DescripcionPlantilla,@Usuario,getDate(),1)"
                 DeleteCommand="UPDATE [Plantillas] SET [Activo]=0 WHERE [IdPlantilla] = @IdPlantilla"
-        ></asp:SqlDataSource>
+        >
+            <InsertParameters>
+                <asp:SessionParameter Name="Usuario" />
+                <asp:FormParameter Name="IdSector" />
+                <asp:FormParameter Name="IdProcesoEvaluacion" />
+                <asp:FormParameter Name="NombrePlantilla" />
+                <asp:FormParameter Name="DescripcionPlantilla" />
+            </InsertParameters>
+
+            <UpdateParameters>
+                <asp:SessionParameter Name="Usuario" />
+                <asp:FormParameter Name="IdSector" />
+                <asp:FormParameter Name="IdProcesoEvaluacion" />
+                <asp:FormParameter Name="NombrePlantilla" />
+                <asp:FormParameter Name="DescripcionPlantilla" />
+            </UpdateParameters>
+
+        </asp:SqlDataSource>
 
         <asp:SqlDataSource ID="Sqlsector" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" SelectCommand="SELECT [DescripcionSectorIndicador],[IdSectorIndicador] FROM [vROISectorIndicadores]"> </asp:SqlDataSource>
-        <asp:SqlDataSource ID="SqlProceso" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" SelectCommand="SELECT [ProcesoEvaluacion],[IdProcesoEvaluacion] FROM [ProcesosEvaluacion]"> </asp:SqlDataSource>
+        <asp:SqlDataSource ID="SqlProceso" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" SelectCommand="SELECT [ProcesoEvaluacion],[IdProcesoEvaluacion] FROM [ProcesosEvaluacion] where [Activo]=1"> </asp:SqlDataSource>
 
     </div>
  </asp:Content>

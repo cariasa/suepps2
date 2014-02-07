@@ -38,8 +38,11 @@ Partial Class Cuantitativo_PreguntasInstrumento
             Session("IdInstrumento") = uf.QueryStringDecode(Request.QueryString.Get(0))
             Session("NomInstrumento") = uf.QueryStringDecode(Request.QueryString.Get(1))
             ASPxLabelTitulo.Text = "Definir Preguntas de Instrumento " + Session("NomInstrumento")
-            SqlDataSource1.SelectParameters(0).DefaultValue = Session("IdInstrumento")
-            SqlDataSource1.InsertParameters(0).DefaultValue = Session("IdInstrumento")
+            SqlPreguntas.SelectParameters(0).DefaultValue = Session("IdInstrumento")
+            SqlPreguntas.InsertParameters(0).DefaultValue = Session("IdInstrumento")
+            SqlPreguntas.InsertParameters(8).DefaultValue = Membership.GetUser.UserName
+            SqlPreguntas.UpdateParameters(8).DefaultValue = Membership.GetUser.UserName
+            SqlDataSourceOpciones.InsertParameters(4).DefaultValue = Membership.GetUser.UserName
 
 
         End Using
@@ -53,66 +56,68 @@ Partial Class Cuantitativo_PreguntasInstrumento
     End Sub
 
     Protected Function IsGridOpcionesVisible(ByVal IdPreguntaInstrumento As Object) As Boolean
-        Dim Tipo As Integer = ASPxGridView1.GetRowValuesByKeyValue(IdPreguntaInstrumento, "IdTipoDePregunta")
+        Dim Tipo As Integer = GridPreguntas.GetRowValuesByKeyValue(IdPreguntaInstrumento, "IdTipoDePregunta")
         Return (3 = Tipo Or 4 = Tipo Or 5 = Tipo Or 6 = Tipo Or 7 = Tipo)
     End Function
 
 
     Protected Sub AsociarPlantilla(sender As Object, e As EventArgs)
 
-        Dim index As Integer = ASPxGridView4.FocusedRowIndex()
+        Dim index As Integer = GridPlantilla.FocusedRowIndex()
 
-        Session("IdPlantilla") = ASPxGridView4.GetRowValues(index, "IdPlantilla").ToString
+        Session("IdPlantilla") = GridPlantilla.GetRowValues(index, "IdPlantilla").ToString()
 
-        SqlDataSource2.SelectParameters(0).DefaultValue = Session("IdPlantilla")
-        SqlDataSource2.DataBind()
+        SqlPreguntasPlantillas.SelectParameters(0).DefaultValue = Session("IdPlantilla")
+        SqlPreguntasPlantillas.DataBind()
 
-        Me.ASPxGridView2.DataBind()
+        Me.GridPreguntasPlantilla.DataBind()
 
 
-        Dim sizegrid As Integer = Me.ASPxGridView2.VisibleRowCount()
+        Dim sizegrid As Integer = Me.GridPreguntasPlantilla.VisibleRowCount()
 
         If sizegrid > 0 Then
 
             For i As Integer = 0 To sizegrid - 1
 
-                SqlDataSource3.InsertParameters(0).DefaultValue = Session("IdInstrumento")
-                SqlDataSource3.InsertParameters(1).DefaultValue = Me.ASPxGridView2.GetRowValues(i, "IdTipoDePregunta")
-                SqlDataSource3.InsertParameters(2).DefaultValue = Me.ASPxGridView2.GetRowValues(i, "IdSeccionFSU")
-                SqlDataSource3.InsertParameters(3).DefaultValue = Me.ASPxGridView2.GetRowValues(i, "PreguntaDePlantilla")
-                SqlDataSource3.InsertParameters(4).DefaultValue = Me.ASPxGridView2.GetRowValues(i, "Orden")
-                SqlDataSource3.InsertParameters(5).DefaultValue = Me.ASPxGridView2.GetRowValues(i, "Requerida")
-                SqlDataSource3.InsertParameters(6).DefaultValue = Me.ASPxGridView2.GetRowValues(i, "IdTipoDeRespuesta")
-                SqlDataSource3.InsertParameters(7).DefaultValue = Me.ASPxGridView2.GetRowValues(i, "IdAmigable")
-                SqlDataSource3.Insert()
+                SqlPreguntasI.InsertParameters(0).DefaultValue = Session("IdInstrumento")
+                SqlPreguntasI.InsertParameters(1).DefaultValue = Me.GridPreguntasPlantilla.GetRowValues(i, "IdTipoDePregunta")
+                SqlPreguntasI.InsertParameters(2).DefaultValue = Me.GridPreguntasPlantilla.GetRowValues(i, "IdSeccionFSU")
+                SqlPreguntasI.InsertParameters(3).DefaultValue = Me.GridPreguntasPlantilla.GetRowValues(i, "PreguntaDePlantilla")
+                SqlPreguntasI.InsertParameters(4).DefaultValue = Me.GridPreguntasPlantilla.GetRowValues(i, "Orden")
+                SqlPreguntasI.InsertParameters(5).DefaultValue = Me.GridPreguntasPlantilla.GetRowValues(i, "Requerida")
+                SqlPreguntasI.InsertParameters(6).DefaultValue = Me.GridPreguntasPlantilla.GetRowValues(i, "IdTipoDeRespuesta")
+                SqlPreguntasI.InsertParameters(7).DefaultValue = Me.GridPreguntasPlantilla.GetRowValues(i, "IdAmigable")
+                SqlPreguntasI.InsertParameters(8).DefaultValue = Membership.GetUser.UserName
+                SqlPreguntasI.Insert()
 
 
 
-                Session("IdPreguntaPorPlantilla") = Me.ASPxGridView2.GetRowValues(i, "IdPreguntaPorPlantilla")
+                Session("IdPreguntaPorPlantilla") = Me.GridPreguntasPlantilla.GetRowValues(i, "IdPreguntaPorPlantilla")
 
-                Dim Tipo As Integer = Me.ASPxGridView2.GetRowValues(i, "IdTipoDePregunta")
+                Dim Tipo As Integer = Me.GridPreguntasPlantilla.GetRowValues(i, "IdTipoDePregunta")
 
                 If (3 = Tipo Or 4 = Tipo Or 5 = Tipo Or 6 = Tipo Or 7 = Tipo) Then
 
-                    SqlDataSource4.SelectParameters(0).DefaultValue = Session("IdPreguntaPorPlantilla")
-                    SqlDataSource4.DataBind()
-                    Me.ASPxGridView3.DataBind()
+                    SqlOpcionesPlantilla.SelectParameters(0).DefaultValue = Session("IdPreguntaPorPlantilla")
+                    SqlOpcionesPlantilla.DataBind()
+                    Me.GridOpcionesPlantilla.DataBind()
 
 
 
-                    If (Me.ASPxGridView3.VisibleRowCount() > 0) Then
+                    If (Me.GridOpcionesPlantilla.VisibleRowCount() > 0) Then
 
-                        For j As Integer = 0 To Me.ASPxGridView3.VisibleRowCount() - 1
+                        For j As Integer = 0 To Me.GridOpcionesPlantilla.VisibleRowCount() - 1
 
                             SqlDataSourceOpciones.InsertParameters(0).DefaultValue = Session("IdPreguntaInstrumento")
-                            SqlDataSourceOpciones.InsertParameters(1).DefaultValue = Me.ASPxGridView3.GetRowValues(j, "Opcion")
-                            SqlDataSourceOpciones.InsertParameters(2).DefaultValue = Me.ASPxGridView3.GetRowValues(j, "Valor")
+                            SqlDataSourceOpciones.InsertParameters(1).DefaultValue = Me.GridOpcionesPlantilla.GetRowValues(j, "Opcion")
+                            SqlDataSourceOpciones.InsertParameters(2).DefaultValue = Me.GridOpcionesPlantilla.GetRowValues(j, "Valor")
+                            SqlDataSourceOpciones.InsertParameters(4).DefaultValue = Membership.GetUser.UserName
 
-                            If (IsDBNull(Me.ASPxGridView3.GetRowValues(j, "SaltaACodigo"))) Then
+                            If (IsDBNull(Me.GridOpcionesPlantilla.GetRowValues(j, "SaltaACodigo"))) Then
 
                             Else
 
-                                SqlDataSourceOpciones.InsertParameters(3).DefaultValue = Me.ASPxGridView3.GetRowValues(j, "SaltaACodigo")
+                                SqlDataSourceOpciones.InsertParameters(3).DefaultValue = Me.GridOpcionesPlantilla.GetRowValues(j, "SaltaACodigo")
 
                             End If
 
@@ -130,9 +135,9 @@ Partial Class Cuantitativo_PreguntasInstrumento
 
         End If
 
-        SqlDataSource1.SelectParameters(0).DefaultValue = Session("IdInstrumento")
-        SqlDataSource1.DataBind()
-        Me.ASPxGridView1.DataBind()
+        SqlPreguntas.SelectParameters(0).DefaultValue = Session("IdInstrumento")
+        SqlPreguntas.DataBind()
+        Me.GridPreguntas.DataBind()
 
 
 
@@ -173,7 +178,8 @@ Partial Class Cuantitativo_PreguntasInstrumento
 
                 SqlDataSourceOpciones.InsertParameters(0).DefaultValue = command.Parameters("@IdPreguntaPorInstrumento").Value
                 SqlDataSourceOpciones.InsertParameters(1).DefaultValue = "Otro"
-                SqlDataSourceOpciones.InsertParameters(2).DefaultValue = 0
+                SqlDataSourceOpciones.InsertParameters(2).DefaultValue = 99
+                SqlDataSourceOpciones.InsertParameters(4).DefaultValue = Membership.GetUser.UserName
                 SqlDataSourceOpciones.Insert()
                 SqlDataSourceOpciones.DataBind()
 
@@ -185,12 +191,14 @@ Partial Class Cuantitativo_PreguntasInstrumento
                 SqlDataSourceOpciones.InsertParameters(0).DefaultValue = command.Parameters("@IdPreguntaPorInstrumento").Value
                 SqlDataSourceOpciones.InsertParameters(1).DefaultValue = "Si"
                 SqlDataSourceOpciones.InsertParameters(2).DefaultValue = 1
+                SqlDataSourceOpciones.InsertParameters(4).DefaultValue = Membership.GetUser.UserName
                 SqlDataSourceOpciones.Insert()
                 SqlDataSourceOpciones.DataBind()
 
                 SqlDataSourceOpciones.InsertParameters(0).DefaultValue = command.Parameters("@IdPreguntaPorInstrumento").Value
                 SqlDataSourceOpciones.InsertParameters(1).DefaultValue = "No"
                 SqlDataSourceOpciones.InsertParameters(2).DefaultValue = 2
+                SqlDataSourceOpciones.InsertParameters(4).DefaultValue = Membership.GetUser.UserName
                 SqlDataSourceOpciones.Insert()
                 SqlDataSourceOpciones.DataBind()
 
@@ -199,4 +207,7 @@ Partial Class Cuantitativo_PreguntasInstrumento
         End If
 
     End Sub
+
+   
+
 End Class

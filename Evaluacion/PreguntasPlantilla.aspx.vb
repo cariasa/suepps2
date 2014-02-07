@@ -39,11 +39,14 @@ Partial Class Cuantitativo_PreguntasPlantilla
             Session("IdPlantilla") = uf.QueryStringDecode(Request.QueryString.Get(0))
             Session("NomPlantilla") = uf.QueryStringDecode(Request.QueryString.Get(1))
             ASPxLabelTitulo.Text = "Definir Preguntas de Plantilla " + Session("NomPlantilla")
-            SqlDataSource1.SelectParameters(0).DefaultValue = Session("IdPlantilla")
-            SqlDataSource1.InsertParameters(0).DefaultValue = Session("IdPlantilla")
-            SqlDataSource1.UpdateParameters(0).DefaultValue = Session("IdPlantilla")
-            SqlDataSource1.DeleteParameters(0).DefaultValue = Session("IdPlantilla")
-
+            SqlPreguntas.SelectParameters(0).DefaultValue = Session("IdPlantilla")
+            SqlPreguntas.InsertParameters(0).DefaultValue = Session("IdPlantilla")
+            SqlPreguntas.InsertParameters(8).DefaultValue = Membership.GetUser.UserName
+            SqlPreguntas.UpdateParameters(0).DefaultValue = Session("IdPlantilla")
+            SqlPreguntas.UpdateParameters(8).DefaultValue = Membership.GetUser.UserName
+            SqlPreguntas.DeleteParameters(0).DefaultValue = Session("IdPlantilla")
+            SqlDataSourceOpciones.InsertParameters(4).DefaultValue = Membership.GetUser.UserName
+            SqlDataSourceOpciones.UpdateParameters(4).DefaultValue = Membership.GetUser.UserName
 
         End Using
     End Sub
@@ -57,7 +60,7 @@ Partial Class Cuantitativo_PreguntasPlantilla
     End Sub
 
     Protected Function IsGridOpcionesVisible(ByVal IdPreguntaPlantilla As Object) As Boolean
-        Dim Tipo As Integer = ASPxGridView1.GetRowValuesByKeyValue(IdPreguntaPlantilla, "IdTipoDePregunta")
+        Dim Tipo As Integer = GridPreguntas.GetRowValuesByKeyValue(IdPreguntaPlantilla, "IdTipoDePregunta")
         Return (3 = Tipo Or 4 = Tipo Or 5 = Tipo Or 6 = Tipo Or 7 = Tipo)
     End Function
 
@@ -77,7 +80,8 @@ Partial Class Cuantitativo_PreguntasPlantilla
 
                 SqlDataSourceOpciones.InsertParameters(0).DefaultValue = command.Parameters("@IdPreguntaPorPlantilla").Value
                 SqlDataSourceOpciones.InsertParameters(1).DefaultValue = "Otro"
-                SqlDataSourceOpciones.InsertParameters(2).DefaultValue = 0
+                SqlDataSourceOpciones.InsertParameters(2).DefaultValue = 99
+                SqlDataSourceOpciones.InsertParameters(4).DefaultValue = Membership.GetUser.UserName
                 SqlDataSourceOpciones.Insert()
                 SqlDataSourceOpciones.DataBind()
 
@@ -89,12 +93,14 @@ Partial Class Cuantitativo_PreguntasPlantilla
                 SqlDataSourceOpciones.InsertParameters(0).DefaultValue = command.Parameters("@IdPreguntaPorPlantilla").Value
                 SqlDataSourceOpciones.InsertParameters(1).DefaultValue = "Si"
                 SqlDataSourceOpciones.InsertParameters(2).DefaultValue = 1
+                SqlDataSourceOpciones.InsertParameters(4).DefaultValue = Membership.GetUser.UserName
                 SqlDataSourceOpciones.Insert()
                 SqlDataSourceOpciones.DataBind()
 
                 SqlDataSourceOpciones.InsertParameters(0).DefaultValue = command.Parameters("@IdPreguntaPorPlantilla").Value
                 SqlDataSourceOpciones.InsertParameters(1).DefaultValue = "No"
                 SqlDataSourceOpciones.InsertParameters(2).DefaultValue = 2
+                SqlDataSourceOpciones.InsertParameters(4).DefaultValue = Membership.GetUser.UserName
                 SqlDataSourceOpciones.Insert()
                 SqlDataSourceOpciones.DataBind()
 

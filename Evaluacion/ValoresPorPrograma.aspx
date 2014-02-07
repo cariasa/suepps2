@@ -115,7 +115,7 @@
             </Templates>
         </dx:ASPxGridView>
         <asp:SqlDataSource runat="server" ID="SqlDataSourceVariablesPrograma" ConnectionString='<%$ ConnectionStrings:SUEPPSConnectionString %>' 
-            >
+            SelectCommand="SELECT * FROM [VariablesPrograma] WHERE [Activo]=1">
 
         </asp:SqlDataSource>
     

@@ -34,7 +34,10 @@ Partial Class Cuantitativo_Default
                 Response.Redirect("~/NoAccess.aspx")
             End If
 
-            Me.SqlDataSource2.SelectCommand = "select DISTINCT(Pol.IdPolitica), Pol.Nombre, Pro.codigo_ficha, Pro.NombreProyecto, Pro.codigo_proyecto from Politicas Pol " & _
+
+            Session("IdPrograma") = Nothing
+
+            Me.SqlPrograma.SelectCommand = "select DISTINCT(Pol.IdPolitica), Pol.Nombre, Pro.codigo_ficha, Pro.NombreProyecto, Pro.codigo_proyecto from Politicas Pol " & _
         "join ComponentesDePolitica CP on Pol.IdPolitica=CP.IdPolitica " & _
         "join MetasDeComponente MC on CP.IdComponentesDePolitica=MC.IdComponentesDePolitica " & _
         "join IndicadoresDeMeta IM on MC.IdMetasDeComponente=IM.IdMetasDeComponente " & _
@@ -48,24 +51,24 @@ Partial Class Cuantitativo_Default
     Protected Sub ASPxGridView2_BeforePerformDataSelect(sender As Object, e As EventArgs)
 
         Session("IdPolitica") = CType(sender, ASPxGridView).GetMasterRowKeyValue()
-        Me.SqlDataSource2.SelectParameters(0).DefaultValue = Session("IdPolitica")
-        Me.SqlDataSource2.DataBind()
+        Me.SqlPrograma.SelectParameters(0).DefaultValue = Session("IdPolitica")
+        Me.SqlPrograma.DataBind()
 
-        Session("indexpolitica") = ASPxGridView1.FocusedRowIndex()
+        Session("indexpolitica") = GridPolitica.FocusedRowIndex()
 
     End Sub
 
     Protected Sub link1_Click(sender As Object, e As EventArgs)
 
-        Dim detail As ASPxGridView = TryCast(ASPxGridView1.FindDetailRowTemplateControl(Session("indexpolitica"), "ASPxGridView2"), ASPxGridView)
+
+
+        Dim detail As ASPxGridView = TryCast(GridPolitica.FindDetailRowTemplateControl(Session("indexpolitica"), "GridPrograma"), ASPxGridView)
 
         Dim index As Integer = detail.FocusedRowIndex()
 
         Dim codprograma As String = detail.GetRowValues(index, "codigo_ficha").ToString()
 
         Dim nombreprograma As String = detail.GetRowValues(index, "NombreProyecto").ToString()
-
-
 
         Response.Redirect("InstrumentosEvaluacion.aspx?CodP=" + uf.QueryStringEncode(codprograma) + "&NomP=" + uf.QueryStringEncode(nombreprograma))
 
@@ -76,7 +79,7 @@ Partial Class Cuantitativo_Default
 
     Protected Sub LinkButton1_Click(sender As Object, e As EventArgs)
 
-        Dim detail As ASPxGridView = TryCast(ASPxGridView1.FindDetailRowTemplateControl(Session("indexpolitica"), "ASPxGridView2"), ASPxGridView)
+        Dim detail As ASPxGridView = TryCast(GridPolitica.FindDetailRowTemplateControl(Session("indexpolitica"), "GridPrograma"), ASPxGridView)
 
         Dim index As Integer = detail.FocusedRowIndex()
 
@@ -89,7 +92,7 @@ Partial Class Cuantitativo_Default
     End Sub
     Protected Sub Documento_Click(sender As Object, e As EventArgs)
 
-        Dim detail As ASPxGridView = TryCast(ASPxGridView1.FindDetailRowTemplateControl(Session("indexpolitica"), "ASPxGridView2"), ASPxGridView)
+        Dim detail As ASPxGridView = TryCast(GridPolitica.FindDetailRowTemplateControl(Session("indexpolitica"), "GridPrograma"), ASPxGridView)
 
         Dim index As Integer = detail.FocusedRowIndex()
 
@@ -97,7 +100,8 @@ Partial Class Cuantitativo_Default
 
         Dim nombreprograma As String = detail.GetRowValues(index, "NombreProyecto").ToString()
 
-        
+
+
 
         Response.Redirect("DocumentosEvaluacion.aspx?CodP=" + uf.QueryStringEncode(codprograma) + "&NomP=" + uf.QueryStringEncode(nombreprograma))
         'Response.Redirect("DocumentosEvaluacion.aspx?CodP=113" + "&NomP=" + nombreprograma)

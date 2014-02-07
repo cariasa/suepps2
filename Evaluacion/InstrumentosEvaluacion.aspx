@@ -33,7 +33,7 @@
         
         <br />
 
-        <dx:ASPxGridView ID="ASPxGridView1" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource1" KeyFieldName="IdInstrumentoDeEvaluacion">
+        <dx:ASPxGridView ID="GridInstrumentos" runat="server" AutoGenerateColumns="False" DataSourceID="SqlInstrumento" KeyFieldName="IdInstrumentoDeEvaluacion">
             <Columns>
                 <dx:GridViewDataTextColumn FieldName="IdInstrumentoDeEvaluacion" ReadOnly="True" VisibleIndex="0" Visible="false">
                     <EditFormSettings Visible="False" />
@@ -42,14 +42,30 @@
                 </dx:GridViewDataTextColumn>
                 <dx:GridViewDataTextColumn FieldName="NombreInstrumento" Caption="Nombre" VisibleIndex="2">
                     <EditFormSettings ColumnSpan="2" />
-
                 </dx:GridViewDataTextColumn>
+                
                 <dx:GridViewDataTextColumn FieldName="DescripcionInstrumento" Caption="Descripción" VisibleIndex="3">
                 <EditFormSettings ColumnSpan="2" />
                 </dx:GridViewDataTextColumn>
-                <dx:GridViewDataTextColumn FieldName="Ano" Caption="Año" VisibleIndex="4">
+
+                <dx:GridViewDataComboBoxColumn VisibleIndex="4" FieldName="IdTipoDeInstrumento" 
+                    Caption="Tipo de Instrumento">
+                    <EditFormSettings ColumnSpan="1" />
+                        <PropertiesComboBox ValueType="System.String" 
+                
+                            DataSourceID="SqlTipoInstrumento" 
+                            ValueField="IdTipoDeInstrumento" 
+                            TextField="TipoDeInstrumento"/>
+                         <Settings AllowAutoFilter="True" />
+                                    <Settings AutoFilterCondition="Contains" />
+                                    <Settings FilterMode="DisplayText" />     
+                  </dx:GridViewDataComboBoxColumn>
+
+
+                <dx:GridViewDataTextColumn FieldName="Ano" Caption="Año" VisibleIndex="5">
                 </dx:GridViewDataTextColumn>
-                <dx:GridViewDataComboBoxColumn VisibleIndex="5" FieldName="IdProcesoEvaluacion" 
+
+                <dx:GridViewDataComboBoxColumn VisibleIndex="6" FieldName="IdProcesoEvaluacion" 
                     Caption="Proceso">
                     <EditFormSettings ColumnSpan="2" />
                         <PropertiesComboBox ValueType="System.String" 
@@ -116,7 +132,7 @@
 
       
 
-        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" >
+        <asp:SqlDataSource ID="SqlInstrumento" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" >
 
              <SelectParameters>
                      <asp:SessionParameter Name="IdPrograma" />
@@ -129,6 +145,9 @@
                 <asp:FormParameter Name="DescripcionInstrumento" />
                 <asp:FormParameter Name="Ano" />
                 <asp:FormParameter Name="IdProcesoEvaluacion" />
+                <asp:SessionParameter Name="Usuario" />
+                <asp:FormParameter Name="IdTipoDeInstrumento" />
+                <asp:SessionParameter Name="AP" />
             </InsertParameters>
 
             <UpdateParameters>
@@ -137,6 +156,9 @@
                 <asp:FormParameter Name="DescripcionInstrumento" />
                 <asp:FormParameter Name="Ano" />
                 <asp:FormParameter Name="IdProcesoEvaluacion" />
+                <asp:SessionParameter Name="Usuario" />
+                <asp:FormParameter Name="IdTipoDeInstrumento" />
+                <asp:SessionParameter Name="AP" />
             </UpdateParameters>
 
             <DeleteParameters>
@@ -144,7 +166,11 @@
             </DeleteParameters>
 
         </asp:SqlDataSource>
-        <asp:SqlDataSource ID="SqlProceso" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" SelectCommand="SELECT [ProcesoEvaluacion],[IdProcesoEvaluacion] FROM [ProcesosEvaluacion]"> </asp:SqlDataSource>
+        
+        <asp:SqlDataSource ID="SqlProceso" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" SelectCommand="SELECT * FROM [ProcesosEvaluacion] Where [Activo]=1"> </asp:SqlDataSource>
+
+        <asp:SqlDataSource ID="SqlTipoInstrumento" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" SelectCommand="SELECT * FROM [TiposDeInstrumento] Where [Activo]=1"> </asp:SqlDataSource>
+
 
     </div>
   

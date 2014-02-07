@@ -151,7 +151,7 @@
         </asp:SqlDataSource>
 
         <asp:SqlDataSource runat="server" ID="SqlDataSourceVariablesMacro" ConnectionString='<%$ ConnectionStrings:SUEPPSConnectionString %>' OnUpdated="SqlDataSourceVariablesMacro_Updated" OnDeleted="SqlDataSourceVariablesMacro_Deleted"
-            
+            SelectCommand="SELECT * FROM [VariablesMacro] WHERE [Activo]=1"
             ></asp:SqlDataSource>
 
         <asp:SqlDataSource runat="server" ID="SqlDataSourceVariable" ConnectionString='<%$ ConnectionStrings:SUEPPSConnectionString %>'

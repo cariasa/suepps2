@@ -38,9 +38,10 @@ Partial Class Cuantitativo_AplicacionInstrumento
             End If
             ASPxLabelTitulo.Text = "Levantamientos de Instrumento " + Session("NomInstrumento")
 
-            SqlDataSource1.SelectParameters(0).DefaultValue = Session("IdInstrumento")
-            SqlDataSource1.InsertParameters(1).DefaultValue = Session("IdInstrumento")
-
+            SqlAplicacion.SelectParameters(0).DefaultValue = Session("IdInstrumento")
+            SqlAplicacion.InsertParameters(1).DefaultValue = Session("IdInstrumento")
+            SqlAplicacion.InsertParameters(4).DefaultValue = Membership.GetUser.UserName
+            SqlAplicacion.UpdateParameters(4).DefaultValue = Membership.GetUser.UserName
 
 
         End Using
@@ -49,9 +50,9 @@ Partial Class Cuantitativo_AplicacionInstrumento
   
     Protected Sub link2_Click(sender As Object, e As EventArgs)
 
-        Dim index As Integer = ASPxGridView1.FocusedRowIndex()
-        Dim idInstrumento As String = ASPxGridView1.GetRowValues(index, "IdInstrumentoDeEvaluacion").ToString
-        Dim idAplicacion As String = ASPxGridView1.GetRowValues(index, "IdAplicacionInstrumento").ToString
+        Dim index As Integer = GridAplicacion.FocusedRowIndex()
+        Dim idInstrumento As String = GridAplicacion.GetRowValues(index, "IdInstrumentoDeEvaluacion").ToString
+        Dim idAplicacion As String = GridAplicacion.GetRowValues(index, "IdAplicacionInstrumento").ToString
         Response.Redirect("Analisis.aspx?IdInstrumento=" + uf.QueryStringEncode(idInstrumento) + "&IdAplicacion=" + uf.QueryStringEncode(idAplicacion) + "&NomInstrumento=" + uf.QueryStringEncode(Session("NomInstrumento")))
 
     End Sub

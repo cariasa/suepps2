@@ -84,7 +84,8 @@
 
                     </td>
                     <td>
-                        <dx:ASPxGridView ID="ASPxGridView1" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSourceIndicadoresEvaluacion" KeyFieldName="IdIndicadoresEvaluacionPorPrograma">
+
+                        <dx:ASPxGridView ID="GrisIndicadoresEvaluacion" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSourceIndicadoresEvaluacion" KeyFieldName="IdIndicadoresEvaluacionPorPrograma" Settings-ShowFilterRow="true">
                             <Columns>
                                 <dx:GridViewDataTextColumn FieldName="IdIndicadoresEvaluacionPorPrograma" ReadOnly="True" VisibleIndex="0" Visible="false">
                                     <EditFormSettings Visible="False" />
@@ -92,8 +93,14 @@
                                 <dx:GridViewDataTextColumn FieldName="IdIndicador" VisibleIndex="1" Visible="false">
                                 </dx:GridViewDataTextColumn>
                                 <dx:GridViewDataTextColumn FieldName="DescripcionSectorIndicador" Caption="Sector" VisibleIndex="2">
+                                    <Settings AllowAutoFilter="True" />
+                                                    <Settings AutoFilterCondition="Contains" />
+                                                    <Settings FilterMode="DisplayText" />
                                 </dx:GridViewDataTextColumn>
                                 <dx:GridViewDataTextColumn FieldName="DescripcionIndicador" Caption="Indicador" VisibleIndex="3">
+                                    <Settings AllowAutoFilter="True" />
+                                                    <Settings AutoFilterCondition="Contains" />
+                                                    <Settings FilterMode="DisplayText" />
                                 </dx:GridViewDataTextColumn>
                                 <dx:GridViewCommandColumn VisibleIndex="10" HeaderStyle-HorizontalAlign="Center" Caption="Acción" CellStyle-HorizontalAlign="NotSet">
                                     <DeleteButton Visible="True">
@@ -123,7 +130,7 @@
 
         <asp:SqlDataSource ID="SqlDataSourceIndicadoresEvaluacion" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>"
             SelectCommand="SELECT a.IdIndicadoresEvaluacionPorPrograma,a.IdIndicador,b.DescripcionIndicador,c.DescripcionSectorIndicador FROM [IndicadoresEvaluacionPorPrograma] as a join [Indicadores] as b on a.IdIndicador=b.IdIndicador join [vROISectorIndicadores] as c on b.IdSectorIndicador=c.IdSectorIndicador where a.Activo=1 and a.IdPrograma=@IdPrograma"
-            InsertCommand="INSERT INTO [IndicadoresEvaluacionPorPrograma]([IdIndicador] ,[IdPrograma],[Activo],[CreadoPor],[FechaCreacion]) VALUES (@IdIndicador, @IdPrograma,1,'PACO',getDate())"
+            InsertCommand="INSERT INTO [IndicadoresEvaluacionPorPrograma]([IdIndicador] ,[IdPrograma],[Activo],[CreadoPor],[FechaCreacion]) VALUES (@IdIndicador, @IdPrograma,1,@Usuario,getDate())"
             DeleteCommand="DELETE FROM [IndicadoresEvaluacionPorPrograma] where [IdIndicadoresEvaluacionPorPrograma]=@IdIndicadoresEvaluacionPorPrograma">
 
 
@@ -136,6 +143,7 @@
             <InsertParameters>
                 <asp:SessionParameter Name="IdIndicador" />
                 <asp:SessionParameter Name="IdPrograma" />
+                <asp:SessionParameter Name="Usuario" />
 
             </InsertParameters>
 

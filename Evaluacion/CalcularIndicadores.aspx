@@ -15,7 +15,8 @@
                 </tr>
             </table>
         </div>
-        <dx:ASPxGridView ID="ASPxGridView1" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource1" KeyFieldName="IdPolitica" SettingsDetail-ShowDetailRow="true">
+
+        <dx:ASPxGridView ID="GridPolitica" runat="server" AutoGenerateColumns="False" DataSourceID="SqlPolitica" KeyFieldName="IdPolitica" SettingsDetail-ShowDetailRow="true">
             <Columns>
                 <dx:GridViewDataTextColumn FieldName="IdPolitica" ReadOnly="True" VisibleIndex="0" Visible="false">
                     <EditFormSettings Visible="False" />
@@ -37,7 +38,7 @@
                         <Templates>
                         <DetailRow>
 
-                            <dx:ASPxGridView ID="ASPxGridView2" runat="server" KeyFieldName="IdInstrumentoDeEvaluacion" IsDetailGrid="true" OnBeforePerformDataSelect="ASPxGridView2_BeforePerformDataSelect" Width="100%" DataSourceID="SqlDataSource2" >
+                            <dx:ASPxGridView ID="GridPrograma" runat="server" KeyFieldName="IdInstrumentoDeEvaluacion" IsDetailGrid="true" OnBeforePerformDataSelect="ASPxGridView2_BeforePerformDataSelect" Width="100%" DataSourceID="SqlPrograma" >
                                 <Columns>
 
                                      <dx:GridViewDataTextColumn FieldName="codigo_ficha" ReadOnly="True" VisibleIndex="0" Visible="false">
@@ -65,7 +66,7 @@
                         <Templates>
                         <DetailRow>
 
-                            <dx:ASPxGridView ID="ASPxGridView3" runat="server" KeyFieldName="IdAplicacionInstrumento" IsDetailGrid="true" OnBeforePerformDataSelect="ASPxGridView3_BeforePerformDataSelect" Width="100%" DataSourceID="SqlDataSource3" OnHtmlDataCellPrepared="ASPxGridView3_HtmlDataCellPrepared" >
+                            <dx:ASPxGridView ID="GridAplicacion" runat="server" KeyFieldName="IdAplicacionInstrumento" IsDetailGrid="true" OnBeforePerformDataSelect="ASPxGridView3_BeforePerformDataSelect" Width="100%" DataSourceID="SqlAplicacion" OnHtmlDataCellPrepared="ASPxGridView3_HtmlDataCellPrepared" >
 
                                 <Columns>
 
@@ -129,12 +130,12 @@
         </dx:ASPxGridView>
 
  
-        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" 
+        <asp:SqlDataSource ID="SqlPolitica" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" 
             SelectCommand="SELECT * FROM [Politicas] where [Activo]=1 ">
 
         </asp:SqlDataSource>
 
-        <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" >
+        <asp:SqlDataSource ID="SqlPrograma" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" >
 
             <SelectParameters>
                      <asp:SessionParameter Name="IdPolitica" />
@@ -143,7 +144,7 @@
 
         </asp:SqlDataSource>
 
-         <asp:SqlDataSource ID="SqlDataSource3" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" >
+         <asp:SqlDataSource ID="SqlAplicacion" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" >
 
             <SelectParameters>
                      <asp:SessionParameter Name="IdInstrumento" />
