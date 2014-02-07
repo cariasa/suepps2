@@ -173,7 +173,7 @@
             </div>
 
             <div>
-                <dx:ASPxPageControl ID="ASPxPageControl2" runat="server" ActiveTabIndex="0" EnableHierarchyRecreation="True" Height="800%" Width="100%">
+                <dx:ASPxPageControl ID="ASPxPageControl2" runat="server" ActiveTabIndex="0" EnableHierarchyRecreation="True" Width="100%">
                     <ClientSideEvents ActiveTabChanged="function (s,e) {click(e);}" />
                     <TabPages>
 
@@ -970,6 +970,10 @@
                                                 <EditFormSettings Visible="False" />
                                                 <Settings AutoFilterCondition="Contains" />
                                             </dx:GridViewDataTextColumn>
+                                            <dx:GridViewDataCheckColumn Caption="Acumula" FieldName="Acumula" VisibleIndex="4">
+                                                <EditFormSettings Visible="True" />
+                                                <Settings AllowAutoFilter="False" />
+                                            </dx:GridViewDataCheckColumn>
                                             <dx:GridViewDataTextColumn FieldName="Potenciales" Caption="Pot." ReadOnly="False" VisibleIndex="4">
                                                 <EditFormSettings Visible="True" />
                                                 <Settings AllowAutoFilter="False" />
@@ -1019,8 +1023,8 @@
                                     </dx:ASPxGridView>
                                     <asp:SqlDataSource ID="SqlMetas" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>"
                                         OnUpdated="SqlMetas_Updated"
-                                        UpdateCommand="UPDATE [MetaYMonitoreoPorPeriodo] SET [Potenciales]=@Potenciales, [ProyectadoQ1]=@ProyectadoQ1, [ProyectadoQ2]=@ProyectadoQ2,[ProyectadoQ3]=@ProyectadoQ3 , [ProyectadoQ4]=@ProyectadoQ4 WHERE [IdMetaPorPeriodo]= @IdMetaPorPeriodo "
-                                        SelectCommand="select MM.IdMetaPorPeriodo,I.IdIndicador,SI.DescripcionSectorIndicador, I.DescripcionIndicador,TI.DescripcionTipoDeIndicador,MM.Potenciales, MM.ProyectadoQ1,MM.ProyectadoQ2,(MM.ProyectadoQ1+MM.ProyectadoQ2) As S1,MM.ProyectadoQ3,MM.ProyectadoQ4,(MM.ProyectadoQ1 + MM.ProyectadoQ2 + MM.ProyectadoQ3 + MM.ProyectadoQ4) as Total from Indicadores I join IndicadoresPorPrograma IP on I.IdIndicador = IP.IdIndicador join vROISectorIndicadores SI on SI.IdSectorIndicador = I.IdSectorIndicador join MetaYMonitoreoPorPeriodo MM on MM.IdIndicadorPorPrograma = IP.IdIndicadoresPorPrograma join  TiposDeIndicador TI on I.IdTipoDeIndicador = TI.IdTipoDeIndicador  where I.Activo=1 and IP.Activo=1 and IP.IdPrograma = @p1 and MM.IdAreaDeInfluencia= @p2 and MM.Ano= @p3 AND MM.Activo=1 and (TI.NivelTipoDeIndicador = 1 OR TI.NivelTipoDeIndicador = 0) group by I.IdIndicador, SI.DescripcionSectorIndicador, I.DescripcionIndicador,TI.DescripcionTipoDeIndicador,IP.IdIndicadoresPorPrograma,MM.Potenciales,MM.ProyectadoQ1,MM.ProyectadoQ2,MM.ProyectadoQ3,MM.ProyectadoQ4,MM.IdMetaPorPeriodo">
+                                        UpdateCommand="UPDATE [MetaYMonitoreoPorPeriodo] SET [Potenciales]=@Potenciales, [ProyectadoQ1]=@ProyectadoQ1, [ProyectadoQ2]=@ProyectadoQ2,[ProyectadoQ3]=@ProyectadoQ3 , [ProyectadoQ4]=@ProyectadoQ4, [Acumula] = @Acumula WHERE [IdMetaPorPeriodo]= @IdMetaPorPeriodo "
+                                        SelectCommand="SELECT  MM.IdMetaPorPeriodo, I.IdIndicador,SI.DescripcionSectorIndicador, I.DescripcionIndicador, MM.Acumula,TI.DescripcionTipoDeIndicador,MM.Potenciales, MM.ProyectadoQ1,MM.ProyectadoQ2, MM.ProyectadoQ3,MM.ProyectadoQ4, 'S1' = (CASE WHEN MM.Acumula =  1 THEN  (MM.ProyectadoQ1+MM.ProyectadoQ2)  ELSE  MM.ProyectadoQ1 END), 'Total' = (CASE WHEN MM.Acumula = 1 THEN (MM.ProyectadoQ1 + MM.ProyectadoQ2 + MM.ProyectadoQ3 + MM.ProyectadoQ4) ELSE MM.ProyectadoQ1 END) from Indicadores I join IndicadoresPorPrograma IP on I.IdIndicador = IP.IdIndicador join vROISectorIndicadores SI on SI.IdSectorIndicador = I.IdSectorIndicador join MetaYMonitoreoPorPeriodo MM on MM.IdIndicadorPorPrograma = IP.IdIndicadoresPorPrograma join  TiposDeIndicador TI on I.IdTipoDeIndicador = TI.IdTipoDeIndicador  where I.Activo=1 and IP.Activo=1 and IP.IdPrograma = @p1 and MM.IdAreaDeInfluencia= @p2 and MM.Ano= @p3  AND MM.Activo=1 and (TI.NivelTipoDeIndicador = 1 OR TI.NivelTipoDeIndicador = 0) group by MM.Acumula, I.IdIndicador, SI.DescripcionSectorIndicador, I.DescripcionIndicador,TI.DescripcionTipoDeIndicador,IP.IdIndicadoresPorPrograma,MM.Potenciales,MM.ProyectadoQ1,MM.ProyectadoQ2,MM.ProyectadoQ3,MM.ProyectadoQ4,MM.IdMetaPorPeriodo">
 
 
                                         <SelectParameters>
@@ -1128,6 +1132,11 @@
                                                 <EditFormSettings Visible="False" />
                                                 <Settings AutoFilterCondition="Contains" />
                                             </dx:GridViewDataTextColumn>
+                                                
+                                            <dx:GridViewDataCheckColumn Caption="Acumula" FieldName="Acumula" VisibleIndex="3">
+                                                <Settings AutoFilterCondition="Contains" />
+                                            </dx:GridViewDataCheckColumn>
+
                                             <dx:GridViewDataTextColumn FieldName="Potenciales" Caption="Pot." ReadOnly="False" VisibleIndex="3">
                                                 <EditFormSettings Visible="True" />
                                                 <Settings AllowAutoFilter="False" />
@@ -1176,8 +1185,8 @@
 
                                     </dx:ASPxGridView>
                                     <asp:SqlDataSource ID="SqlDataSource3" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>"
-                                        UpdateCommand="UPDATE [MetaYMonitoreoPorPeriodo] SET [Potenciales]=@Potenciales, [ProyectadoQ1]=@ProyectadoQ1, [ProyectadoQ2]=@ProyectadoQ2,[ProyectadoQ3]=@ProyectadoQ3 , [ProyectadoQ4]=@ProyectadoQ4 WHERE [IdMetaPorPeriodo]= @IdMetaPorPeriodo "
-                                        SelectCommand="select MM.IdMetaPorPeriodo,AI.DescripcionAreaDeInfluencia,MM.Potenciales, MM.ProyectadoQ1,MM.ProyectadoQ2,(MM.ProyectadoQ1+MM.ProyectadoQ2) As S1,MM.ProyectadoQ3,MM.ProyectadoQ4,(MM.ProyectadoQ1 + MM.ProyectadoQ2 + MM.ProyectadoQ3 + MM.ProyectadoQ4) as Total from MetaYMonitoreoPorPeriodo MM join IndicadoresPorPrograma IP on IP.IdIndicadoresPorPrograma= MM.IdIndicadorPorPrograma join dbo.[AreasDeInfluencia] AI on MM.IdAreaDeInfluencia = AI.IdAreaDeInfluencia  where MM.IdIndicadorPorPrograma = @Indicador and MM.Ano= @Ano and MM.Activo=1 and AI.Activo=1 and IP.Activo=1 group by AI.DescripcionAreaDeInfluencia,MM.Potenciales,MM.ProyectadoQ1,MM.ProyectadoQ2,MM.ProyectadoQ3,MM.ProyectadoQ4,MM.IdMetaPorPeriodo">
+                                        UpdateCommand="UPDATE [MetaYMonitoreoPorPeriodo] SET [Potenciales]=@Potenciales, [ProyectadoQ1]=@ProyectadoQ1, [ProyectadoQ2]=@ProyectadoQ2,[ProyectadoQ3]=@ProyectadoQ3 , [ProyectadoQ4]=@ProyectadoQ4, [Acumula]=@Acumula WHERE [IdMetaPorPeriodo]= @IdMetaPorPeriodo "
+                                        SelectCommand="SELECT  MM.IdMetaPorPeriodo,AI.DescripcionAreaDeInfluencia, MM.Acumula, MM.Potenciales, MM.ProyectadoQ1,MM.ProyectadoQ2, MM.ProyectadoQ3,MM.ProyectadoQ4, 'S1' = (CASE WHEN MM.Acumula =  1 THEN  (MM.ProyectadoQ1+MM.ProyectadoQ2)  ELSE  MM.ProyectadoQ1 END), 'Total' = (CASE WHEN MM.Acumula = 1 THEN (MM.ProyectadoQ1 + MM.ProyectadoQ2 + MM.ProyectadoQ3 + MM.ProyectadoQ4) ELSE MM.ProyectadoQ1 END) from MetaYMonitoreoPorPeriodo MM join IndicadoresPorPrograma IP on IP.IdIndicadoresPorPrograma= MM.IdIndicadorPorPrograma join dbo.[AreasDeInfluencia] AI on MM.IdAreaDeInfluencia = AI.IdAreaDeInfluencia  where MM.IdIndicadorPorPrograma = @Indicador and MM.Ano= @Ano and MM.Activo=1 and AI.Activo=1 and IP.Activo=1 group by MM.Acumula, AI.DescripcionAreaDeInfluencia,MM.Potenciales,MM.ProyectadoQ1,MM.ProyectadoQ2,MM.ProyectadoQ3,MM.ProyectadoQ4,MM.IdMetaPorPeriodo">
                                         <SelectParameters>
                                             <asp:SessionParameter Name="Indicador" />
                                             <asp:SessionParameter Name="Ano" />
