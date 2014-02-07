@@ -44,28 +44,28 @@ Partial Class MOCA_UE
     End Property
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-        If Not IsPostBack Then
-            'Verifica Entidades y Unidades de Compras Asignadas
-            Dim ws As New MOCA.SecurityCredentialsSoapClient
-            Dim dt As DataTable
-            dt = ws.GetEntrepricesAssigedToUser(My.User.Name)
-            ddlEntidades.DataSource=dt
-            ddlEntidades.DataBind()
+        'If Not IsPostBack Then
+        '    'Verifica Entidades y Unidades de Compras Asignadas
+        '    Dim ws As New MOCA.SecurityCredentialsSoapClient
+        '    Dim dt As DataTable
+        '    dt = ws.GetEntrepricesAssigedToUser(My.User.Name)
+        '    ddlEntidades.DataSource=dt
+        '    ddlEntidades.DataBind()
 
-            'Unidades de Compra Asignadas
-            Call CargarUE()
+        '    'Unidades de Compra Asignadas
+        '    Call CargarUE()
 
-            'Tipo de control a mostrar
-            If Me.ddlEntidades.Items.Count = 1 Then
-                Me.ddlEntidades.Visible = False
-                Me.lblEntidad.Text = ddlEntidades.SelectedItem.Text
-                Me.lblEntidad.Visible = True
-            Else
-                Me.ddlEntidades.Visible = True
-                Me.lblEntidad.Text = Nothing
-                Me.lblEntidad.Visible = False
-            End If
-        End If
+        '    'Tipo de control a mostrar
+        '    If Me.ddlEntidades.Items.Count = 1 Then
+        '        Me.ddlEntidades.Visible = False
+        '        Me.lblEntidad.Text = ddlEntidades.SelectedItem.Text
+        '        Me.lblEntidad.Visible = True
+        '    Else
+        '        Me.ddlEntidades.Visible = True
+        '        Me.lblEntidad.Text = Nothing
+        '        Me.lblEntidad.Visible = False
+        '    End If
+        'End If
     End Sub
 
     Protected Sub ddlEntidades_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles ddlEntidades.SelectedIndexChanged
