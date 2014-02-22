@@ -65,6 +65,27 @@
                         <Templates>
                         <DetailRow>
 
+                            <dx:ASPxGridView ID="ASPxGridViewInstrumentos" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSourceInstrumentos" KeyFieldName="IdInstrumentoDeEvaluacion" IsDetailGrid="true" OnBeforePerformDataSelect="ASPxGridViewInstrumentos_BeforePerformDataSelect" Width="100%" SettingsDetail-AllowOnlyOneMasterRowExpanded="true">
+                                <Columns>
+                                    <dx:GridViewDataTextColumn FieldName="IdInstrumentoDeEvaluacion" ReadOnly="True" VisibleIndex="0" Visible="false">
+                                        <EditFormSettings Visible="False"></EditFormSettings>
+                                    </dx:GridViewDataTextColumn>
+                                    <dx:GridViewDataTextColumn FieldName="TipoDeInstrumento" VisibleIndex="2"></dx:GridViewDataTextColumn>
+                                    <dx:GridViewDataTextColumn FieldName="IdPrograma" VisibleIndex="2" Visible="false"></dx:GridViewDataTextColumn>
+                                    <dx:GridViewDataTextColumn FieldName="NombreInstrumento" VisibleIndex="1"></dx:GridViewDataTextColumn>
+                                    <dx:GridViewDataTextColumn FieldName="Ano" VisibleIndex="4"></dx:GridViewDataTextColumn>
+                                </Columns>
+                                <SettingsBehavior AllowFocusedRow="True" />
+
+                                <SettingsPager>
+                <AllButton Visible="True" Text="Todos">
+                </AllButton>
+            </SettingsPager>
+
+             <SettingsDetail ShowDetailRow="True" />
+                        <Templates>
+                        <DetailRow>
+                                                        
                             <dx:ASPxGridView ID="ASPxGridView3" runat="server" KeyFieldName="IdAplicacionInstrumento" IsDetailGrid="true" OnBeforePerformDataSelect="ASPxGridView3_BeforePerformDataSelect"  OnHtmlDataCellPrepared="ASPxGridView3_HtmlDataCellPrepared" Width="100%" DataSourceID="SqlDataSource3" >
 
                                 <Columns>
@@ -102,13 +123,16 @@
                                 <Columns>
                                 <dx:GridViewDataTextColumn FieldName="IdIndicador" Caption="IdIndicador" ReadOnly="True" VisibleIndex="0" Visible="false" >
                                      </dx:GridViewDataTextColumn>
-                                <dx:GridViewDataTextColumn FieldName="DescripcionIndicador" Caption="Indicador" VisibleIndex="1" >
+                                <dx:GridViewDataTextColumn FieldName="Indicador" Caption="Indicador" VisibleIndex="1" >
                                      </dx:GridViewDataTextColumn>
 
-                                <dx:GridViewDataTextColumn FieldName="ValorIndicador" Caption="Valor" VisibleIndex="2">
+                                <dx:GridViewDataTextColumn FieldName="ValorCalculado" Caption="Valor" VisibleIndex="2">
                                     </dx:GridViewDataTextColumn>
 
-                                    <dx:GridViewDataTextColumn Caption="Oficial" VisibleIndex="3">
+                                <dx:GridViewDataTextColumn FieldName="ValorPrograma" Caption="Valor Programa" VisibleIndex="3">
+                                    </dx:GridViewDataTextColumn>
+
+                                <dx:GridViewDataTextColumn FieldName="ValorOficial" Caption="Valor Oficial" VisibleIndex="3">
                                     </dx:GridViewDataTextColumn>
 
 
@@ -198,6 +222,13 @@
 
                          </Templates>
 
+                            </dx:ASPxGridView>    
+
+
+
+                                </DetailRow>
+                            </Templates>
+                            
 
                             </dx:ASPxGridView>
 
@@ -282,6 +313,15 @@
                 <asp:SessionParameter Name="IdIndicador" />
                      
                 </SelectParameters>
+
+        </asp:SqlDataSource>
+
+
+        <asp:SqlDataSource runat="server" ID="SqlDataSourceInstrumentos" ConnectionString='<%$ ConnectionStrings:SUEPPSConnectionString %>' SelectCommand="select distinct(IE.IdInstrumentoDeEvaluacion), TI.TipoDeInstrumento, IE.IdPrograma, IE.NombreInstrumento, IE.Ano from AplicacionInstrumento AI join MomentosDeAplicacion MA on AI.IdMomentoAplicacion=MA.IdMomentoDeAplicacion join InstrumentosDeEvaluacion IE on AI.IdInstrumentoDeEvaluacion=IE.IdInstrumentoDeEvaluacion join ProcesosEvaluacion PE on IE.IdProcesoEvaluacion=PE.IdProcesoEvaluacion join TiposDeInstrumento TI on IE.IdTipoDeInstrumento=TI.IdTipoDeInstrumento where IE.IdPrograma = @IdPrograma" >
+            
+            <SelectParameters>
+                <asp:SessionParameter Name="IdPrograma" />
+             </SelectParameters>
 
         </asp:SqlDataSource>
 

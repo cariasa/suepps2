@@ -1,4 +1,5 @@
 ﻿Imports DevExpress.Web.ASPxGridView
+Imports System.Windows.Forms
 
 Partial Class Evaluacion_Levantamientos
     Inherits System.Web.UI.Page
@@ -51,16 +52,19 @@ Partial Class Evaluacion_Levantamientos
             " left join ValoresIndicadorPorLevantamiento VIP on AI.IdAplicacionInstrumento=VIP.IdAplicacionInstrumento" & _
             " AND IEP.IdIndicadoresEvaluacionPorPrograma=VIP.IdIndicadoresEvaluacionPorPrograma where AI.[IdInstrumentoDeEvaluacion]=@IdInstrumento and AI.[Activo]=1 group by AI.IdAplicacionInstrumento,MA.DescripcionMomento,PE.ProcesoEvaluacion,AI.FechaAplicacion,VIP.FechaCalculo  "
 
-            Me.SqlDataSource4.SelectCommand = "select I.IdIndicador,I.DescripcionIndicador,VIP.ValorIndicador from AplicacionInstrumento AI" & _
-            " join MomentosDeAplicacion ME on AI.IdMomentoAplicacion=ME.IdMomentoDeAplicacion" & _
-            " join InstrumentosDeEvaluacion IE on AI.IdInstrumentoDeEvaluacion=IE.IdInstrumentoDeEvaluacion" & _
-            " join ProcesosEvaluacion PE on IE.IdProcesoEvaluacion=PE.IdProcesoEvaluacion" & _
-            " join vProyectos P on IE.IdPrograma=P.codigo_ficha" & _
-            " join IndicadoresEvaluacionPorPrograma IEP on IE.IdPrograma = IEP.IdPrograma" & _
-            " join Indicadores I on IEP.IdIndicador = I.IdIndicador" & _
-            " left join ValoresIndicadorPorLevantamiento VIP " & _
-            " on AI.IdAplicacionInstrumento=VIP.IdAplicacionInstrumento " & _
-            " AND IEP.IdIndicadoresEvaluacionPorPrograma=VIP.IdIndicadoresEvaluacionPorPrograma where AI.IdAplicacionInstrumento= @IdAplicacion"
+            Me.SqlDataSource4.SelectCommand = "Select distinct(I.IdIndicador), " & _
+                "I.DescripcionIndicador Indicador, " & _
+                "VI.ValorIndicador ValorCalculado, " & _
+                "VIP.ValorIndicador ValorPrograma, " & _
+                "VIO.ValorIndicador ValorOficial " & _
+                "from " & _
+                "ValoresIndicadorPorLevantamiento VI " & _
+                "join IndicadoresEvaluacionPorPrograma IEP on VI.IdIndicadoresEvaluacionPorPrograma=IEP.IdIndicadoresEvaluacionPorPrograma and VI.IndicadorCalculado = 1 " & _
+                "join Indicadores I on IEP.IdIndicador = I.IdIndicador " & _
+                "left join ValoresIndicadorPorLevantamiento VIP on VI.IdIndicadoresEvaluacionPorPrograma = VIP.IdIndicadoresEvaluacionPorPrograma AND VIP.IndicadorPrograma=1 " & _
+                "left join ValoresIndicadorPorLevantamiento VIO on VI.IdIndicadoresEvaluacionPorPrograma = VIO.IdIndicadoresEvaluacionPorPrograma AND VIO.IndicadorOficial=1 " & _
+                "where " & _
+                "VI.IdAplicacionInstrumento = @IdAplicacion"
 
         End Using
 
@@ -74,6 +78,8 @@ Partial Class Evaluacion_Levantamientos
         Me.SqlDataSource2.DataBind()
 
         Session("indexpolitica") = ASPxGridView1.FocusedRowIndex()
+
+
 
     End Sub
 
@@ -153,7 +159,7 @@ Partial Class Evaluacion_Levantamientos
         Me.SqlDataSource5.SelectParameters(1).DefaultValue = Session("IdIndicador")
         Me.SqlDataSource5.DataBind()
 
-        
+
 
 
     End Sub
@@ -193,4 +199,28 @@ Partial Class Evaluacion_Levantamientos
 
 
     End Sub
+
+    Protected Sub ASPxGridViewInstrumentos_BeforePerformDataSelect(sender As Object, e As EventArgs)
+
+
+        Dim key As Integer
+        key = CType(sender, ASPxGridView).GetMasterRowKeyValue()
+
+        Dim detail As ASPxGridView = TryCast(ASPxGridView1.FindDetailRowTemplateControl(ASPxGridView1.FocusedRowIndex(), "ASPxGridView2"), ASPxGridView)
+
+        Dim index As Integer = detail.FocusedRowIndex()
+
+        Session("IdPrograma") = detail.GetRowValues(index, "codigo_ficha")
+        
+        'Session("IdPrograma") = CType(sender, ASPxGridView).GetRowValues(key, "codigo_ficha")
+        SqlDataSourceInstrumentos.SelectParameters(0).DefaultValue = Session("IdPrograma")
+        SqlDataSourceInstrumentos.DataBind()
+
+        'Dim detail As ASPxGridView = TryCast(ASPxGridView1.FindDetailRowTemplateControl(ASPxGridView1.FocusedRowIndex(), "ASPxGridView2"), ASPxGridView)
+
+        'Dim index As Integer = detail.FocusedRowIndex()
+
+        'Session("IdPrograma") = detail.GetRowValues(index, "codigo_ficha")
+    End Sub
+
 End Class
