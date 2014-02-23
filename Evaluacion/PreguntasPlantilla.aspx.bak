@@ -1,8 +1,8 @@
 ﻿<%@ Page Title="Preguntas de Plantilla" Language="VB" AutoEventWireup="false" CodeFile="PreguntasPlantilla.aspx.vb" Inherits="Cuantitativo_PreguntasPlantilla"  MasterPageFile="~/Site.master"  %>
 
-<%@ Register Assembly="DevExpress.Web.v13.1, Version=13.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web.ASPxEditors" TagPrefix="dx" %>
+<%@ Register Assembly="DevExpress.Web.v13.2, Version=13.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web.ASPxEditors" TagPrefix="dx" %>
 
-<%@ Register Assembly="DevExpress.Web.v13.1, Version=13.1.8.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
+<%@ Register Assembly="DevExpress.Web.v13.2, Version=13.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a"
     Namespace="DevExpress.Web.ASPxGridView" TagPrefix="dx" %>
 
 <%@ Register Src="~/MOCA_UE.ascx" TagPrefix="uc1" TagName="MOCA_UE" %>
@@ -28,8 +28,8 @@
         </div>
 
            
-        <dx:ASPxGridView ID="ASPxGridView1" runat="server" AutoGenerateColumns="False" 
-            DataSourceID="SqlDataSource1" KeyFieldName="IdPreguntaPorPlantilla">
+        <dx:ASPxGridView ID="GridPreguntas" runat="server" AutoGenerateColumns="False" 
+            DataSourceID="SqlPreguntas" KeyFieldName="IdPreguntaPorPlantilla">
             <Columns>
                 <dx:GridViewDataTextColumn FieldName="IdPreguntaPorPlantilla" ReadOnly="True" Visible="false"
                     VisibleIndex="0">
@@ -46,7 +46,7 @@
                 <EditFormSettings ColumnSpan="1" />
                 </dx:GridViewDataTextColumn>
 
-                <dx:GridViewDataComboBoxColumn VisibleIndex="4" FieldName="IdTipoDePregunta" Caption="Tipo Pregunta">
+                <dx:GridViewDataComboBoxColumn VisibleIndex="4" FieldName="IdTipoDePregunta" Caption="Tipo de Pregunta">
                                <EditFormSettings ColumnSpan="1" />
                                 <PropertiesComboBox ValueType="System.String" 
                 
@@ -75,8 +75,11 @@
                 </dx:GridViewDataTextColumn>
                 <dx:GridViewDataCheckColumn FieldName="Requerida" Caption="Requerida" VisibleIndex="7">
                 <EditFormSettings ColumnSpan="1" />
+                    <PropertiesCheckEdit>  
+                       <ClientSideEvents Init="function(s, e){s.SetChecked(false);}" />                   
+                    </PropertiesCheckEdit>
                 </dx:GridViewDataCheckColumn>
-                <dx:GridViewDataComboBoxColumn FieldName="IdTipoDeRespuesta" Caption="Tipo Respuesta" VisibleIndex="8">
+                <dx:GridViewDataComboBoxColumn FieldName="IdTipoDeRespuesta" Caption="Tipo de Respuesta" VisibleIndex="8">
                 <EditFormSettings ColumnSpan="1" />
                 <PropertiesComboBox ValueType="System.String" 
                 
@@ -150,11 +153,11 @@
                        
         </dx:ASPxGridView>
 
-        <asp:SqlDataSource ID="SqlDataSource1" runat="server"  OnInserted="SqlDataSource1_Inserted"
+        <asp:SqlDataSource ID="SqlPreguntas" runat="server"  OnInserted="SqlDataSource1_Inserted"
             ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" 
             SelectCommand="SELECT * FROM [PreguntasPorPlantilla] a join [SeccionesFSU] b on a.IdSeccionFSU= b.IdSeccionFSU WHERE a.[Activo]=1 and a.[IdPlantilla]= @IdPlantilla Order By b.NombreSeccion,a.Orden"
-            InsertCommand="Insert INTO [PreguntasPorPlantilla] ([IdPlantilla], [IdTipoDePregunta],[IdSeccionFSU],[PreguntaDePlantilla],[Orden],[Requerida],[IdTipoDeRespuesta],[CreadoPor], [FechaCreacion], [Activo],[IdAmigable]) VALUES (@IdPlantilla, @IdTipoDePregunta,@IdSeccionFSU,@PreguntaDePlantilla,@Orden,@Requerida,@IdTipoDeRespuesta,'PACO', getDate(), 1,@IdAmigable) SELECT @IdPreguntaPorPlantilla = SCOPE_IDENTITY()"
-            UpdateCommand="Update [PreguntasPorPlantilla] SET [IdTipoDePregunta]=@IdTipoDePregunta, [IdSeccionFSU]=@IdSeccionFSU,[PreguntaDePlantilla]=@PreguntaDePlantilla,[Orden]=@Orden,[Requerida]=@Requerida,[IdTipoDeRespuesta]=@IdTipoDeRespuesta,[ActualizadoPor]='PACO', [FechaActualizacion]=getDate(), [IdAmigable]=@IdAmigable WHERE [IdPreguntaPorPlantilla] = @IdPreguntaPorPlantilla"
+            InsertCommand="Insert INTO [PreguntasPorPlantilla] ([IdPlantilla], [IdTipoDePregunta],[IdSeccionFSU],[PreguntaDePlantilla],[Orden],[Requerida],[IdTipoDeRespuesta],[CreadoPor], [FechaCreacion], [Activo],[IdAmigable]) VALUES (@IdPlantilla, @IdTipoDePregunta,@IdSeccionFSU,@PreguntaDePlantilla,@Orden,@Requerida,@IdTipoDeRespuesta,@Usuario, getDate(), 1,@IdAmigable) SELECT @IdPreguntaPorPlantilla = SCOPE_IDENTITY()"
+            UpdateCommand="Update [PreguntasPorPlantilla] SET [IdTipoDePregunta]=@IdTipoDePregunta, [IdSeccionFSU]=@IdSeccionFSU,[PreguntaDePlantilla]=@PreguntaDePlantilla,[Orden]=@Orden,[Requerida]=@Requerida,[IdTipoDeRespuesta]=@IdTipoDeRespuesta,[ActualizadoPor]=@Usuario, [FechaActualizacion]=getDate(), [IdAmigable]=@IdAmigable WHERE [IdPreguntaPorPlantilla] = @IdPreguntaPorPlantilla"
             DeleteCommand="Update [PreguntasPorPlantilla] SET [Activo]=0 WHERE [IdPreguntaPorPlantilla] = @IdPreguntaPorPlantilla"
             >
 
@@ -172,6 +175,7 @@
                 <asp:FormParameter Name="Requerida" />
                 <asp:FormParameter Name="IdTipoDeRespuesta" />
                 <asp:FormParameter Name="IdAmigable" />
+                <asp:SessionParameter Name="Usuario" />
                 <asp:Parameter Name="IdPreguntaPorPlantilla" Direction="Output"  type="Int32" />
                 
 
@@ -186,6 +190,7 @@
                 <asp:FormParameter Name="IdTipoDeRespuesta" />
                 <asp:FormParameter Name="IdPreguntaPorPlantilla" />
                 <asp:FormParameter Name="IdAmigable" />
+                <asp:SessionParameter Name="Usuario" />
          
             </UpdateParameters>
 
@@ -204,8 +209,8 @@
 
        <asp:SqlDataSource runat="server" ID="SqlDataSourceOpciones" ConnectionString='<%$ ConnectionStrings:SUEPPSConnectionString %>' 
                     SelectCommand="SELECT * FROM [OpcionesPreguntaPorPlantilla] WHERE ([IdPreguntaPorPlantilla] = @IdPreguntaPorPlantilla AND [Activo]=1)"
-                    InsertCommand="Insert INTO [OpcionesPreguntaPorPlantilla] ([Opcion], [IdPreguntaPorPlantilla], [CreadoPor], [FechaCreacion], [Activo],[Valor],[SaltaACodigo]) VALUES (@Opcion, @IdPreguntaPorPlantilla, 'PACO', getDate(), 1,@Valor,@SaltaACodigo)"
-                    UpdateCommand="Update [OpcionesPreguntaPorPlantilla] SET [Opcion]=@Opcion, [ActualizadoPor]='PACO', [FechaActualizacion]=getDate(),[Valor]=@Valor,[SaltaACodigo]=@SaltaACodigo WHERE [IdOpcionPreguntaPorPlantilla] = @IdOpcionPreguntaPorPlantilla"
+                    InsertCommand="Insert INTO [OpcionesPreguntaPorPlantilla] ([Opcion], [IdPreguntaPorPlantilla], [CreadoPor], [FechaCreacion], [Activo],[Valor],[SaltaACodigo]) VALUES (@Opcion, @IdPreguntaPorPlantilla, @Usuario, getDate(), 1,@Valor,@SaltaACodigo)"
+                    UpdateCommand="Update [OpcionesPreguntaPorPlantilla] SET [Opcion]=@Opcion, [ActualizadoPor]=@Usuario, [FechaActualizacion]=getDate(),[Valor]=@Valor,[SaltaACodigo]=@SaltaACodigo WHERE [IdOpcionPreguntaPorPlantilla] = @IdOpcionPreguntaPorPlantilla"
                     DeleteCommand="Update [OpcionesPreguntaPorPlantilla] SET [Activo]=0 WHERE [IdOpcionPreguntaPorPlantilla] = @IdOpcionPreguntaPorPlantilla"
                     >
                 <SelectParameters>
@@ -218,6 +223,7 @@
                     <asp:FormParameter Name="Opcion" />
                     <asp:FormParameter Name="Valor" />
                     <asp:FormParameter Name="SaltaACodigo" />
+                    <asp:SessionParameter Name="Usuario" />
                 </InsertParameters>
 
                 <UpdateParameters>
@@ -225,6 +231,7 @@
                     <asp:FormParameter Name="Opcion" />
                     <asp:FormParameter Name="Valor" />
                      <asp:FormParameter Name="SaltaACodigo" />
+                    <asp:SessionParameter Name="Usuario" />
                 </UpdateParameters>
  
             </asp:SqlDataSource>
