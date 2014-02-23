@@ -6,7 +6,7 @@ Partial Class GestionPublica_Usuarios
 
         Me.Programa.Text = Request.QueryString.Get(0)
 
-        '     SqlDataSource1.InsertCommand = "SET @AP = (SELECT [IdPrograma],[Usuario] FROM [UsuariosPorPrograma] " & _
+        '     SqlDataSourceUsuario.InsertCommand = "SET @AP = (SELECT [IdPrograma],[Usuario] FROM [UsuariosPorPrograma] " & _
         '    "where [IdPrograma]=@Programa" & _
         '     " and [Usuario]=@Usuario and Activo=1" & _
         '        ")" & _
@@ -16,12 +16,12 @@ Partial Class GestionPublica_Usuarios
         ' "END"
 
 
-        SqlDataSource1.SelectParameters(0).DefaultValue = Request.QueryString.Get(1)
+        SqlDataSourceUsuario.SelectParameters(0).DefaultValue = Request.QueryString.Get(1)
 
-        SqlDataSource1.InsertParameters(0).DefaultValue = Request.QueryString.Get(1)
-        SqlDataSource1.InsertParameters(1).DefaultValue = Membership.GetUser.UserName
+        SqlDataSourceUsuario.InsertParameters(0).DefaultValue = Request.QueryString.Get(1)
+        SqlDataSourceUsuario.InsertParameters(1).DefaultValue = Membership.GetUser.UserName
 
-        SqlDataSource1.UpdateParameters(0).DefaultValue = Membership.GetUser.UserName
+        SqlDataSourceUsuario.UpdateParameters(0).DefaultValue = Membership.GetUser.UserName
 
     End Sub
 
@@ -63,7 +63,7 @@ Partial Class GestionPublica_Usuarios
 
         Me.Programa.Text = Request.QueryString.Get(0)
 
-        '     SqlDataSource1.InsertCommand = "SET @AP = (SELECT [IdPrograma],[Usuario] FROM [UsuariosPorPrograma] " & _
+        '     SqlDataSourceUsuario.InsertCommand = "SET @AP = (SELECT [IdPrograma],[Usuario] FROM [UsuariosPorPrograma] " & _
         '    "where [IdPrograma]=@Programa" & _
         '     " and [Usuario]=@Usuario and Activo=1" & _
         '        ")" & _
@@ -72,13 +72,13 @@ Partial Class GestionPublica_Usuarios
         '"INSERT INTO [UsuariosPorPrograma] ([IdPrograma],[Usuario],[CreadoPor],[FechaCreacion],[Activo]) values (@Programa,@Usuario,@Creado,getDate(),1)" & _
         ' "END"
 
-        SqlDataSource1.SelectParameters(0).DefaultValue = Request.QueryString.Get(1)
+        SqlDataSourceUsuario.SelectParameters(0).DefaultValue = Request.QueryString.Get(1)
 
-        SqlDataSource1.InsertParameters(0).DefaultValue = Request.QueryString.Get(1)
+        SqlDataSourceUsuario.InsertParameters(0).DefaultValue = Request.QueryString.Get(1)
 
-        SqlDataSource1.InsertParameters(1).DefaultValue = Membership.GetUser.UserName
+        SqlDataSourceUsuario.InsertParameters(1).DefaultValue = Membership.GetUser.UserName
 
-        SqlDataSource1.UpdateParameters(0).DefaultValue = Membership.GetUser.UserName
+        SqlDataSourceUsuario.UpdateParameters(0).DefaultValue = Membership.GetUser.UserName
 
     End Sub
 End Class

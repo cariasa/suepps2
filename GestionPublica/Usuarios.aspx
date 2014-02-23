@@ -14,7 +14,7 @@
 
         <br />
 
-        <dx:ASPxGridView ID="ASPxGridView1" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource1"  KeyFieldName="IdUsuarioPorPrograma" >
+        <dx:ASPxGridView ID="ASPxGridViewUsuario" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSourceUsuario"  KeyFieldName="IdUsuarioPorPrograma" >
             <Columns>
                 
 
@@ -39,7 +39,7 @@
 
 
 
-        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" 
+        <asp:SqlDataSource ID="SqlDataSourceUsuario" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" 
             SelectCommand="SELECT [IdUsuarioPorPrograma], [IdPrograma], [Usuario] FROM [UsuariosPorPrograma] where [IdPrograma]=@Programa and [Activo]=1"
            InsertCommand="INSERT INTO [UsuariosPorPrograma] ([IdPrograma],[Usuario],[CreadoPor],[FechaCreacion],[Activo]) values (@Programa,@Usuario,@Creado,getDate(),1)"
             UpdateCommand="UPDATE [UsuariosPorPrograma] SET [Usuario]=@Usuario, [ActualizadoPor]=@Actualizado, [FechaActualizacion]=getDate() WHERE [IdUsuarioPorPrograma]= @IdUsuarioPorPrograma"

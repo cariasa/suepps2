@@ -34,7 +34,7 @@ Partial Class Evaluacion_Levantamientos
                 Response.Redirect("~/NoAccess.aspx")
             End If
 
-            Me.SqlDataSource2.SelectCommand = "select DISTINCT(Pol.IdPolitica), Pol.Nombre, Pro.codigo_ficha, Pro.NombreProyecto, Pro.codigo_proyecto,IE.Ano,IE.NombreInstrumento,IE.IdInstrumentoDeEvaluacion from Politicas Pol " & _
+            Me.SqlDataSourceProyectos.SelectCommand = "select DISTINCT(Pol.IdPolitica), Pol.Nombre, Pro.codigo_ficha, Pro.NombreProyecto, Pro.codigo_proyecto,IE.Ano,IE.NombreInstrumento,IE.IdInstrumentoDeEvaluacion from Politicas Pol " & _
        "join ComponentesDePolitica CP on Pol.IdPolitica=CP.IdPolitica AND Pol.Activo = 1 " & _
        "join MetasDeComponente MC on CP.IdComponentesDePolitica=MC.IdComponentesDePolitica " & _
        "join IndicadoresDeMeta IM on MC.IdMetasDeComponente=IM.IdMetasDeComponente " & _
@@ -42,7 +42,7 @@ Partial Class Evaluacion_Levantamientos
        "join vProyectos Pro ON PIM.IdPrograma=Pro.codigo_ficha " & _
        "join InstrumentosDeEvaluacion IE ON Pro.codigo_ficha= IE.IdPrograma where Pol.[IdPolitica]=@IdPolitica "
 
-            Me.SqlDataSource3.SelectCommand = " select AI.IdAplicacionInstrumento,MA.DescripcionMomento,PE.ProcesoEvaluacion,AI.FechaAplicacion,VIP.FechaCalculo from InstrumentosDeEvaluacion IE" & _
+            Me.SqlDataSourceLevantamientos.SelectCommand = " select AI.IdAplicacionInstrumento,MA.DescripcionMomento,PE.ProcesoEvaluacion,AI.FechaAplicacion,VIP.FechaCalculo from InstrumentosDeEvaluacion IE" & _
             " join AplicacionInstrumento AI on IE.IdInstrumentoDeEvaluacion= AI.IdInstrumentoDeEvaluacion" & _
             " join ProcesosEvaluacion PE on PE.IdProcesoEvaluacion=IE.IdProcesoEvaluacion" & _
             " join MomentosDeAplicacion MA on MA.IdMomentoDeAplicacion=AI.IdMomentoAplicacion" & _
@@ -52,7 +52,7 @@ Partial Class Evaluacion_Levantamientos
             " left join ValoresIndicadorPorLevantamiento VIP on AI.IdAplicacionInstrumento=VIP.IdAplicacionInstrumento" & _
             " AND IEP.IdIndicadoresEvaluacionPorPrograma=VIP.IdIndicadoresEvaluacionPorPrograma where AI.[IdInstrumentoDeEvaluacion]=@IdInstrumento and AI.[Activo]=1 group by AI.IdAplicacionInstrumento,MA.DescripcionMomento,PE.ProcesoEvaluacion,AI.FechaAplicacion,VIP.FechaCalculo  "
 
-            Me.SqlDataSource4.SelectCommand = "Select distinct(I.IdIndicador), " & _
+            Me.SqlDataSourceIndicadores.SelectCommand = "Select distinct(I.IdIndicador), " & _
                 "I.DescripcionIndicador Indicador, " & _
                 "VI.ValorIndicador ValorCalculado, " & _
                 "VIP.ValorIndicador ValorPrograma, " & _
@@ -71,13 +71,13 @@ Partial Class Evaluacion_Levantamientos
     End Sub
 
 
-    Protected Sub ASPxGridView2_BeforePerformDataSelect(sender As Object, e As EventArgs)
+    Protected Sub ASPxGridViewProyectos_BeforePerformDataSelect(sender As Object, e As EventArgs)
 
         Session("IdPolitica") = CType(sender, ASPxGridView).GetMasterRowKeyValue()
-        Me.SqlDataSource2.SelectParameters(0).DefaultValue = Session("IdPolitica")
-        Me.SqlDataSource2.DataBind()
+        Me.SqlDataSourceProyectos.SelectParameters(0).DefaultValue = Session("IdPolitica")
+        Me.SqlDataSourceProyectos.DataBind()
 
-        Session("indexpolitica") = ASPxGridView1.FocusedRowIndex()
+        Session("indexpolitica") = ASPxGridViewPoliticas.FocusedRowIndex()
 
 
 
@@ -85,13 +85,13 @@ Partial Class Evaluacion_Levantamientos
 
 
 
-    Protected Sub ASPxGridView3_BeforePerformDataSelect(sender As Object, e As EventArgs)
+    Protected Sub ASPxGridViewLevantamientos_BeforePerformDataSelect(sender As Object, e As EventArgs)
 
         Session("IdInstrumento") = CType(sender, ASPxGridView).GetMasterRowKeyValue()
-        Me.SqlDataSource3.SelectParameters(0).DefaultValue = Session("IdInstrumento")
-        Me.SqlDataSource3.DataBind()
+        Me.SqlDataSourceLevantamientos.SelectParameters(0).DefaultValue = Session("IdInstrumento")
+        Me.SqlDataSourceLevantamientos.DataBind()
 
-        Dim detail As ASPxGridView = TryCast(ASPxGridView1.FindDetailRowTemplateControl(ASPxGridView1.FocusedRowIndex(), "ASPxGridView2"), ASPxGridView)
+        Dim detail As ASPxGridView = TryCast(ASPxGridViewPoliticas.FindDetailRowTemplateControl(ASPxGridViewPoliticas.FocusedRowIndex(), "ASPxGridViewProyectos"), ASPxGridView)
 
         Dim index As Integer = detail.FocusedRowIndex()
 
@@ -103,17 +103,17 @@ Partial Class Evaluacion_Levantamientos
     End Sub
 
 
-    Protected Sub ASPxGridView4_BeforePerformDataSelect(sender As Object, e As EventArgs)
+    Protected Sub ASPxGridViewIndicadores_BeforePerformDataSelect(sender As Object, e As EventArgs)
 
         Session("IdAplicacion") = CType(sender, ASPxGridView).GetMasterRowKeyValue()
 
-        Me.SqlDataSource4.SelectParameters(0).DefaultValue = Session("IdAplicacion")
-        Me.SqlDataSource4.DataBind()
+        Me.SqlDataSourceIndicadores.SelectParameters(0).DefaultValue = Session("IdAplicacion")
+        Me.SqlDataSourceIndicadores.DataBind()
 
 
     End Sub
 
-    Protected Sub ASPxGridView3_HtmlDataCellPrepared(sender As Object, e As ASPxGridViewTableDataCellEventArgs)
+    Protected Sub ASPxGridViewLevantamientos_HtmlDataCellPrepared(sender As Object, e As ASPxGridViewTableDataCellEventArgs)
 
         If e.DataColumn.FieldName = "FechaCalculo" Then
 
@@ -145,9 +145,9 @@ Partial Class Evaluacion_Levantamientos
     End Sub
 
 
-    Protected Sub ASPxGridView5_BeforePerformDataSelect(sender As Object, e As EventArgs)
+    Protected Sub ASPxGridViewDepartamentos_BeforePerformDataSelect(sender As Object, e As EventArgs)
 
-        Me.SqlDataSource5.SelectCommand = "select IEP.IdIndicadoresEvaluacionPorPrograma,D.DescripcionDepartamento,VD.Valor from AplicacionInstrumento AI " & _
+        Me.SqlDataSourceDepartamentos.SelectCommand = "select IEP.IdIndicadoresEvaluacionPorPrograma,D.DescripcionDepartamento,VD.Valor from AplicacionInstrumento AI " & _
         " join InstrumentosDeEvaluacion IE on AI.IdInstrumentoDeEvaluacion=IE.IdInstrumentoDeEvaluacion" & _
         " join IndicadoresEvaluacionPorPrograma IEP on IE.IdPrograma = IEP.IdPrograma" & _
         " left join ValoresDepartamento VD on AI.IdAplicacionInstrumento=VD.IdAplicacionInstrumento AND IEP.IdIndicadoresEvaluacionPorPrograma=VD.IdIndicadorEvaluacionPorPrograma" & _
@@ -155,18 +155,18 @@ Partial Class Evaluacion_Levantamientos
 
         Session("IdIndicador") = CType(sender, ASPxGridView).GetMasterRowKeyValue()
 
-        Me.SqlDataSource5.SelectParameters(0).DefaultValue = Session("IdAplicacion")
-        Me.SqlDataSource5.SelectParameters(1).DefaultValue = Session("IdIndicador")
-        Me.SqlDataSource5.DataBind()
+        Me.SqlDataSourceDepartamentos.SelectParameters(0).DefaultValue = Session("IdAplicacion")
+        Me.SqlDataSourceDepartamentos.SelectParameters(1).DefaultValue = Session("IdIndicador")
+        Me.SqlDataSourceDepartamentos.DataBind()
 
 
 
 
     End Sub
 
-    Protected Sub ASPxGridView6_BeforePerformDataSelect(sender As Object, e As EventArgs)
+    Protected Sub ASPxGridViewMunicipios_BeforePerformDataSelect(sender As Object, e As EventArgs)
 
-        Me.SqlDataSource6.SelectCommand = "select IEP.IdIndicadoresEvaluacionPorPrograma,D.DescripcionDepartamento,M.DescripcionMunicipio,VM.Valor from AplicacionInstrumento AI" & _
+        Me.SqlDataSourceMunicipios.SelectCommand = "select IEP.IdIndicadoresEvaluacionPorPrograma,D.DescripcionDepartamento,M.DescripcionMunicipio,VM.Valor from AplicacionInstrumento AI" & _
        " join InstrumentosDeEvaluacion IE on AI.IdInstrumentoDeEvaluacion=IE.IdInstrumentoDeEvaluacion" & _
        " join IndicadoresEvaluacionPorPrograma IEP on IE.IdPrograma = IEP.IdPrograma" & _
        " left join ValoresMunicipio VM on AI.IdAplicacionInstrumento=VM.IdAplicacionInstrumento AND IEP.IdIndicadoresEvaluacionPorPrograma=VM.IdIndicadorEvaluacionPorPrograma" & _
@@ -175,17 +175,17 @@ Partial Class Evaluacion_Levantamientos
 
         Session("IdIndicador") = CType(sender, ASPxGridView).GetMasterRowKeyValue()
 
-        Me.SqlDataSource6.SelectParameters(0).DefaultValue = Session("IdAplicacion")
-        Me.SqlDataSource6.SelectParameters(1).DefaultValue = Session("IdIndicador")
-        Me.SqlDataSource6.DataBind()
+        Me.SqlDataSourceMunicipios.SelectParameters(0).DefaultValue = Session("IdAplicacion")
+        Me.SqlDataSourceMunicipios.SelectParameters(1).DefaultValue = Session("IdIndicador")
+        Me.SqlDataSourceMunicipios.DataBind()
 
 
 
     End Sub
 
-    Protected Sub ASPxGridView7_BeforePerformDataSelect(sender As Object, e As EventArgs)
+    Protected Sub ASPxGridViewSexo_BeforePerformDataSelect(sender As Object, e As EventArgs)
 
-        Me.SqlDataSource7.SelectCommand = "select IEP.IdIndicadoresEvaluacionPorPrograma,S.DescripcionSexo,VS.Valor from AplicacionInstrumento AI" & _
+        Me.SqlDataSourceSexo.SelectCommand = "select IEP.IdIndicadoresEvaluacionPorPrograma,S.DescripcionSexo,VS.Valor from AplicacionInstrumento AI" & _
     " join InstrumentosDeEvaluacion IE on AI.IdInstrumentoDeEvaluacion=IE.IdInstrumentoDeEvaluacion" & _
     " join IndicadoresEvaluacionPorPrograma IEP on IE.IdPrograma = IEP.IdPrograma" & _
     " left join ValoresSexo VS on AI.IdAplicacionInstrumento=VS.IdAplicacionInstrumento AND IEP.IdIndicadoresEvaluacionPorPrograma=VS.IdIndicadorEvaluacionPorPrograma" & _
@@ -193,9 +193,9 @@ Partial Class Evaluacion_Levantamientos
 
         Session("IdIndicador") = CType(sender, ASPxGridView).GetMasterRowKeyValue()
 
-        Me.SqlDataSource7.SelectParameters(0).DefaultValue = Session("IdAplicacion")
-        Me.SqlDataSource7.SelectParameters(1).DefaultValue = Session("IdIndicador")
-        Me.SqlDataSource7.DataBind()
+        Me.SqlDataSourceSexo.SelectParameters(0).DefaultValue = Session("IdAplicacion")
+        Me.SqlDataSourceSexo.SelectParameters(1).DefaultValue = Session("IdIndicador")
+        Me.SqlDataSourceSexo.DataBind()
 
 
     End Sub
@@ -206,7 +206,7 @@ Partial Class Evaluacion_Levantamientos
         Dim key As Integer
         key = CType(sender, ASPxGridView).GetMasterRowKeyValue()
 
-        Dim detail As ASPxGridView = TryCast(ASPxGridView1.FindDetailRowTemplateControl(ASPxGridView1.FocusedRowIndex(), "ASPxGridView2"), ASPxGridView)
+        Dim detail As ASPxGridView = TryCast(ASPxGridViewPoliticas.FindDetailRowTemplateControl(ASPxGridViewPoliticas.FocusedRowIndex(), "ASPxGridViewProyectos"), ASPxGridView)
 
         Dim index As Integer = detail.FocusedRowIndex()
 
@@ -216,7 +216,7 @@ Partial Class Evaluacion_Levantamientos
         SqlDataSourceInstrumentos.SelectParameters(0).DefaultValue = Session("IdPrograma")
         SqlDataSourceInstrumentos.DataBind()
 
-        'Dim detail As ASPxGridView = TryCast(ASPxGridView1.FindDetailRowTemplateControl(ASPxGridView1.FocusedRowIndex(), "ASPxGridView2"), ASPxGridView)
+        'Dim detail As ASPxGridView = TryCast(ASPxGridViewPoliticas.FindDetailRowTemplateControl(ASPxGridViewPoliticas.FocusedRowIndex(), "ASPxGridViewProyectos"), ASPxGridView)
 
         'Dim index As Integer = detail.FocusedRowIndex()
 
