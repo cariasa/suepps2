@@ -72,6 +72,7 @@ Partial Class Cuantitativo_InstrumentosEvaluacion
 
     Protected Sub link1_Click(sender As Object, e As EventArgs)
 
+
         Dim index As Integer = GridInstrumentos.FocusedRowIndex()
         Dim codInstrumento As String = GridInstrumentos.GetRowValues(index, "IdInstrumentoDeEvaluacion").ToString
         Dim nomInstrumento As String = GridInstrumentos.GetRowValues(index, "NombreInstrumento").ToString

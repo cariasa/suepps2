@@ -9,7 +9,7 @@
     <uc1:MOCA_UE runat="server" ID="MOCA_UE01" />
 
     <div>
-        <dx:ASPxPageControl ID="carTabPage" runat="server" ActiveTabIndex="1" EnableHierarchyRecreation="True" >
+        <dx:ASPxPageControl ID="carTabPage" runat="server" ActiveTabIndex="0" EnableHierarchyRecreation="True" >
 
             <ClientSideEvents ActiveTabChanged="function (s,e) {click(e);}" />
 
@@ -78,7 +78,15 @@
                                                 <dx:GridViewDataTextColumn FieldName="IdIndicador" ReadOnly="True" VisibleIndex="0" Visible="false">
                                                     <EditFormSettings Visible="False"></EditFormSettings>
                                                 </dx:GridViewDataTextColumn>
-                                                <dx:GridViewDataTextColumn FieldName="IdSectorIndicador" VisibleIndex="1" Caption="Sector"></dx:GridViewDataTextColumn>
+                                                <dx:GridViewDataComboBoxColumn FieldName="IdSectorIndicador" VisibleIndex="1" Caption="Sector">
+                                                   <PropertiesComboBox ValueType="System.String"
+                                                       DataSourceID="SqlDataSourceSectores"
+                                                       ValueField="IdSectorIndicador"
+                                                       TextField="DescripcionSectorIndicador" />
+                                                    <Settings AllowAutoFilter="True" />
+                                                    <Settings AutoFilterCondition="Contains" />
+                                                    <Settings FilterMode="DisplayText" />
+                                                </dx:GridViewDataComboBoxColumn>
 
 
                                                 <dx:GridViewDataComboBoxColumn VisibleIndex="2" FieldName="IdTipoDeIndicador" Caption="Tipo Indicador">
@@ -88,7 +96,7 @@
                                                         TextField="DescripcionTipoDeIndicador" />
                                                     <Settings AllowAutoFilter="True" />
                                                     <Settings AutoFilterCondition="Contains" />
-                                                    <Settings FilterMode="Value" />
+                                                    <Settings FilterMode="DisplayText" />
 
 
                                                 </dx:GridViewDataComboBoxColumn>
@@ -281,6 +289,9 @@
 
                             <asp:SqlDataSource runat="server" ID="SqlDataSourceTipoIndicadores" ConnectionString='<%$ ConnectionStrings:SUEPPSConnectionString %>'
                                 SelectCommand="SELECT IdTipoDeIndicador, DescripcionTipoDeIndicador FROM [TiposDeIndicador]"></asp:SqlDataSource>
+
+                            <asp:SqlDataSource runat="server" ID="SqlDataSourceSectores" ConnectionString='<%$ ConnectionStrings:SUEPPSConnectionString %>'
+                                SelectCommand="SELECT IdSectorIndicador, DescripcionSectorIndicador FROM [vROISectorIndicadores]"></asp:SqlDataSource>
 
                             <asp:SqlDataSource runat="server" ID="SqlDataSourceIndicadoresCombo" ConnectionString='<%$ ConnectionStrings:SUEPPSConnectionString %>'
                                 SelectCommand="SELECT IdIndicador, DescripcionIndicador FROM [Indicadores]"></asp:SqlDataSource>

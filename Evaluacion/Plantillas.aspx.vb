@@ -42,6 +42,7 @@ Partial Class Cuantitativo_Plantilla
 
     Protected Sub send(ByVal sender As Object, ByVal e As EventArgs)
 
+
         Dim index As Integer = GridPlantilla.FocusedRowIndex()
         Dim codplantilla As String = GridPlantilla.GetRowValues(index, "IdPlantilla").ToString()
         Dim nomplantilla As String = GridPlantilla.GetRowValues(index, "NombrePlantilla")

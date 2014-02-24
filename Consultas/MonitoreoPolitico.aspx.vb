@@ -249,7 +249,7 @@ Partial Class Consultas_MonitoreoPolitico
         "ON cdp.IdComponentesDePolitica = sigC.[IdComponentesDePolitica] " & _
         "WHERE cdp.[Peso] <> 0 AND cdp.Activo = 1 " & _
         "GROUP BY cdp.IdComponentesDePolitica, cdp.[IdPolitica], cdp.[Nombre], cdp.[Descripcion], cdp.[Peso]) " & _
-        "as ultima ON p.[IdPolitica] = ultima.IdPolitica " & _
+        "as ultima ON p.[IdPolitica] = ultima.IdPolitica   WHERE p.[Activo] = 1 " & _
         "GROUP BY p.[IdPolitica], p.[Nombre], p.[SujetosDeAtencion]"
     End Sub
 

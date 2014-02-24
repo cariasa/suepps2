@@ -15,7 +15,7 @@
     </div>
     <div>
 
-        <dx:ASPxGridView ID="ASPxGridView1" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource1" KeyFieldName="IdPolitica" SettingsDetail-ShowDetailRow="true">
+        <dx:ASPxGridView ID="ASPxGridViewPoliticas" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSourcePoliticas" KeyFieldName="IdPolitica" SettingsDetail-ShowDetailRow="true">
             <Columns>
                 <dx:GridViewDataTextColumn FieldName="IdPolitica" ReadOnly="True" VisibleIndex="0" Visible="false">
                     <EditFormSettings Visible="False" />
@@ -37,7 +37,7 @@
                         <Templates>
                         <DetailRow>
 
-                            <dx:ASPxGridView ID="ASPxGridView2" runat="server" KeyFieldName="IdInstrumentoDeEvaluacion" IsDetailGrid="true" OnBeforePerformDataSelect="ASPxGridView2_BeforePerformDataSelect" Width="100%" DataSourceID="SqlDataSource2" >
+                            <dx:ASPxGridView ID="ASPxGridViewProyectos" runat="server" KeyFieldName="IdInstrumentoDeEvaluacion" IsDetailGrid="true" OnBeforePerformDataSelect="ASPxGridViewProyectos_BeforePerformDataSelect" Width="100%" DataSourceID="SqlDataSourceProyectos" >
                                 <Columns>
 
                                      <dx:GridViewDataTextColumn FieldName="codigo_ficha" ReadOnly="True" VisibleIndex="0" Visible="false">
@@ -65,7 +65,28 @@
                         <Templates>
                         <DetailRow>
 
-                            <dx:ASPxGridView ID="ASPxGridView3" runat="server" KeyFieldName="IdAplicacionInstrumento" IsDetailGrid="true" OnBeforePerformDataSelect="ASPxGridView3_BeforePerformDataSelect"  OnHtmlDataCellPrepared="ASPxGridView3_HtmlDataCellPrepared" Width="100%" DataSourceID="SqlDataSource3" >
+                            <dx:ASPxGridView ID="ASPxGridViewInstrumentos" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSourceInstrumentos" KeyFieldName="IdInstrumentoDeEvaluacion" IsDetailGrid="true" OnBeforePerformDataSelect="ASPxGridViewInstrumentos_BeforePerformDataSelect" Width="100%" SettingsDetail-AllowOnlyOneMasterRowExpanded="true">
+                                <Columns>
+                                    <dx:GridViewDataTextColumn FieldName="IdInstrumentoDeEvaluacion" ReadOnly="True" VisibleIndex="0" Visible="false">
+                                        <EditFormSettings Visible="False"></EditFormSettings>
+                                    </dx:GridViewDataTextColumn>
+                                    <dx:GridViewDataTextColumn FieldName="TipoDeInstrumento" VisibleIndex="2"></dx:GridViewDataTextColumn>
+                                    <dx:GridViewDataTextColumn FieldName="IdPrograma" VisibleIndex="2" Visible="false"></dx:GridViewDataTextColumn>
+                                    <dx:GridViewDataTextColumn FieldName="NombreInstrumento" VisibleIndex="1"></dx:GridViewDataTextColumn>
+                                    <dx:GridViewDataTextColumn FieldName="Ano" VisibleIndex="4"></dx:GridViewDataTextColumn>
+                                </Columns>
+                                <SettingsBehavior AllowFocusedRow="True" />
+
+                                <SettingsPager>
+                <AllButton Visible="True" Text="Todos">
+                </AllButton>
+            </SettingsPager>
+
+             <SettingsDetail ShowDetailRow="True" />
+                        <Templates>
+                        <DetailRow>
+                                                        
+                            <dx:ASPxGridView ID="ASPxGridViewLevantamientos" runat="server" KeyFieldName="IdAplicacionInstrumento" IsDetailGrid="true" OnBeforePerformDataSelect="ASPxGridViewLevantamientos_BeforePerformDataSelect"  OnHtmlDataCellPrepared="ASPxGridViewLevantamientos_HtmlDataCellPrepared" Width="100%" DataSourceID="SqlDataSourceLevantamientos" >
 
                                 <Columns>
 
@@ -96,19 +117,22 @@
                         <Templates>
                         <DetailRow>
 
-                            <dx:ASPxGridView ID="ASPxGridView4"  runat="server" IsDetailGrid="true" KeyFieldName="IdIndicador"  Width="100%" DataSourceID="SqlDataSource4" OnBeforePerformDataSelect="ASPxGridView4_BeforePerformDataSelect">
+                            <dx:ASPxGridView ID="ASPxGridViewIndicadores"  runat="server" IsDetailGrid="true" KeyFieldName="IdIndicador"  Width="100%" DataSourceID="SqlDataSourceIndicadores" OnBeforePerformDataSelect="ASPxGridViewIndicadores_BeforePerformDataSelect">
 
 
                                 <Columns>
                                 <dx:GridViewDataTextColumn FieldName="IdIndicador" Caption="IdIndicador" ReadOnly="True" VisibleIndex="0" Visible="false" >
                                      </dx:GridViewDataTextColumn>
-                                <dx:GridViewDataTextColumn FieldName="DescripcionIndicador" Caption="Indicador" VisibleIndex="1" >
+                                <dx:GridViewDataTextColumn FieldName="Indicador" Caption="Indicador" VisibleIndex="1" >
                                      </dx:GridViewDataTextColumn>
 
-                                <dx:GridViewDataTextColumn FieldName="ValorIndicador" Caption="Valor" VisibleIndex="2">
+                                <dx:GridViewDataTextColumn FieldName="ValorCalculado" Caption="Valor" VisibleIndex="2">
                                     </dx:GridViewDataTextColumn>
 
-                                    <dx:GridViewDataTextColumn Caption="Oficial" VisibleIndex="3">
+                                <dx:GridViewDataTextColumn FieldName="ValorPrograma" Caption="Valor Programa" VisibleIndex="3">
+                                    </dx:GridViewDataTextColumn>
+
+                                <dx:GridViewDataTextColumn FieldName="ValorOficial" Caption="Valor Oficial" VisibleIndex="3">
                                     </dx:GridViewDataTextColumn>
 
 
@@ -123,7 +147,7 @@
                         <Templates>
                         <DetailRow>
 
-                            <dx:ASPxGridView ID="ASPxGridView7"  runat="server" IsDetailGrid="true" KeyFieldName="IdIndicadoresEvaluacionPorPrograma"  Width="100%" DataSourceID="SqlDataSource7" OnBeforePerformDataSelect="ASPxGridView7_BeforePerformDataSelect">
+                            <dx:ASPxGridView ID="ASPxGridViewSexo"  runat="server" IsDetailGrid="true" KeyFieldName="IdIndicadoresEvaluacionPorPrograma"  Width="100%" DataSourceID="SqlDataSourceSexo" OnBeforePerformDataSelect="ASPxGridViewSexo_BeforePerformDataSelect">
 
                                 <Columns>
                                     <dx:GridViewDataTextColumn FieldName="IdIndicadoresEvaluacionPorPrograma" Caption="#" ReadOnly="True" VisibleIndex="0" Visible="false" >
@@ -145,7 +169,7 @@
 
                             <br />
 
-                            <dx:ASPxGridView ID="ASPxGridView5"  runat="server" IsDetailGrid="true" KeyFieldName="IdIndicadoresEvaluacionPorPrograma"  Width="100%" DataSourceID="SqlDataSource5" OnBeforePerformDataSelect="ASPxGridView5_BeforePerformDataSelect">
+                            <dx:ASPxGridView ID="ASPxGridViewDepartamentos"  runat="server" IsDetailGrid="true" KeyFieldName="IdIndicadoresEvaluacionPorPrograma"  Width="100%" DataSourceID="SqlDataSourceDepartamentos" OnBeforePerformDataSelect="ASPxGridViewDepartamentos_BeforePerformDataSelect">
 
                                 <Columns>
                                 <dx:GridViewDataTextColumn FieldName="IdIndicadoresEvaluacionPorPrograma" Caption="#" ReadOnly="True" VisibleIndex="0" Visible="false" >
@@ -165,7 +189,7 @@
 
                             <br />
 
-                                 <dx:ASPxGridView ID="ASPxGridView6"  runat="server" IsDetailGrid="true" KeyFieldName="IdIndicadoresEvaluacionPorPrograma"  Width="100%" DataSourceID="SqlDataSource6" OnBeforePerformDataSelect="ASPxGridView6_BeforePerformDataSelect">
+                                 <dx:ASPxGridView ID="ASPxGridViewMunicipios"  runat="server" IsDetailGrid="true" KeyFieldName="IdIndicadoresEvaluacionPorPrograma"  Width="100%" DataSourceID="SqlDataSourceMunicipios" OnBeforePerformDataSelect="ASPxGridViewMunicipios_BeforePerformDataSelect">
 
                                 <Columns>
                                 <dx:GridViewDataTextColumn FieldName="IdIndicadoresEvaluacionPorPrograma" Caption="#" ReadOnly="True" VisibleIndex="0" Visible="false" >
@@ -198,6 +222,13 @@
 
                          </Templates>
 
+                            </dx:ASPxGridView>    
+
+
+
+                                </DetailRow>
+                            </Templates>
+                            
 
                             </dx:ASPxGridView>
 
@@ -223,12 +254,12 @@
         </dx:ASPxGridView>
 
  
-        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" 
+        <asp:SqlDataSource ID="SqlDataSourcePoliticas" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" 
             SelectCommand="SELECT * FROM [Politicas] where [Activo]=1 ">
 
         </asp:SqlDataSource>
 
-        <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" >
+        <asp:SqlDataSource ID="SqlDataSourceProyectos" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" >
 
             <SelectParameters>
                      <asp:SessionParameter Name="IdPolitica" />
@@ -237,7 +268,7 @@
 
         </asp:SqlDataSource>
 
-         <asp:SqlDataSource ID="SqlDataSource3" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" >
+         <asp:SqlDataSource ID="SqlDataSourceLevantamientos" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" >
 
             <SelectParameters>
                      <asp:SessionParameter Name="IdInstrumento" />
@@ -246,7 +277,7 @@
 
         </asp:SqlDataSource>
 
-        <asp:SqlDataSource ID="SqlDataSource4" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" >
+        <asp:SqlDataSource ID="SqlDataSourceIndicadores" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" >
 
             <SelectParameters>
                      <asp:SessionParameter Name="IdAplicacion" />
@@ -255,7 +286,7 @@
 
         </asp:SqlDataSource>
 
-        <asp:SqlDataSource ID="SqlDataSource5" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" >
+        <asp:SqlDataSource ID="SqlDataSourceDepartamentos" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" >
 
             <SelectParameters>
                  <asp:SessionParameter Name="IdAplicacion" />
@@ -265,7 +296,7 @@
 
         </asp:SqlDataSource>
 
-         <asp:SqlDataSource ID="SqlDataSource6" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" >
+         <asp:SqlDataSource ID="SqlDataSourceMunicipios" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" >
 
             <SelectParameters>
                  <asp:SessionParameter Name="IdAplicacion" />
@@ -275,13 +306,22 @@
 
         </asp:SqlDataSource>
 
-        <asp:SqlDataSource ID="SqlDataSource7" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" >
+        <asp:SqlDataSource ID="SqlDataSourceSexo" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" >
 
             <SelectParameters>
                  <asp:SessionParameter Name="IdAplicacion" />
                 <asp:SessionParameter Name="IdIndicador" />
                      
                 </SelectParameters>
+
+        </asp:SqlDataSource>
+
+
+        <asp:SqlDataSource runat="server" ID="SqlDataSourceInstrumentos" ConnectionString='<%$ ConnectionStrings:SUEPPSConnectionString %>' SelectCommand="select distinct(IE.IdInstrumentoDeEvaluacion), TI.TipoDeInstrumento, IE.IdPrograma, IE.NombreInstrumento, IE.Ano from AplicacionInstrumento AI join MomentosDeAplicacion MA on AI.IdMomentoAplicacion=MA.IdMomentoDeAplicacion join InstrumentosDeEvaluacion IE on AI.IdInstrumentoDeEvaluacion=IE.IdInstrumentoDeEvaluacion join ProcesosEvaluacion PE on IE.IdProcesoEvaluacion=PE.IdProcesoEvaluacion join TiposDeInstrumento TI on IE.IdTipoDeInstrumento=TI.IdTipoDeInstrumento where IE.IdPrograma = @IdPrograma" >
+            
+            <SelectParameters>
+                <asp:SessionParameter Name="IdPrograma" />
+             </SelectParameters>
 
         </asp:SqlDataSource>
 

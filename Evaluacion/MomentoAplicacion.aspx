@@ -15,7 +15,7 @@
     <form id="form1" runat="server">
     <div>
 
-        <dx:ASPxGridView ID="ASPxGridView1" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource1" KeyFieldName="IdMomentoAplicacion">
+        <dx:ASPxGridView ID="ASPxGridViewMomento" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSourceMomento" KeyFieldName="IdMomentoAplicacion">
             <Columns>
                 <dx:GridViewDataTextColumn FieldName="IdMomentoAplicacion" ReadOnly="True" VisibleIndex="0" Visible="false">
                     <EditFormSettings Visible="False" />
@@ -53,7 +53,7 @@
 
         </dx:ASPxGridView>
 
-        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" 
+        <asp:SqlDataSource ID="SqlDataSourceMomento" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" 
             SelectCommand="SELECT * FROM [MomentosAplicacion] where [Activo]=1 "
             InsertCommand="Insert INTO [MomentosAplicacion] ([MomentoAplicacion],[CreadoPor], [FechaCreacion], [Activo]) VALUES (@MomentoAplicacion,'PACO', getDate(), 1)"
              UpdateCommand="Update [MomentosAplicacion] SET [MomentoAplicacion]=@MomentoAplicacion, [ActualizadoPor]='PACO', [FechaActualizacion]=getDate() WHERE [IdMomentoAplicacion] = @IdMomentoAplicacion"

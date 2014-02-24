@@ -20,6 +20,7 @@
             </table>
         </div>
 
+
         <dx:ASPxGridView ID="GridPolitica" runat="server" AutoGenerateColumns="False" DataSourceID="SqlPolitica" KeyFieldName="IdPolitica" SettingsDetail-ShowDetailRow="true" Settings-ShowFilterRow="true">
             <Columns>
                 <dx:GridViewDataTextColumn FieldName="IdPolitica" ReadOnly="True" VisibleIndex="0" Visible="false">

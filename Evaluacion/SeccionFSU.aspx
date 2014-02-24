@@ -15,7 +15,7 @@
     <form id="form1" runat="server">
     <div>
 
-        <dx:ASPxGridView ID="ASPxGridView1" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource1" KeyFieldName="IdSeccionFSU">
+        <dx:ASPxGridView ID="ASPxGridViewFSU" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSourceFSU" KeyFieldName="IdSeccionFSU">
             <Columns>
                 <dx:GridViewDataTextColumn FieldName="IdSeccionFSU" ReadOnly="True" VisibleIndex="0" Visible="false">
                     <EditFormSettings Visible="False" />
@@ -44,7 +44,7 @@
             </Columns>
         </dx:ASPxGridView>
 
-        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" 
+        <asp:SqlDataSource ID="SqlDataSourceFSU" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" 
             SelectCommand="SELECT * FROM [SeccionesFSU] where [Activo]=1"
             InsertCommand="INSERT INTO SeccionesFSU (NombreSeccion,CreadoPor,FechaCreacion,Activo) values (@NombreSeccion,'PACO',getDate(),1) "
             UpdateCommand="UPDATE [SeccionesFSU] SET [NombreSeccion]=@NombreSeccion where [IdSeccionFSU]=@IdSeccionFSU"

@@ -10,7 +10,7 @@
         <dx:ASPxButton ID="ASPxButtonExportarPreguntas" runat="server" Text="Exportar" OnClick="ASPxButtonExportarPreguntas_Click"></dx:ASPxButton>
         <dx:ASPxGridViewExporter ID="exporter" runat="server" />
 
-        <dx:ASPxGridView ID="ASPxGridViewPreguntas" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource1">
+        <dx:ASPxGridView ID="ASPxGridViewPreguntas" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSourcePreguntas">
             <Columns>
                 <dx:GridViewDataTextColumn FieldName="NombreInstrumento" VisibleIndex="0"></dx:GridViewDataTextColumn>
                 <dx:GridViewDataTextColumn FieldName="Ano" VisibleIndex="1"></dx:GridViewDataTextColumn>
@@ -29,7 +29,7 @@
 
 
 
-        <asp:SqlDataSource runat="server" ID="SqlDataSource1" ConnectionString='<%$ ConnectionStrings:SUEPPSConnectionString %>' SelectCommand="select
+        <asp:SqlDataSource runat="server" ID="SqlDataSourcePreguntas" ConnectionString='<%$ ConnectionStrings:SUEPPSConnectionString %>' SelectCommand="select
 	IE.NombreInstrumento,
 	IE.Ano,
 	MDA.DescripcionMomento,

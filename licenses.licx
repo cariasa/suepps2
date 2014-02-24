@@ -1,4 +1,17 @@
+DevExpress.Web.ASPxGridView.ASPxGridView, DevExpress.Web.v13.2, Version=13.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 >>>>>>> origin/paco
+=======
+
+DevExpress.Web.ASPxUploadControl.ASPxUploadControl, DevExpress.Web.v13.2, Version=13.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a
+DevExpress.Web.ASPxPanel.ASPxPanel, DevExpress.Web.v13.2, Version=13.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a
+DevExpress.Web.ASPxGridView.Export.ASPxGridViewExporter, DevExpress.Web.v13.2, Version=13.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a
+DevExpress.Web.ASPxEditors.ASPxComboBox, DevExpress.Web.v13.2, Version=13.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a
+DevExpress.Web.ASPxEditors.ASPxTextBox, DevExpress.Web.v13.2, Version=13.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a
+DevExpress.Web.ASPxEditors.ASPxHyperLink, DevExpress.Web.v13.2, Version=13.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a
+DevExpress.Web.ASPxEditors.ASPxLabel, DevExpress.Web.v13.2, Version=13.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a
+DevExpress.Web.ASPxGridView.ASPxGridView, DevExpress.Web.v13.2, Version=13.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a
+>>>>>>> 0e0c173436d57456b14f2d4d585b3ba812254d28
 

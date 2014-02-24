@@ -57,13 +57,23 @@ Partial Class Consultas_MapTest
         "join MomentosDeAplicacion MA on MA.IdMomentoDeAplicacion=IdMomentoAplicacion where AI.[IdInstrumentoDeEvaluacion]=@IdInstrumento and AI.[Activo]=1 "
 
 
-        Me.SqlDataSourceCabeceras.SelectCommand = "select AI.IdAplicacionInstrumento,I.DescripcionIndicador,M.DescripcionMunicipio,D.DescripcionDepartamento,VM.Valor,MG.Latitud,MG.Longitud from AplicacionInstrumento AI " & _
+        Me.SqlIndicadores.SelectCommand = "select I.IdIndicador,I.DescripcionIndicador from AplicacionInstrumento AI " & _
         "join ValoresMunicipio VM on AI.IdAplicacionInstrumento = VM.IdAplicacionInstrumento " & _
         "join IndicadoresEvaluacionPorPrograma IEP on VM.IdIndicadorEvaluacionPorPrograma = IEP.IdIndicadoresEvaluacionPorPrograma " & _
         "join Indicadores I on IEP.IdIndicador = I.IdIndicador " & _
         "join vMunicipios M on VM.IdDepartamento = M.IdDepartamento and VM.IdMunicipio=M.IdMunicipio " & _
         "join vDepartamentos D on VM.IdDepartamento=D.IdDepartamento " & _
         "join MunicipiosGeoreferenciados MG on M.IdMunicipio = MG.IdMunicipio where AI.IdAplicacionInstrumento=@IdAplicacionInstrumento"
+
+
+
+        Me.SqlDataSourceCabeceras.SelectCommand = "select I.DescripcionIndicador,M.DescripcionMunicipio,D.DescripcionDepartamento,VM.Valor,MG.Latitud,MG.Longitud from AplicacionInstrumento AI " & _
+        "join ValoresMunicipio VM on AI.IdAplicacionInstrumento = VM.IdAplicacionInstrumento " & _
+        "join IndicadoresEvaluacionPorPrograma IEP on VM.IdIndicadorEvaluacionPorPrograma = IEP.IdIndicadoresEvaluacionPorPrograma " & _
+        "join Indicadores I on IEP.IdIndicador = I.IdIndicador " & _
+        "join vMunicipios M on VM.IdDepartamento = M.IdDepartamento and VM.IdMunicipio=M.IdMunicipio " & _
+        "join vDepartamentos D on VM.IdDepartamento=D.IdDepartamento " & _
+        "join MunicipiosGeoreferenciados MG on M.IdMunicipio = MG.IdMunicipio where AI.IdAplicacionInstrumento=@IdAplicacionInstrumento and I.IdIndicador=@IdIndicador"
 
     End Sub
 
@@ -104,6 +114,7 @@ Partial Class Consultas_MapTest
         Dim IndexPrograma As Integer
         Dim IndexInstrumento As Integer
         Dim IndexAplicacion As Integer
+        Dim IndexIndicador As Integer
 
         For i As Integer = 0 To Me.GridPolitica.VisibleRowCount - 1
 
@@ -144,18 +155,34 @@ Partial Class Consultas_MapTest
             End If
 
         Next
+        '-----------------------------------------------
 
         Dim GridDetalleAplicacion As ASPxGridView = TryCast(GridDetalleInstrumento.FindDetailRowTemplateControl(IndexInstrumento, "GridAplicacion"), ASPxGridView)
 
-        IndexAplicacion = GridDetalleAplicacion.FocusedRowIndex()
-        'Session("IdAplicacion") = CInt(GridDetalleAplicacion.GetRowValues(IndexAplicacion, "IdAplicacionInstrumento"))
+        For i As Integer = 0 To GridDetalleAplicacion.VisibleRowCount - 1
 
+            Dim IInstrumento As Integer = CInt(GridDetalleAplicacion.GetRowValues(i, "IdAplicacionInstrumento"))
 
-        Dim IdAplicacion As Integer = CInt(GridDetalleAplicacion.GetRowValues(IndexAplicacion, "IdAplicacionInstrumento"))
+            If (IInstrumento = Session("IdAplicacion")) Then
+                IndexAplicacion = i
 
-        Me.SqlDataSourceCabeceras.SelectParameters(0).DefaultValue = IdAplicacion
+            End If
+
+        Next
+
+        Dim GridDetalleIndicador As ASPxGridView = TryCast(GridDetalleAplicacion.FindDetailRowTemplateControl(IndexAplicacion, "GridIndicadores"), ASPxGridView)
+
+        IndexIndicador = GridDetalleIndicador.FocusedRowIndex()
+        
+        Dim IdAplicacion As Integer = CInt(GridDetalleIndicador.GetRowValues(IndexIndicador, "IdIndicador"))
+
+        Me.SqlDataSourceCabeceras.SelectParameters(0).DefaultValue = Session("IdAplicacion")
+        Me.SqlDataSourceCabeceras.SelectParameters(1).DefaultValue = IdAplicacion
         Me.SqlDataSourceCabeceras.DataBind()
         Me.DataGrid.DataBind()
+
+        Me.DataGrid.Selection.SelectAll()
+
     End Sub
 
 
@@ -191,6 +218,14 @@ Partial Class Consultas_MapTest
 
         SqlInstrumentos.SelectParameters(0).DefaultValue = Session("IdPrograma")
         SqlInstrumentos.DataBind()
+
+    End Sub
+
+    Protected Sub GridIndicadores_BeforePerformDataSelect(sender As Object, e As EventArgs)
+
+        Session("IdAplicacion") = CType(sender, ASPxGridView).GetMasterRowKeyValue()
+        Me.SqlIndicadores.SelectParameters(0).DefaultValue = Session("IdAplicacion")
+        Me.SqlIndicadores.DataBind()
 
     End Sub
 End Class

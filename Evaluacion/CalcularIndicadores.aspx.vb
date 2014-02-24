@@ -33,6 +33,7 @@ Partial Class Evaluacion_Levantamientos
                 Response.Redirect("~/NoAccess.aspx")
             End If
 
+
             Me.SqlPrograma.SelectCommand = "select DISTINCT(Pol.IdPolitica), Pol.Nombre, Pro.codigo_ficha, Pro.NombreProyecto, Pro.codigo_proyecto,IE.Ano,IE.NombreInstrumento,IE.IdInstrumentoDeEvaluacion from Politicas Pol " & _
        "join ComponentesDePolitica CP on Pol.IdPolitica=CP.IdPolitica " & _
        "join MetasDeComponente MC on CP.IdComponentesDePolitica=MC.IdComponentesDePolitica " & _
@@ -45,7 +46,7 @@ Partial Class Evaluacion_Levantamientos
             "join AplicacionInstrumento AI on IE.IdInstrumentoDeEvaluacion= AI.IdInstrumentoDeEvaluacion " & _
             "join MomentosDeAplicacion MA on MA.IdMomentoDeAplicacion=IdMomentoAplicacion where AI.[IdInstrumentoDeEvaluacion]=@IdInstrumento and AI.[Activo]=1 "
 
-         
+
 
         End Using
 
@@ -107,9 +108,10 @@ Partial Class Evaluacion_Levantamientos
 
     End Sub
 
-   
+
     Protected Sub link1_Click(sender As Object, e As EventArgs)
         'Session("IdLevantamiento") = CType(sender, ASPxGridView).GetMasterRowKeyValue()
+
         Dim detail1 As ASPxGridView = TryCast(GridPolitica.FindDetailRowTemplateControl(GridPolitica.FocusedRowIndex(), "GridPrograma"), ASPxGridView)
         Dim detail2 As ASPxGridView = TryCast(detail1.FindDetailRowTemplateControl(detail1.FocusedRowIndex(), "GridAplicacion"), ASPxGridView)
         Dim index As Integer = detail2.FocusedRowIndex()

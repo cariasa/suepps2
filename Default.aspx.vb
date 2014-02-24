@@ -1,4 +1,5 @@
-﻿
+﻿Imports System.Windows.Forms
+
 Partial Class Buscar
     Inherits System.Web.UI.Page
 
@@ -11,7 +12,7 @@ Partial Class Buscar
             Dim txtSql As String = "SELECT [IdPolitica], [Nombre], [SujetosDeAtencion] FROM [Politicas]"
             Dim txtSql2 As String = "SELECT [codigo_ficha], [ley], [NombreProyecto], [decreto], [codigo_proyecto], [TotalFinanciamientoML] FROM [vProyectos]"
             Dim txtSql3 As String = "SELECT b.[NombreProyecto], a.[Comentario], a.[Fecha], a.[Usuario], a.[Ano], a.[Periodo] FROM [SistematizacionDeMonitoreo] a join [vProyectos] b on a.[IdPrograma]= b.[codigo_ficha]"
-
+            Dim txtSql4 As String = "SELECT [IdDocumentoEvaluacion], [DescripcionDocumento], [PalabrasClave], [FechaDocumento] FROM [DocumentosEvaluacion]"
 
 
             Dim TestString As String = txtbuscar.Text
@@ -33,17 +34,19 @@ Partial Class Buscar
                     txtSql = txtSql + " WHERE [Nombre] LIKE '%" + TestArray(i) + "%"
                     txtSql2 = txtSql2 + " WHERE [NombreProyecto] LIKE '%" + TestArray(i) + "%"
                     txtSql3 = txtSql3 + " WHERE [Comentario] LIKE '%" + TestArray(i) + "%"
+                    txtSql4 = txtSql4 + " WHERE [DescripcionDocumento] LIKE '%" + TestArray(i) + "%' OR [PalabrasClave] LIKE '%" + TestArray(i) + "%"
                 Else
                     txtSql = txtSql + TestArray(i) + "%"
                     txtSql2 = txtSql2 + TestArray(i) + "%"
                     txtSql3 = txtSql3 + TestArray(i) + "%"
+                    txtSql4 = txtSql4 + TestArray(i) + "%"
                 End If
 
             Next
             txtSql = txtSql + "'"
             txtSql2 = txtSql2 + "'"
             txtSql3 = txtSql3 + "'"
-
+            txtSql4 = txtSql4 + "'"
             'For i As Integer = 0 To TestArray.Length - 1
             '    If i = 0 Then
             '        txtSql = txtSql + " OR [ObjetivosEstrategicos] LIKE '%" + TestArray(i) + "%"
@@ -84,6 +87,10 @@ Partial Class Buscar
             Me.SqlInsumos.SelectCommand = txtSql3
             Me.SqlInsumos.DataBind()
             'MsgBox(txtSql)
+
+
+            Me.SqlDataSourceDocumentos.SelectCommand = txtSql4
+            Me.SqlDataSourceDocumentos.DataBind()
 
         End If
 

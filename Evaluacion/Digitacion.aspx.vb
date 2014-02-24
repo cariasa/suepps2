@@ -38,11 +38,12 @@ Partial Class Cuantitativo_DigitarInstrumento
     End Sub
 
 
+
     Protected Sub LinkDigitacion_Click(sender As Object, e As EventArgs)
         Dim Digitador As String = Membership.GetUser.UserName.ToString
         Response.Redirect("Encuesta.aspx?CodFSU=" + uf.QueryStringEncode(Me.ASPxTextBoxIdFicha.Text.ToString) + _
                           "&CodDigitador=" + uf.QueryStringEncode(Digitador) + _
-                          "&IdAplicacion=" + uf.QueryStringEncode(Me.ASPxTextBox1.Text.ToString) + _
+                          "&IdAplicacion=" + uf.QueryStringEncode(Me.ASPxTextBoxCodDigitacion.Text.ToString) + _
                           "&IdVivienda=" + uf.QueryStringEncode(Me.ASPxTextBoxIdVivienda.Text.ToString) + _
                           "&IdHogar=" + uf.QueryStringEncode(Me.ASPxTextBoxIdHogar.Text.ToString) + _
                           "&IdMiembro=" + uf.QueryStringEncode(Me.ASPxTextBoxIdMiembro.Text.ToString))

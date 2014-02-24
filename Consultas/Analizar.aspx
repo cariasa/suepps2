@@ -14,8 +14,16 @@
                 GridIndicadores.PerformCallback();
             }
 
+            function LoadTri(cmbTrimestreIndicadores) {
+                cmbAnoI.PerformCallback();
+            }
+
             function Load2(cmbAnoI) {
                 GridIndicadoresI.PerformCallback();
+            }
+
+            function LoadTrimestre(cmbTrimestre) {
+                cmbAno.PerformCallback();
             }
 
             function LoadP(cmbAnoP) {
@@ -411,16 +419,33 @@
 
                             <table>
                                 <tr>
+                                    
+                                    <td>
+                                        <dx:ASPxLabel ID="lblTrimestreIndicadores" runat="server" Text="Trimestre" AssociatedControlID="cmbTrimestreIndicadores"></dx:ASPxLabel>
+                                    </td>
+
+                                    <td>
+                                        <dx:ASPxComboBox ID="cmbTrimestreIndicadores" runat="server" ValueType="System.String" TextField="Trimestre" ClientInstanceName="cmbTrimestreIndicadores">
+                                            <Items>
+                                                <dx:ListEditItem Text="Trimestre 1" Value="1" />
+                                                <dx:ListEditItem Text="Trimestre 2" Value="2" />
+                                                <dx:ListEditItem Text="Trimestre 3" Value="3" />
+                                                <dx:ListEditItem Text="Trimestre 4" Value="5" />
+                                            </Items>
+                                            <ClientSideEvents SelectedIndexChanged="function(s, e) {LoadTri();} " />
+                                        </dx:ASPxComboBox>
+                                    </td>
+                                    
                                     <td>
                                          <dx:ASPxLabel ID="LblAnoI" runat="server" Text="Año:" AssociatedControlID="cmbAno"></dx:ASPxLabel>
                            
                                     </td>
                                     <td>
-                                        <dx:ASPxComboBox ID="cmbAnoI"  ClientInstanceName="cmbAnoI" runat="server" ValueType="System.String" DataSourceID="SqlAno"  ValueField="Ano"  TextField="Ano">              
+                                        <dx:ASPxComboBox ID="cmbAnoI"  ClientInstanceName="cmbAnoI" runat="server" ValueType="System.String" DataSourceID="SqlAno"  ValueField="Ano"  TextField="Ano" OnCallback="cmbAnoI_Callback">              
                                          <ClientSideEvents SelectedIndexChanged="function(s, e) {Load2(); }" /> 
                                         </dx:ASPxComboBox>
                                     </td>
-
+                                                                        
                                     <td>
                      
                                         <dx:ASPxButton ID="ExportarIndicador" runat="server" Text="Exportar Excel" OnClick="ExportarIndicador_Click"></dx:ASPxButton>
@@ -621,12 +646,27 @@
 
                             <table>
                                 <tr>
+
+                                    <td>
+                                        <dx:ASPxLabel ID="lblTri" runat="server"></dx:ASPxLabel>
+                                    </td>
+                                    <td>
+                                        <dx:ASPxComboBox ID="cmbTrimestre" runat="server" ClientInstanceName="cmbTrimestre" ValueType="System.String">
+                                            <ClientSideEvents SelectedIndexChanged="function(s,e) {LoadTrimestre();}" />
+                                            <Items>
+                                                <dx:ListEditItem Text="Trimestre 1" Value="1" />
+                                                <dx:ListEditItem Text="Trimestre 2" Value="2" />
+                                                <dx:ListEditItem Text="Trimestre 3" Value="3" />
+                                                <dx:ListEditItem Text="Trimestre 4" Value="4" />
+                                            </Items>
+                                        </dx:ASPxComboBox>
+                                    </td>
                                     <td>
                                          <dx:ASPxLabel ID="LblAno" runat="server" Text="Año:" AssociatedControlID="cmbAno"></dx:ASPxLabel>
                            
                                     </td>
                                     <td>
-                                        <dx:ASPxComboBox ID="cmbAno"  ClientInstanceName="cmbAno" runat="server" ValueType="System.String" DataSourceID="SqlAno"  ValueField="Ano"  TextField="Ano">              
+                                        <dx:ASPxComboBox ID="cmbAno"  ClientInstanceName="cmbAno" runat="server" ValueType="System.String" DataSourceID="SqlAno"  ValueField="Ano"  TextField="Ano" OnCallback="cmbAno_Callback">              
                                          <ClientSideEvents SelectedIndexChanged="function(s, e) {Load(); }" /> 
                                         </dx:ASPxComboBox>
                                     </td>

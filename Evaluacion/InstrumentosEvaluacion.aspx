@@ -64,6 +64,7 @@
 
                 <dx:GridViewDataTextColumn FieldName="Ano" Caption="Año" VisibleIndex="5">
                 </dx:GridViewDataTextColumn>
+
                 <dx:GridViewDataComboBoxColumn VisibleIndex="6" FieldName="IdProcesoEvaluacion" 
                     Caption="Proceso">
                     <EditFormSettings ColumnSpan="2" />
@@ -147,7 +148,6 @@
                 <asp:SessionParameter Name="Usuario" />
                 <asp:FormParameter Name="IdTipoDeInstrumento" />
                 <asp:SessionParameter Name="AP" />
-                
             </InsertParameters>
 
             <UpdateParameters>

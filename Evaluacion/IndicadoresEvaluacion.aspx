@@ -84,6 +84,7 @@
 
                     </td>
                     <td>
+
                         <dx:ASPxGridView ID="GrisIndicadoresEvaluacion" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSourceIndicadoresEvaluacion" KeyFieldName="IdIndicadoresEvaluacionPorPrograma" Settings-ShowFilterRow="true">
                             <Columns>
                                 <dx:GridViewDataTextColumn FieldName="IdIndicadoresEvaluacionPorPrograma" ReadOnly="True" VisibleIndex="0" Visible="false">

@@ -8,6 +8,7 @@ Imports System.Windows.Forms
 Imports DevExpress.Web.ASPxGridView.Export
 Imports System.Data.SqlClient
 Imports DevExpress.Web.ASPxEditors
+Imports DevExpress.Web.ASPxClasses
 
 Partial Class Consultas_Analizar
     Inherits System.Web.UI.Page
@@ -25,39 +26,39 @@ Partial Class Consultas_Analizar
             "GROUP BY cic.IdCategoriaIndicadorCobertura, cic.CategoriaIndicadorCobertura, c.IdIndicador, c.DescripcionIndicador,c.UnidadIndicador " & _
             "ORDER BY cic.IdCategoriaIndicadorCobertura ASC, c.IdIndicador ASC "
 
-        SqlMetaMonitoreo.SelectCommand = "SELECT c.DescripcionIndicador, " & _
-            "SUM(a.[ProyectadoQ1]) as ProyectadoQ1, SUM(a.[ProyectadoQ2]) as ProyectadoQ2, SUM(a.[ProyectadoQ3]) as ProyectadoQ3,  SUM(a.[ProyectadoQ4]) as ProyectadoQ4, " & _
-            "SUM(a.[EjecutadoQ1]) as EjecutadoQ1, SUM(a.[EjecutadoQ2]) as EjecutadoQ2, SUM(a.[EjecutadoQ3]) as EjecutadoQ3, SUM(a.[EjecutadoQ4]) as EjecutadoQ4, " & _
-            "(COALESCE(SUM(a.EjecutadoQ1)/ NULLIF(SUM(a.ProyectadoQ1),0),0)) As P1, " & _
-            "(COALESCE(SUM(a.EjecutadoQ2)/ NULLIF(SUM(a.ProyectadoQ2),0),0)) As P2, " & _
-            "(COALESCE(SUM(a.EjecutadoQ3)/ NULLIF(SUM(a.ProyectadoQ3),0),0)) As P3, " & _
-            "(COALESCE(SUM(a.EjecutadoQ4)/ NULLIF(SUM(a.ProyectadoQ4),0),0)) As P4, " & _
-            "(SUM(a.ProyectadoQ1+a.ProyectadoQ2+a.ProyectadoQ3+a.ProyectadoQ4)) As PA, " & _
-            "(SUM(a.[EjecutadoQ1]+a.[EjecutadoQ2]+a.[EjecutadoQ3]+a.[EjecutadoQ4])) As EA," & _
-            "(COALESCE((SUM(a.[EjecutadoQ1]+a.[EjecutadoQ2]+a.[EjecutadoQ3]+a.[EjecutadoQ4]))/ NULLIF((SUM(a.ProyectadoQ1+a.ProyectadoQ2+a.ProyectadoQ3+a.ProyectadoQ4)),0),0)) As PAA " & _
-            "FROM [MetaYMonitoreoPorPeriodo] a " & _
-            "join [IndicadoresPorPrograma] b on b.IdIndicadoresPorPrograma= a.IdIndicadorPorPrograma " & _
-            "join [Indicadores] c on b.IdIndicador= c.IdIndicador " & _
-            "join [TiposDeIndicador] d on c.IdTipoDeIndicador=d.IdTipoDeIndicador " & _
-            "where b.IdPrograma = @Programa And a.Ano = @Year And c.IdTipoDeIndicador = 1 And a.Activo=1 And b.Activo=1 and c.Activo=1 and a.IdAreaDeInfluencia=@Area  " & _
-            "GROUP BY c.IdIndicador, c.DescripcionIndicador"
+        'SqlMetaMonitoreo.SelectCommand = "SELECT c.DescripcionIndicador, " & _
+        '    "SUM(a.[ProyectadoQ1]) as ProyectadoQ1, SUM(a.[ProyectadoQ2]) as ProyectadoQ2, SUM(a.[ProyectadoQ3]) as ProyectadoQ3,  SUM(a.[ProyectadoQ4]) as ProyectadoQ4, " & _
+        '    "SUM(a.[EjecutadoQ1]) as EjecutadoQ1, SUM(a.[EjecutadoQ2]) as EjecutadoQ2, SUM(a.[EjecutadoQ3]) as EjecutadoQ3, SUM(a.[EjecutadoQ4]) as EjecutadoQ4, " & _
+        '    "(COALESCE(SUM(a.EjecutadoQ1)/ NULLIF(SUM(a.ProyectadoQ1),0),0)) As P1, " & _
+        '    "(COALESCE(SUM(a.EjecutadoQ2)/ NULLIF(SUM(a.ProyectadoQ2),0),0)) As P2, " & _
+        '    "(COALESCE(SUM(a.EjecutadoQ3)/ NULLIF(SUM(a.ProyectadoQ3),0),0)) As P3, " & _
+        '    "(COALESCE(SUM(a.EjecutadoQ4)/ NULLIF(SUM(a.ProyectadoQ4),0),0)) As P4, " & _
+        '    "(SUM(a.ProyectadoQ1+a.ProyectadoQ2+a.ProyectadoQ3+a.ProyectadoQ4)) As PA, " & _
+        '    "(SUM(a.[EjecutadoQ1]+a.[EjecutadoQ2]+a.[EjecutadoQ3]+a.[EjecutadoQ4])) As EA," & _
+        '    "(COALESCE((SUM(a.[EjecutadoQ1]+a.[EjecutadoQ2]+a.[EjecutadoQ3]+a.[EjecutadoQ4]))/ NULLIF((SUM(a.ProyectadoQ1+a.ProyectadoQ2+a.ProyectadoQ3+a.ProyectadoQ4)),0),0)) As PAA " & _
+        '    "FROM [MetaYMonitoreoPorPeriodo] a " & _
+        '    "join [IndicadoresPorPrograma] b on b.IdIndicadoresPorPrograma= a.IdIndicadorPorPrograma " & _
+        '    "join [Indicadores] c on b.IdIndicador= c.IdIndicador " & _
+        '    "join [TiposDeIndicador] d on c.IdTipoDeIndicador=d.IdTipoDeIndicador " & _
+        '    "where b.IdPrograma = @Programa And a.Ano = @Year And c.IdTipoDeIndicador = 1 And a.Activo=1 And b.Activo=1 and c.Activo=1 and a.IdAreaDeInfluencia=@Area  " & _
+        '    "GROUP BY c.IdIndicador, c.DescripcionIndicador"
 
-        SqlMetaIndicadores.SelectCommand = "SELECT c.DescripcionIndicador, " & _
-            "SUM(a.[ProyectadoQ1]) as ProyectadoQ1, SUM(a.[ProyectadoQ2]) as ProyectadoQ2, SUM(a.[ProyectadoQ3]) as ProyectadoQ3,  SUM(a.[ProyectadoQ4]) as ProyectadoQ4, " & _
-            "SUM(a.[EjecutadoQ1]) as EjecutadoQ1, SUM(a.[EjecutadoQ2]) as EjecutadoQ2, SUM(a.[EjecutadoQ3]) as EjecutadoQ3, SUM(a.[EjecutadoQ4]) as EjecutadoQ4, " & _
-            "(COALESCE(SUM(a.EjecutadoQ1)/ NULLIF(SUM(a.ProyectadoQ1),0),0)) As P1, " & _
-            "(COALESCE(SUM(a.EjecutadoQ2)/ NULLIF(SUM(a.ProyectadoQ2),0),0)) As P2, " & _
-            "(COALESCE(SUM(a.EjecutadoQ3)/ NULLIF(SUM(a.ProyectadoQ3),0),0)) As P3, " & _
-            "(COALESCE(SUM(a.EjecutadoQ4)/ NULLIF(SUM(a.ProyectadoQ4),0),0)) As P4, " & _
-            "(SUM(a.ProyectadoQ1+a.ProyectadoQ2+a.ProyectadoQ3+a.ProyectadoQ4)) As PA, " & _
-            "(SUM(a.[EjecutadoQ1]+a.[EjecutadoQ2]+a.[EjecutadoQ3]+a.[EjecutadoQ4])) As EA," & _
-            "(COALESCE((SUM(a.[EjecutadoQ1]+a.[EjecutadoQ2]+a.[EjecutadoQ3]+a.[EjecutadoQ4]))/ NULLIF((SUM(a.ProyectadoQ1+a.ProyectadoQ2+a.ProyectadoQ3+a.ProyectadoQ4)),0),0)) As PAA " & _
-            "FROM [MetaYMonitoreoPorPeriodo] a " & _
-            "join [IndicadoresPorPrograma] b on b.IdIndicadoresPorPrograma= a.IdIndicadorPorPrograma " & _
-            "join [Indicadores] c on b.IdIndicador= c.IdIndicador " & _
-            "join [TiposDeIndicador] d on c.IdTipoDeIndicador=d.IdTipoDeIndicador " & _
-            "where b.IdPrograma = @Programa And a.Ano = @Year And c.IdTipoDeIndicador = 1 And a.Activo=1 And b.Activo=1 and c.Activo=1" & _
-            "GROUP BY c.IdIndicador,c.DescripcionIndicador"
+        'SqlMetaIndicadores.SelectCommand = "SELECT c.DescripcionIndicador, " & _
+        '    "SUM(a.[ProyectadoQ1]) as ProyectadoQ1, SUM(a.[ProyectadoQ2]) as ProyectadoQ2, SUM(a.[ProyectadoQ3]) as ProyectadoQ3,  SUM(a.[ProyectadoQ4]) as ProyectadoQ4, " & _
+        '    "SUM(a.[EjecutadoQ1]) as EjecutadoQ1, SUM(a.[EjecutadoQ2]) as EjecutadoQ2, SUM(a.[EjecutadoQ3]) as EjecutadoQ3, SUM(a.[EjecutadoQ4]) as EjecutadoQ4, " & _
+        '    "(COALESCE(SUM(a.EjecutadoQ1)/ NULLIF(SUM(a.ProyectadoQ1),0),0)) As P1, " & _
+        '    "(COALESCE(SUM(a.EjecutadoQ2)/ NULLIF(SUM(a.ProyectadoQ2),0),0)) As P2, " & _
+        '    "(COALESCE(SUM(a.EjecutadoQ3)/ NULLIF(SUM(a.ProyectadoQ3),0),0)) As P3, " & _
+        '    "(COALESCE(SUM(a.EjecutadoQ4)/ NULLIF(SUM(a.ProyectadoQ4),0),0)) As P4, " & _
+        '    "(SUM(a.ProyectadoQ1+a.ProyectadoQ2+a.ProyectadoQ3+a.ProyectadoQ4)) As PA, " & _
+        '    "(SUM(a.[EjecutadoQ1]+a.[EjecutadoQ2]+a.[EjecutadoQ3]+a.[EjecutadoQ4])) As EA," & _
+        '    "(COALESCE((SUM(a.[EjecutadoQ1]+a.[EjecutadoQ2]+a.[EjecutadoQ3]+a.[EjecutadoQ4]))/ NULLIF((SUM(a.ProyectadoQ1+a.ProyectadoQ2+a.ProyectadoQ3+a.ProyectadoQ4)),0),0)) As PAA " & _
+        '    "FROM [MetaYMonitoreoPorPeriodo] a " & _
+        '    "join [IndicadoresPorPrograma] b on b.IdIndicadoresPorPrograma= a.IdIndicadorPorPrograma " & _
+        '    "join [Indicadores] c on b.IdIndicador= c.IdIndicador " & _
+        '    "join [TiposDeIndicador] d on c.IdTipoDeIndicador=d.IdTipoDeIndicador " & _
+        '    "where b.IdPrograma = @Programa And a.Ano = @Year And c.IdTipoDeIndicador = 1 And a.Activo=1 And b.Activo=1 and c.Activo=1" & _
+        '    "GROUP BY c.IdIndicador,c.DescripcionIndicador"
 
         SqlDataSource1.SelectCommand = " SELECT distinct e.DescripcionAreaDeInfluencia, a.ProyectadoQ1,a.ProyectadoQ2,a.ProyectadoQ3,a.ProyectadoQ4,a.EjecutadoQ1,EjecutadoQ2,EjecutadoQ3,EjecutadoQ4 " & _
             "FROM [MetaYMonitoreoPorPeriodo] a " & _
@@ -117,7 +118,107 @@ Partial Class Consultas_Analizar
         Else
 
             If cmbAno.Text <> "" And cmbArea.Text <> "" Then
-      
+
+                If (cmbTrimestre.Text = "Trimestre 1") Then
+                    SqlMetaMonitoreo.SelectCommand = "SELECT " & _
+                            "c.DescripcionIndicador, " & _
+                            "SUM(a.[ProyectadoQ1]) as ProyectadoQ1, " & _
+                            "SUM(a.[ProyectadoQ2]) as ProyectadoQ2, " & _
+                            "SUM(a.[ProyectadoQ3]) as ProyectadoQ3, " & _
+                            "SUM(a.[ProyectadoQ4]) as ProyectadoQ4, " & _
+                            "SUM(a.[EjecutadoQ1]) as EjecutadoQ1, " & _
+                            "SUM(a.[EjecutadoQ2]) as EjecutadoQ2, " & _
+                            "SUM(a.[EjecutadoQ3]) as EjecutadoQ3, " & _
+                            "SUM(a.[EjecutadoQ4]) as EjecutadoQ4, " & _
+                            "(COALESCE(SUM(a.EjecutadoQ1)/ NULLIF(SUM(a.ProyectadoQ1),0),0)) As P1, " & _
+                            "(COALESCE(SUM(a.EjecutadoQ2)/ NULLIF(SUM(a.ProyectadoQ2),0),0)) As P2, " & _
+                            "(COALESCE(SUM(a.EjecutadoQ3)/ NULLIF(SUM(a.ProyectadoQ3),0),0)) As P3, " & _
+                            "(COALESCE(SUM(a.EjecutadoQ4)/ NULLIF(SUM(a.ProyectadoQ4),0),0)) As P4, " & _
+                            "(SUM(a.ProyectadoQ1)) As PA, " & _
+                            "(SUM(a.[EjecutadoQ1])) As EA, " & _
+                            "(COALESCE((SUM(a.[EjecutadoQ1]))/ NULLIF((SUM(a.ProyectadoQ1)),0),0)) As PAA " & _
+                            "FROM " & _
+                            "[MetaYMonitoreoPorPeriodo] a " & _
+                            "join [IndicadoresPorPrograma] b on b.IdIndicadoresPorPrograma= a.IdIndicadorPorPrograma " & _
+                            "join [Indicadores] c on b.IdIndicador= c.IdIndicador " & _
+                            "join [TiposDeIndicador] d on c.IdTipoDeIndicador=d.IdTipoDeIndicador " & _
+                            "where " & _
+                            "b.IdPrograma = 133 And a.Ano = 2013 And c.IdTipoDeIndicador = 1 And a.Activo = 1 And b.Activo = 1 And c.Activo = 1 and a.IdAreaDeInfluencia=@Area and (a.ProyectadoQ1 <> 0 Or a.ProyectadoQ2 <> 0 OR a.ProyectadoQ3 <> 0 OR a.ProyectadoQ4 <> 0) " & _
+                            "GROUP BY c.IdIndicador,c.DescripcionIndicador"
+
+                ElseIf (cmbTrimestre.Text = "Trimestre 2") Then
+                    SqlMetaMonitoreo.SelectCommand = "SELECT " & _
+                            "c.DescripcionIndicador, " & _
+                            "SUM(a.[ProyectadoQ1]) as ProyectadoQ1, " & _
+                            "SUM(a.[ProyectadoQ2]) as ProyectadoQ2, " & _
+                            "SUM(a.[ProyectadoQ3]) as ProyectadoQ3, " & _
+                            "SUM(a.[ProyectadoQ4]) as ProyectadoQ4, " & _
+                            "SUM(a.[EjecutadoQ1]) as EjecutadoQ1, " & _
+                            "SUM(a.[EjecutadoQ2]) as EjecutadoQ2, " & _
+                            "SUM(a.[EjecutadoQ3]) as EjecutadoQ3, " & _
+                            "SUM(a.[EjecutadoQ4]) as EjecutadoQ4, " & _
+                            "(COALESCE(SUM(a.EjecutadoQ1)/ NULLIF(SUM(a.ProyectadoQ1),0),0)) As P1, " & _
+                            "(COALESCE(SUM(a.EjecutadoQ2)/ NULLIF(SUM(a.ProyectadoQ2),0),0)) As P2, " & _
+                            "(COALESCE(SUM(a.EjecutadoQ3)/ NULLIF(SUM(a.ProyectadoQ3),0),0)) As P3, " & _
+                            "(COALESCE(SUM(a.EjecutadoQ4)/ NULLIF(SUM(a.ProyectadoQ4),0),0)) As P4, " & _
+                            "(SUM(a.ProyectadoQ1+a.ProyectadoQ2)) As PA, " & _
+                            "(SUM(a.[EjecutadoQ1]+a.[EjecutadoQ2])) As EA, " & _
+                            "(COALESCE((SUM(a.[EjecutadoQ1]+a.[EjecutadoQ2]))/ NULLIF((SUM(a.ProyectadoQ1+a.ProyectadoQ2)),0),0)) As PAA " & _
+                            "FROM " & _
+                            "[MetaYMonitoreoPorPeriodo] a " & _
+                            "join [IndicadoresPorPrograma] b on b.IdIndicadoresPorPrograma= a.IdIndicadorPorPrograma  " & _
+                            "join [Indicadores] c on b.IdIndicador= c.IdIndicador " & _
+                            "join [TiposDeIndicador] d on c.IdTipoDeIndicador=d.IdTipoDeIndicador " & _
+                            "where " & _
+                            "b.IdPrograma = 133 And a.Ano = 2013 And c.IdTipoDeIndicador = 1 And a.Activo = 1 And b.Activo = 1 And c.Activo = 1 and a.IdAreaDeInfluencia=@Area and (a.ProyectadoQ1 <> 0 Or a.ProyectadoQ2 <> 0 OR a.ProyectadoQ3 <> 0 OR a.ProyectadoQ4 <> 0) " & _
+                            "GROUP BY c.IdIndicador,c.DescripcionIndicador"
+                ElseIf (cmbTrimestre.Text = "Trimestre 3") Then
+                    SqlMetaMonitoreo.SelectCommand = "SELECT " & _
+                            "c.DescripcionIndicador, " & _
+                            "SUM(a.[ProyectadoQ1]) as ProyectadoQ1, " & _
+                            "SUM(a.[ProyectadoQ2]) as ProyectadoQ2, " & _
+                            "SUM(a.[ProyectadoQ3]) as ProyectadoQ3, " & _
+                            "SUM(a.[ProyectadoQ4]) as ProyectadoQ4, " & _
+                            "SUM(a.[EjecutadoQ1]) as EjecutadoQ1, " & _
+                            "SUM(a.[EjecutadoQ2]) as EjecutadoQ2, " & _
+                            "SUM(a.[EjecutadoQ3]) as EjecutadoQ3, " & _
+                            "SUM(a.[EjecutadoQ4]) as EjecutadoQ4, " & _
+                            "(COALESCE(SUM(a.EjecutadoQ1)/ NULLIF(SUM(a.ProyectadoQ1),0),0)) As P1, " & _
+                            "(COALESCE(SUM(a.EjecutadoQ2)/ NULLIF(SUM(a.ProyectadoQ2),0),0)) As P2, " & _
+                            "(COALESCE(SUM(a.EjecutadoQ3)/ NULLIF(SUM(a.ProyectadoQ3),0),0)) As P3, " & _
+                            "(COALESCE(SUM(a.EjecutadoQ4)/ NULLIF(SUM(a.ProyectadoQ4),0),0)) As P4, " & _
+                            "(SUM(a.ProyectadoQ1+a.ProyectadoQ2)) As PA, " & _
+                            "(SUM(a.[EjecutadoQ1]+a.[EjecutadoQ2])) As EA, " & _
+                            "(COALESCE((SUM(a.[EjecutadoQ1]+a.[EjecutadoQ2]))/ NULLIF((SUM(a.ProyectadoQ1+a.ProyectadoQ2)),0),0)) As PAA  " & _
+                            "FROM " & _
+                            "[MetaYMonitoreoPorPeriodo] a " & _
+                            "join [IndicadoresPorPrograma] b on b.IdIndicadoresPorPrograma= a.IdIndicadorPorPrograma  " & _
+                            "join [Indicadores] c on b.IdIndicador= c.IdIndicador " & _
+                            "join [TiposDeIndicador] d on c.IdTipoDeIndicador=d.IdTipoDeIndicador " & _
+                            "where " & _
+                            "b.IdPrograma = 133 And a.Ano = 2013 And c.IdTipoDeIndicador = 1 And a.Activo = 1 And b.Activo = 1 And c.Activo = 1 and (a.ProyectadoQ1 <> 0 Or a.ProyectadoQ2 <> 0 OR a.ProyectadoQ3 <> 0 OR a.ProyectadoQ4 <> 0) " & _
+                            "GROUP BY c.IdIndicador,c.DescripcionIndicador"
+
+                Else
+
+                    SqlMetaMonitoreo.SelectCommand = "SELECT c.DescripcionIndicador, " & _
+                        "SUM(a.[ProyectadoQ1]) as ProyectadoQ1, SUM(a.[ProyectadoQ2]) as ProyectadoQ2, SUM(a.[ProyectadoQ3]) as ProyectadoQ3,  SUM(a.[ProyectadoQ4]) as ProyectadoQ4, " & _
+                        "SUM(a.[EjecutadoQ1]) as EjecutadoQ1, SUM(a.[EjecutadoQ2]) as EjecutadoQ2, SUM(a.[EjecutadoQ3]) as EjecutadoQ3, SUM(a.[EjecutadoQ4]) as EjecutadoQ4, " & _
+                        "(COALESCE(SUM(a.EjecutadoQ1)/ NULLIF(SUM(a.ProyectadoQ1),0),0)) As P1, " & _
+                        "(COALESCE(SUM(a.EjecutadoQ2)/ NULLIF(SUM(a.ProyectadoQ2),0),0)) As P2, " & _
+                        "(COALESCE(SUM(a.EjecutadoQ3)/ NULLIF(SUM(a.ProyectadoQ3),0),0)) As P3, " & _
+                        "(COALESCE(SUM(a.EjecutadoQ4)/ NULLIF(SUM(a.ProyectadoQ4),0),0)) As P4, " & _
+                        "(SUM(a.ProyectadoQ1+a.ProyectadoQ2+a.ProyectadoQ3+a.ProyectadoQ4)) As PA, " & _
+                        "(SUM(a.[EjecutadoQ1]+a.[EjecutadoQ2]+a.[EjecutadoQ3]+a.[EjecutadoQ4])) As EA," & _
+                        "(COALESCE((SUM(a.[EjecutadoQ1]+a.[EjecutadoQ2]+a.[EjecutadoQ3]+a.[EjecutadoQ4]))/ NULLIF((SUM(a.ProyectadoQ1+a.ProyectadoQ2+a.ProyectadoQ3+a.ProyectadoQ4)),0),0)) As PAA " & _
+                        "FROM [MetaYMonitoreoPorPeriodo] a " & _
+                        "join [IndicadoresPorPrograma] b on b.IdIndicadoresPorPrograma= a.IdIndicadorPorPrograma " & _
+                        "join [Indicadores] c on b.IdIndicador= c.IdIndicador " & _
+                        "join [TiposDeIndicador] d on c.IdTipoDeIndicador=d.IdTipoDeIndicador " & _
+                        "where b.IdPrograma = @Programa And a.Ano = @Year And c.IdTipoDeIndicador = 1 And a.Activo=1 And b.Activo=1 and c.Activo=1 and a.IdAreaDeInfluencia=@Area and (a.ProyectadoQ1 <> 0 Or a.ProyectadoQ2 <> 0 OR a.ProyectadoQ3 <> 0 OR a.ProyectadoQ4 <> 0) " & _
+                        "GROUP BY c.IdIndicador, c.DescripcionIndicador"
+                End If
+
                 SqlMetaMonitoreo.SelectParameters(0).DefaultValue = Session("CodPrograma")
                 SqlMetaMonitoreo.SelectParameters(1).DefaultValue = cmbAno.Text
                 SqlMetaMonitoreo.SelectParameters(2).DefaultValue = cmbArea.Value
@@ -293,7 +394,7 @@ Partial Class Consultas_Analizar
         SqlRespuestas.DataBind()
     End Sub
 
-   
+
 
     Protected Sub ASPxGridViewOpciones_BeforePerformDataSelect(sender As Object, e As EventArgs)
         Session("IdRespuesta") = CType(sender, ASPxGridView).GetMasterRowKeyValue()
@@ -302,7 +403,7 @@ Partial Class Consultas_Analizar
 
     End Sub
 
-   
+
 
     Public Property nombrePrograma As String
 
@@ -419,6 +520,104 @@ Partial Class Consultas_Analizar
 
 
     Protected Sub GridIndicadoresI_CustomCallback(sender As Object, e As ASPxGridViewCustomCallbackEventArgs)
+
+        If (cmbTrimestreIndicadores.Text = "Trimestre 1") Then
+            SqlMetaIndicadores.SelectCommand = "SELECT " & _
+                "c.DescripcionIndicador, " & _
+                "SUM(a.[ProyectadoQ1]) as ProyectadoQ1, " & _
+                "SUM(a.[ProyectadoQ2]) as ProyectadoQ2, " & _
+                "SUM(a.[ProyectadoQ3]) as ProyectadoQ3, " & _
+                "SUM(a.[ProyectadoQ4]) as ProyectadoQ4, " & _
+                "SUM(a.[EjecutadoQ1]) as EjecutadoQ1, " & _
+                "SUM(a.[EjecutadoQ2]) as EjecutadoQ2, " & _
+                "SUM(a.[EjecutadoQ3]) as EjecutadoQ3, " & _
+                "SUM(a.[EjecutadoQ4]) as EjecutadoQ4, " & _
+                "(COALESCE(SUM(a.EjecutadoQ1)/ NULLIF(SUM(a.ProyectadoQ1),0),0)) As P1, " & _
+                "(COALESCE(SUM(a.EjecutadoQ2)/ NULLIF(SUM(a.ProyectadoQ2),0),0)) As P2, " & _
+                "(COALESCE(SUM(a.EjecutadoQ3)/ NULLIF(SUM(a.ProyectadoQ3),0),0)) As P3, " & _
+                "(COALESCE(SUM(a.EjecutadoQ4)/ NULLIF(SUM(a.ProyectadoQ4),0),0)) As P4, " & _
+                "(SUM(a.ProyectadoQ1)) As PA, " & _
+                "(SUM(a.[EjecutadoQ1])) As EA, " & _
+                "(COALESCE((SUM(a.[EjecutadoQ1]))/ NULLIF((SUM(a.ProyectadoQ1)),0),0)) As PAA " & _
+                "FROM " & _
+                "[MetaYMonitoreoPorPeriodo] a " & _
+                "join [IndicadoresPorPrograma] b on b.IdIndicadoresPorPrograma= a.IdIndicadorPorPrograma " & _
+                "join [Indicadores] c on b.IdIndicador= c.IdIndicador " & _
+                "join [TiposDeIndicador] d on c.IdTipoDeIndicador=d.IdTipoDeIndicador " & _
+                "where " & _
+                "b.IdPrograma = @Programa And a.Ano = @Year And c.IdTipoDeIndicador = 1 And a.Activo = 1 And b.Activo = 1 And c.Activo = 1 and (a.ProyectadoQ1 <> 0 Or a.ProyectadoQ2 <> 0 OR a.ProyectadoQ3 <> 0 OR a.ProyectadoQ4 <> 0) " & _
+                "GROUP BY c.IdIndicador,c.DescripcionIndicador "
+        ElseIf (cmbTrimestreIndicadores.Text = "Trimestre 2") Then
+            SqlMetaIndicadores.SelectCommand = "SELECT " & _
+                    "c.DescripcionIndicador, " & _
+                    "SUM(a.[ProyectadoQ1]) as ProyectadoQ1, " & _
+                    "SUM(a.[ProyectadoQ2]) as ProyectadoQ2, " & _
+                    "SUM(a.[ProyectadoQ3]) as ProyectadoQ3, " & _
+                    "SUM(a.[ProyectadoQ4]) as ProyectadoQ4, " & _
+                    "SUM(a.[EjecutadoQ1]) as EjecutadoQ1, " & _
+                    "SUM(a.[EjecutadoQ2]) as EjecutadoQ2, " & _
+                    "SUM(a.[EjecutadoQ3]) as EjecutadoQ3, " & _
+                    "SUM(a.[EjecutadoQ4]) as EjecutadoQ4, " & _
+                    "(COALESCE(SUM(a.EjecutadoQ1)/ NULLIF(SUM(a.ProyectadoQ1),0),0)) As P1, " & _
+                    "(COALESCE(SUM(a.EjecutadoQ2)/ NULLIF(SUM(a.ProyectadoQ2),0),0)) As P2, " & _
+                    "(COALESCE(SUM(a.EjecutadoQ3)/ NULLIF(SUM(a.ProyectadoQ3),0),0)) As P3, " & _
+                    "(COALESCE(SUM(a.EjecutadoQ4)/ NULLIF(SUM(a.ProyectadoQ4),0),0)) As P4, " & _
+                    "(SUM(a.ProyectadoQ1+a.ProyectadoQ2)) As PA, " & _
+                    "(SUM(a.[EjecutadoQ1]+a.[EjecutadoQ2])) As EA, " & _
+                    "(COALESCE((SUM(a.[EjecutadoQ1]+a.[EjecutadoQ2]))/ NULLIF((SUM(a.ProyectadoQ1+a.ProyectadoQ2)),0),0)) As PAA " & _
+                    "FROM " & _
+                    "[MetaYMonitoreoPorPeriodo] a " & _
+                    "join [IndicadoresPorPrograma] b on b.IdIndicadoresPorPrograma= a.IdIndicadorPorPrograma " & _
+                    "join [Indicadores] c on b.IdIndicador= c.IdIndicador " & _
+                    "join [TiposDeIndicador] d on c.IdTipoDeIndicador=d.IdTipoDeIndicador " & _
+                    "where " & _
+                    "b.IdPrograma = @Programa And a.Ano = @Year And c.IdTipoDeIndicador = 1 And a.Activo = 1 And b.Activo = 1 And c.Activo = 1 and (a.ProyectadoQ1 <> 0 Or a.ProyectadoQ2 <> 0 OR a.ProyectadoQ3 <> 0 OR a.ProyectadoQ4 <> 0) " & _
+                    "GROUP BY c.IdIndicador,c.DescripcionIndicador"
+        ElseIf (cmbTrimestreIndicadores.Text = "Trimestre 3") Then
+            SqlMetaIndicadores.SelectCommand = "SELECT " & _
+                    "c.DescripcionIndicador, " & _
+                    "SUM(a.[ProyectadoQ1]) as ProyectadoQ1, " & _
+                    "SUM(a.[ProyectadoQ2]) as ProyectadoQ2, " & _
+                    "SUM(a.[ProyectadoQ3]) as ProyectadoQ3, " & _
+                    "SUM(a.[ProyectadoQ4]) as ProyectadoQ4, " & _
+                    "SUM(a.[EjecutadoQ1]) as EjecutadoQ1, " & _
+                    "SUM(a.[EjecutadoQ2]) as EjecutadoQ2, " & _
+                    "SUM(a.[EjecutadoQ3]) as EjecutadoQ3, " & _
+                    "SUM(a.[EjecutadoQ4]) as EjecutadoQ4, " & _
+                    "(COALESCE(SUM(a.EjecutadoQ1)/ NULLIF(SUM(a.ProyectadoQ1),0),0)) As P1, " & _
+                    "(COALESCE(SUM(a.EjecutadoQ2)/ NULLIF(SUM(a.ProyectadoQ2),0),0)) As P2, " & _
+                    "(COALESCE(SUM(a.EjecutadoQ3)/ NULLIF(SUM(a.ProyectadoQ3),0),0)) As P3, " & _
+                    "(COALESCE(SUM(a.EjecutadoQ4)/ NULLIF(SUM(a.ProyectadoQ4),0),0)) As P4, " & _
+                    "(SUM(a.ProyectadoQ1+a.ProyectadoQ2+a.ProyectadoQ3)) As PA, " & _
+                    "(SUM(a.[EjecutadoQ1]+a.[EjecutadoQ2]+a.[EjecutadoQ3])) As EA, " & _
+                    "(COALESCE((SUM(a.[EjecutadoQ1]+a.[EjecutadoQ2]+a.[EjecutadoQ3]))/ NULLIF((SUM(a.ProyectadoQ1+a.ProyectadoQ2+a.ProyectadoQ3)),0),0)) As PAA " & _
+                    "FROM " & _
+                    "[MetaYMonitoreoPorPeriodo] a " & _
+                    "join [IndicadoresPorPrograma] b on b.IdIndicadoresPorPrograma= a.IdIndicadorPorPrograma " & _
+                    "join [Indicadores] c on b.IdIndicador= c.IdIndicador " & _
+                    "join [TiposDeIndicador] d on c.IdTipoDeIndicador=d.IdTipoDeIndicador " & _
+                    "where " & _
+                    "b.IdPrograma = 133 And a.Ano = 2013 And c.IdTipoDeIndicador = 1 And a.Activo = 1 And b.Activo = 1 And c.Activo = 1 and (a.ProyectadoQ1 <> 0 Or a.ProyectadoQ2 <> 0 OR a.ProyectadoQ3 <> 0 OR a.ProyectadoQ4 <> 0) " & _
+                    "GROUP BY c.IdIndicador,c.DescripcionIndicador"
+        Else
+            SqlMetaIndicadores.SelectCommand = "SELECT c.DescripcionIndicador, " & _
+                "SUM(a.[ProyectadoQ1]) as ProyectadoQ1, SUM(a.[ProyectadoQ2]) as ProyectadoQ2, SUM(a.[ProyectadoQ3]) as ProyectadoQ3,  SUM(a.[ProyectadoQ4]) as ProyectadoQ4, " & _
+                "SUM(a.[EjecutadoQ1]) as EjecutadoQ1, SUM(a.[EjecutadoQ2]) as EjecutadoQ2, SUM(a.[EjecutadoQ3]) as EjecutadoQ3, SUM(a.[EjecutadoQ4]) as EjecutadoQ4, " & _
+                "(COALESCE(SUM(a.EjecutadoQ1)/ NULLIF(SUM(a.ProyectadoQ1),0),0)) As P1, " & _
+                "(COALESCE(SUM(a.EjecutadoQ2)/ NULLIF(SUM(a.ProyectadoQ2),0),0)) As P2, " & _
+                "(COALESCE(SUM(a.EjecutadoQ3)/ NULLIF(SUM(a.ProyectadoQ3),0),0)) As P3, " & _
+                "(COALESCE(SUM(a.EjecutadoQ4)/ NULLIF(SUM(a.ProyectadoQ4),0),0)) As P4, " & _
+                "(SUM(a.ProyectadoQ1+a.ProyectadoQ2+a.ProyectadoQ3+a.ProyectadoQ4)) As PA, " & _
+                "(SUM(a.[EjecutadoQ1]+a.[EjecutadoQ2]+a.[EjecutadoQ3]+a.[EjecutadoQ4])) As EA," & _
+                "(COALESCE((SUM(a.[EjecutadoQ1]+a.[EjecutadoQ2]+a.[EjecutadoQ3]+a.[EjecutadoQ4]))/ NULLIF((SUM(a.ProyectadoQ1+a.ProyectadoQ2+a.ProyectadoQ3+a.ProyectadoQ4)),0),0)) As PAA " & _
+                "FROM [MetaYMonitoreoPorPeriodo] a " & _
+                "join [IndicadoresPorPrograma] b on b.IdIndicadoresPorPrograma= a.IdIndicadorPorPrograma " & _
+                "join [Indicadores] c on b.IdIndicador= c.IdIndicador " & _
+                "join [TiposDeIndicador] d on c.IdTipoDeIndicador=d.IdTipoDeIndicador " & _
+                "where b.IdPrograma = @Programa And a.Ano = @Year And c.IdTipoDeIndicador = 1 And a.Activo=1 And b.Activo=1 and c.Activo=1 and (a.ProyectadoQ1 <> 0 Or a.ProyectadoQ2 <> 0 OR a.ProyectadoQ3 <> 0 OR a.ProyectadoQ4 <> 0) " & _
+                "GROUP BY c.IdIndicador,c.DescripcionIndicador"
+        End If
+
 
         SqlMetaIndicadores.SelectParameters(0).DefaultValue = Session("CodPrograma")
         SqlMetaIndicadores.SelectParameters(1).DefaultValue = cmbAnoI.Text
@@ -557,6 +756,103 @@ Partial Class Consultas_Analizar
 
     Protected Sub ExportarIndicador_Click(sender As Object, e As EventArgs)
 
+        If (cmbTrimestreIndicadores.Text = "Trimestre 1") Then
+            SqlMetaIndicadores.SelectCommand = "SELECT " & _
+                "c.DescripcionIndicador, " & _
+                "SUM(a.[ProyectadoQ1]) as ProyectadoQ1, " & _
+                "SUM(a.[ProyectadoQ2]) as ProyectadoQ2, " & _
+                "SUM(a.[ProyectadoQ3]) as ProyectadoQ3, " & _
+                "SUM(a.[ProyectadoQ4]) as ProyectadoQ4, " & _
+                "SUM(a.[EjecutadoQ1]) as EjecutadoQ1, " & _
+                "SUM(a.[EjecutadoQ2]) as EjecutadoQ2, " & _
+                "SUM(a.[EjecutadoQ3]) as EjecutadoQ3, " & _
+                "SUM(a.[EjecutadoQ4]) as EjecutadoQ4, " & _
+                "(COALESCE(SUM(a.EjecutadoQ1)/ NULLIF(SUM(a.ProyectadoQ1),0),0)) As P1, " & _
+                "(COALESCE(SUM(a.EjecutadoQ2)/ NULLIF(SUM(a.ProyectadoQ2),0),0)) As P2, " & _
+                "(COALESCE(SUM(a.EjecutadoQ3)/ NULLIF(SUM(a.ProyectadoQ3),0),0)) As P3, " & _
+                "(COALESCE(SUM(a.EjecutadoQ4)/ NULLIF(SUM(a.ProyectadoQ4),0),0)) As P4, " & _
+                "(SUM(a.ProyectadoQ1)) As PA, " & _
+                "(SUM(a.[EjecutadoQ1])) As EA, " & _
+                "(COALESCE((SUM(a.[EjecutadoQ1]))/ NULLIF((SUM(a.ProyectadoQ1)),0),0)) As PAA " & _
+                "FROM " & _
+                "[MetaYMonitoreoPorPeriodo] a " & _
+                "join [IndicadoresPorPrograma] b on b.IdIndicadoresPorPrograma= a.IdIndicadorPorPrograma " & _
+                "join [Indicadores] c on b.IdIndicador= c.IdIndicador " & _
+                "join [TiposDeIndicador] d on c.IdTipoDeIndicador=d.IdTipoDeIndicador " & _
+                "where " & _
+                "b.IdPrograma = @Programa And a.Ano = @Year And c.IdTipoDeIndicador = 1 And a.Activo = 1 And b.Activo = 1 And c.Activo = 1 and (a.ProyectadoQ1 <> 0 Or a.ProyectadoQ2 <> 0 OR a.ProyectadoQ3 <> 0 OR a.ProyectadoQ4 <> 0) " & _
+                "GROUP BY c.IdIndicador,c.DescripcionIndicador "
+        ElseIf (cmbTrimestreIndicadores.Text = "Trimestre 2") Then
+            SqlMetaIndicadores.SelectCommand = "SELECT " & _
+                    "c.DescripcionIndicador, " & _
+                    "SUM(a.[ProyectadoQ1]) as ProyectadoQ1, " & _
+                    "SUM(a.[ProyectadoQ2]) as ProyectadoQ2, " & _
+                    "SUM(a.[ProyectadoQ3]) as ProyectadoQ3, " & _
+                    "SUM(a.[ProyectadoQ4]) as ProyectadoQ4, " & _
+                    "SUM(a.[EjecutadoQ1]) as EjecutadoQ1, " & _
+                    "SUM(a.[EjecutadoQ2]) as EjecutadoQ2, " & _
+                    "SUM(a.[EjecutadoQ3]) as EjecutadoQ3, " & _
+                    "SUM(a.[EjecutadoQ4]) as EjecutadoQ4, " & _
+                    "(COALESCE(SUM(a.EjecutadoQ1)/ NULLIF(SUM(a.ProyectadoQ1),0),0)) As P1, " & _
+                    "(COALESCE(SUM(a.EjecutadoQ2)/ NULLIF(SUM(a.ProyectadoQ2),0),0)) As P2, " & _
+                    "(COALESCE(SUM(a.EjecutadoQ3)/ NULLIF(SUM(a.ProyectadoQ3),0),0)) As P3, " & _
+                    "(COALESCE(SUM(a.EjecutadoQ4)/ NULLIF(SUM(a.ProyectadoQ4),0),0)) As P4, " & _
+                    "(SUM(a.ProyectadoQ1+a.ProyectadoQ2)) As PA, " & _
+                    "(SUM(a.[EjecutadoQ1]+a.[EjecutadoQ2])) As EA, " & _
+                    "(COALESCE((SUM(a.[EjecutadoQ1]+a.[EjecutadoQ2]))/ NULLIF((SUM(a.ProyectadoQ1+a.ProyectadoQ2)),0),0)) As PAA " & _
+                    "FROM " & _
+                    "[MetaYMonitoreoPorPeriodo] a " & _
+                    "join [IndicadoresPorPrograma] b on b.IdIndicadoresPorPrograma= a.IdIndicadorPorPrograma " & _
+                    "join [Indicadores] c on b.IdIndicador= c.IdIndicador " & _
+                    "join [TiposDeIndicador] d on c.IdTipoDeIndicador=d.IdTipoDeIndicador " & _
+                    "where " & _
+                    "b.IdPrograma = @Programa And a.Ano = @Year And c.IdTipoDeIndicador = 1 And a.Activo = 1 And b.Activo = 1 And c.Activo = 1 and (a.ProyectadoQ1 <> 0 Or a.ProyectadoQ2 <> 0 OR a.ProyectadoQ3 <> 0 OR a.ProyectadoQ4 <> 0) " & _
+                    "GROUP BY c.IdIndicador,c.DescripcionIndicador"
+        ElseIf (cmbTrimestreIndicadores.Text = "Trimestre 3") Then
+            SqlMetaIndicadores.SelectCommand = "SELECT " & _
+                    "c.DescripcionIndicador, " & _
+                    "SUM(a.[ProyectadoQ1]) as ProyectadoQ1, " & _
+                    "SUM(a.[ProyectadoQ2]) as ProyectadoQ2, " & _
+                    "SUM(a.[ProyectadoQ3]) as ProyectadoQ3, " & _
+                    "SUM(a.[ProyectadoQ4]) as ProyectadoQ4, " & _
+                    "SUM(a.[EjecutadoQ1]) as EjecutadoQ1, " & _
+                    "SUM(a.[EjecutadoQ2]) as EjecutadoQ2, " & _
+                    "SUM(a.[EjecutadoQ3]) as EjecutadoQ3, " & _
+                    "SUM(a.[EjecutadoQ4]) as EjecutadoQ4, " & _
+                    "(COALESCE(SUM(a.EjecutadoQ1)/ NULLIF(SUM(a.ProyectadoQ1),0),0)) As P1, " & _
+                    "(COALESCE(SUM(a.EjecutadoQ2)/ NULLIF(SUM(a.ProyectadoQ2),0),0)) As P2, " & _
+                    "(COALESCE(SUM(a.EjecutadoQ3)/ NULLIF(SUM(a.ProyectadoQ3),0),0)) As P3, " & _
+                    "(COALESCE(SUM(a.EjecutadoQ4)/ NULLIF(SUM(a.ProyectadoQ4),0),0)) As P4, " & _
+                    "(SUM(a.ProyectadoQ1+a.ProyectadoQ2+a.ProyectadoQ3)) As PA, " & _
+                    "(SUM(a.[EjecutadoQ1]+a.[EjecutadoQ2]+a.[EjecutadoQ3])) As EA, " & _
+                    "(COALESCE((SUM(a.[EjecutadoQ1]+a.[EjecutadoQ2]+a.[EjecutadoQ3]))/ NULLIF((SUM(a.ProyectadoQ1+a.ProyectadoQ2+a.ProyectadoQ3)),0),0)) As PAA " & _
+                    "FROM " & _
+                    "[MetaYMonitoreoPorPeriodo] a " & _
+                    "join [IndicadoresPorPrograma] b on b.IdIndicadoresPorPrograma= a.IdIndicadorPorPrograma " & _
+                    "join [Indicadores] c on b.IdIndicador= c.IdIndicador " & _
+                    "join [TiposDeIndicador] d on c.IdTipoDeIndicador=d.IdTipoDeIndicador " & _
+                    "where " & _
+                    "b.IdPrograma = 133 And a.Ano = 2013 And c.IdTipoDeIndicador = 1 And a.Activo = 1 And b.Activo = 1 And c.Activo = 1 and (a.ProyectadoQ1 <> 0 Or a.ProyectadoQ2 <> 0 OR a.ProyectadoQ3 <> 0 OR a.ProyectadoQ4 <> 0) " & _
+                    "GROUP BY c.IdIndicador,c.DescripcionIndicador"
+        Else
+            SqlMetaIndicadores.SelectCommand = "SELECT c.DescripcionIndicador, " & _
+                "SUM(a.[ProyectadoQ1]) as ProyectadoQ1, SUM(a.[ProyectadoQ2]) as ProyectadoQ2, SUM(a.[ProyectadoQ3]) as ProyectadoQ3,  SUM(a.[ProyectadoQ4]) as ProyectadoQ4, " & _
+                "SUM(a.[EjecutadoQ1]) as EjecutadoQ1, SUM(a.[EjecutadoQ2]) as EjecutadoQ2, SUM(a.[EjecutadoQ3]) as EjecutadoQ3, SUM(a.[EjecutadoQ4]) as EjecutadoQ4, " & _
+                "(COALESCE(SUM(a.EjecutadoQ1)/ NULLIF(SUM(a.ProyectadoQ1),0),0)) As P1, " & _
+                "(COALESCE(SUM(a.EjecutadoQ2)/ NULLIF(SUM(a.ProyectadoQ2),0),0)) As P2, " & _
+                "(COALESCE(SUM(a.EjecutadoQ3)/ NULLIF(SUM(a.ProyectadoQ3),0),0)) As P3, " & _
+                "(COALESCE(SUM(a.EjecutadoQ4)/ NULLIF(SUM(a.ProyectadoQ4),0),0)) As P4, " & _
+                "(SUM(a.ProyectadoQ1+a.ProyectadoQ2+a.ProyectadoQ3+a.ProyectadoQ4)) As PA, " & _
+                "(SUM(a.[EjecutadoQ1]+a.[EjecutadoQ2]+a.[EjecutadoQ3]+a.[EjecutadoQ4])) As EA," & _
+                "(COALESCE((SUM(a.[EjecutadoQ1]+a.[EjecutadoQ2]+a.[EjecutadoQ3]+a.[EjecutadoQ4]))/ NULLIF((SUM(a.ProyectadoQ1+a.ProyectadoQ2+a.ProyectadoQ3+a.ProyectadoQ4)),0),0)) As PAA " & _
+                "FROM [MetaYMonitoreoPorPeriodo] a " & _
+                "join [IndicadoresPorPrograma] b on b.IdIndicadoresPorPrograma= a.IdIndicadorPorPrograma " & _
+                "join [Indicadores] c on b.IdIndicador= c.IdIndicador " & _
+                "join [TiposDeIndicador] d on c.IdTipoDeIndicador=d.IdTipoDeIndicador " & _
+                "where b.IdPrograma = @Programa And a.Ano = @Year And c.IdTipoDeIndicador = 1 And a.Activo=1 And b.Activo=1 and c.Activo=1 and (a.ProyectadoQ1 <> 0 Or a.ProyectadoQ2 <> 0 OR a.ProyectadoQ3 <> 0 OR a.ProyectadoQ4 <> 0) " & _
+                "GROUP BY c.IdIndicador,c.DescripcionIndicador"
+        End If
+
         SqlMetaIndicadores.SelectParameters(0).DefaultValue = Session("CodPrograma")
         SqlMetaIndicadores.SelectParameters(1).DefaultValue = cmbAnoI.Text
         SqlMetaIndicadores.DataBind()
@@ -591,6 +887,108 @@ Partial Class Consultas_Analizar
     End Sub
 
     Protected Sub ExportarIndicadorArea_Click(sender As Object, e As EventArgs)
+
+        If (cmbTrimestre.Text = "Trimestre 1") Then
+            SqlMetaMonitoreo.SelectCommand = "SELECT " & _
+                    "c.DescripcionIndicador, " & _
+                    "SUM(a.[ProyectadoQ1]) as ProyectadoQ1, " & _
+                    "SUM(a.[ProyectadoQ2]) as ProyectadoQ2, " & _
+                    "SUM(a.[ProyectadoQ3]) as ProyectadoQ3, " & _
+                    "SUM(a.[ProyectadoQ4]) as ProyectadoQ4, " & _
+                    "SUM(a.[EjecutadoQ1]) as EjecutadoQ1, " & _
+                    "SUM(a.[EjecutadoQ2]) as EjecutadoQ2, " & _
+                    "SUM(a.[EjecutadoQ3]) as EjecutadoQ3, " & _
+                    "SUM(a.[EjecutadoQ4]) as EjecutadoQ4, " & _
+                    "(COALESCE(SUM(a.EjecutadoQ1)/ NULLIF(SUM(a.ProyectadoQ1),0),0)) As P1, " & _
+                    "(COALESCE(SUM(a.EjecutadoQ2)/ NULLIF(SUM(a.ProyectadoQ2),0),0)) As P2, " & _
+                    "(COALESCE(SUM(a.EjecutadoQ3)/ NULLIF(SUM(a.ProyectadoQ3),0),0)) As P3, " & _
+                    "(COALESCE(SUM(a.EjecutadoQ4)/ NULLIF(SUM(a.ProyectadoQ4),0),0)) As P4, " & _
+                    "(SUM(a.ProyectadoQ1)) As PA, " & _
+                    "(SUM(a.[EjecutadoQ1])) As EA, " & _
+                    "(COALESCE((SUM(a.[EjecutadoQ1]))/ NULLIF((SUM(a.ProyectadoQ1)),0),0)) As PAA " & _
+                    "FROM " & _
+                    "[MetaYMonitoreoPorPeriodo] a " & _
+                    "join [IndicadoresPorPrograma] b on b.IdIndicadoresPorPrograma= a.IdIndicadorPorPrograma " & _
+                    "join [Indicadores] c on b.IdIndicador= c.IdIndicador " & _
+                    "join [TiposDeIndicador] d on c.IdTipoDeIndicador=d.IdTipoDeIndicador " & _
+                    "where " & _
+                    "b.IdPrograma = 133 And a.Ano = 2013 And c.IdTipoDeIndicador = 1 And a.Activo = 1 And b.Activo = 1 And c.Activo = 1 and a.IdAreaDeInfluencia=@Area and (a.ProyectadoQ1 <> 0 Or a.ProyectadoQ2 <> 0 OR a.ProyectadoQ3 <> 0 OR a.ProyectadoQ4 <> 0) " & _
+                    "GROUP BY c.IdIndicador,c.DescripcionIndicador"
+
+        ElseIf (cmbTrimestre.Text = "Trimestre 2") Then
+            SqlMetaMonitoreo.SelectCommand = "SELECT " & _
+                    "c.DescripcionIndicador, " & _
+                    "SUM(a.[ProyectadoQ1]) as ProyectadoQ1, " & _
+                    "SUM(a.[ProyectadoQ2]) as ProyectadoQ2, " & _
+                    "SUM(a.[ProyectadoQ3]) as ProyectadoQ3, " & _
+                    "SUM(a.[ProyectadoQ4]) as ProyectadoQ4, " & _
+                    "SUM(a.[EjecutadoQ1]) as EjecutadoQ1, " & _
+                    "SUM(a.[EjecutadoQ2]) as EjecutadoQ2, " & _
+                    "SUM(a.[EjecutadoQ3]) as EjecutadoQ3, " & _
+                    "SUM(a.[EjecutadoQ4]) as EjecutadoQ4, " & _
+                    "(COALESCE(SUM(a.EjecutadoQ1)/ NULLIF(SUM(a.ProyectadoQ1),0),0)) As P1, " & _
+                    "(COALESCE(SUM(a.EjecutadoQ2)/ NULLIF(SUM(a.ProyectadoQ2),0),0)) As P2, " & _
+                    "(COALESCE(SUM(a.EjecutadoQ3)/ NULLIF(SUM(a.ProyectadoQ3),0),0)) As P3, " & _
+                    "(COALESCE(SUM(a.EjecutadoQ4)/ NULLIF(SUM(a.ProyectadoQ4),0),0)) As P4, " & _
+                    "(SUM(a.ProyectadoQ1+a.ProyectadoQ2)) As PA, " & _
+                    "(SUM(a.[EjecutadoQ1]+a.[EjecutadoQ2])) As EA, " & _
+                    "(COALESCE((SUM(a.[EjecutadoQ1]+a.[EjecutadoQ2]))/ NULLIF((SUM(a.ProyectadoQ1+a.ProyectadoQ2)),0),0)) As PAA " & _
+                    "FROM " & _
+                    "[MetaYMonitoreoPorPeriodo] a " & _
+                    "join [IndicadoresPorPrograma] b on b.IdIndicadoresPorPrograma= a.IdIndicadorPorPrograma  " & _
+                    "join [Indicadores] c on b.IdIndicador= c.IdIndicador " & _
+                    "join [TiposDeIndicador] d on c.IdTipoDeIndicador=d.IdTipoDeIndicador " & _
+                    "where " & _
+                    "b.IdPrograma = 133 And a.Ano = 2013 And c.IdTipoDeIndicador = 1 And a.Activo = 1 And b.Activo = 1 And c.Activo = 1 and a.IdAreaDeInfluencia=@Area and (a.ProyectadoQ1 <> 0 Or a.ProyectadoQ2 <> 0 OR a.ProyectadoQ3 <> 0 OR a.ProyectadoQ4 <> 0) " & _
+                    "GROUP BY c.IdIndicador,c.DescripcionIndicador"
+        ElseIf (cmbTrimestre.Text = "Trimestre 3") Then
+            SqlMetaMonitoreo.SelectCommand = "SELECT " & _
+                    "c.DescripcionIndicador, " & _
+                    "SUM(a.[ProyectadoQ1]) as ProyectadoQ1, " & _
+                    "SUM(a.[ProyectadoQ2]) as ProyectadoQ2, " & _
+                    "SUM(a.[ProyectadoQ3]) as ProyectadoQ3, " & _
+                    "SUM(a.[ProyectadoQ4]) as ProyectadoQ4, " & _
+                    "SUM(a.[EjecutadoQ1]) as EjecutadoQ1, " & _
+                    "SUM(a.[EjecutadoQ2]) as EjecutadoQ2, " & _
+                    "SUM(a.[EjecutadoQ3]) as EjecutadoQ3, " & _
+                    "SUM(a.[EjecutadoQ4]) as EjecutadoQ4, " & _
+                    "(COALESCE(SUM(a.EjecutadoQ1)/ NULLIF(SUM(a.ProyectadoQ1),0),0)) As P1, " & _
+                    "(COALESCE(SUM(a.EjecutadoQ2)/ NULLIF(SUM(a.ProyectadoQ2),0),0)) As P2, " & _
+                    "(COALESCE(SUM(a.EjecutadoQ3)/ NULLIF(SUM(a.ProyectadoQ3),0),0)) As P3, " & _
+                    "(COALESCE(SUM(a.EjecutadoQ4)/ NULLIF(SUM(a.ProyectadoQ4),0),0)) As P4, " & _
+                    "(SUM(a.ProyectadoQ1+a.ProyectadoQ2)) As PA, " & _
+                    "(SUM(a.[EjecutadoQ1]+a.[EjecutadoQ2])) As EA, " & _
+                    "(COALESCE((SUM(a.[EjecutadoQ1]+a.[EjecutadoQ2]))/ NULLIF((SUM(a.ProyectadoQ1+a.ProyectadoQ2)),0),0)) As PAA  " & _
+                    "FROM " & _
+                    "[MetaYMonitoreoPorPeriodo] a " & _
+                    "join [IndicadoresPorPrograma] b on b.IdIndicadoresPorPrograma= a.IdIndicadorPorPrograma  " & _
+                    "join [Indicadores] c on b.IdIndicador= c.IdIndicador " & _
+                    "join [TiposDeIndicador] d on c.IdTipoDeIndicador=d.IdTipoDeIndicador " & _
+                    "where " & _
+                    "b.IdPrograma = 133 And a.Ano = 2013 And c.IdTipoDeIndicador = 1 And a.Activo = 1 And b.Activo = 1 And c.Activo = 1 and (a.ProyectadoQ1 <> 0 Or a.ProyectadoQ2 <> 0 OR a.ProyectadoQ3 <> 0 OR a.ProyectadoQ4 <> 0) " & _
+                    "GROUP BY c.IdIndicador,c.DescripcionIndicador"
+
+        Else
+
+            SqlMetaMonitoreo.SelectCommand = "SELECT c.DescripcionIndicador, " & _
+                "SUM(a.[ProyectadoQ1]) as ProyectadoQ1, SUM(a.[ProyectadoQ2]) as ProyectadoQ2, SUM(a.[ProyectadoQ3]) as ProyectadoQ3,  SUM(a.[ProyectadoQ4]) as ProyectadoQ4, " & _
+                "SUM(a.[EjecutadoQ1]) as EjecutadoQ1, SUM(a.[EjecutadoQ2]) as EjecutadoQ2, SUM(a.[EjecutadoQ3]) as EjecutadoQ3, SUM(a.[EjecutadoQ4]) as EjecutadoQ4, " & _
+                "(COALESCE(SUM(a.EjecutadoQ1)/ NULLIF(SUM(a.ProyectadoQ1),0),0)) As P1, " & _
+                "(COALESCE(SUM(a.EjecutadoQ2)/ NULLIF(SUM(a.ProyectadoQ2),0),0)) As P2, " & _
+                "(COALESCE(SUM(a.EjecutadoQ3)/ NULLIF(SUM(a.ProyectadoQ3),0),0)) As P3, " & _
+                "(COALESCE(SUM(a.EjecutadoQ4)/ NULLIF(SUM(a.ProyectadoQ4),0),0)) As P4, " & _
+                "(SUM(a.ProyectadoQ1+a.ProyectadoQ2+a.ProyectadoQ3+a.ProyectadoQ4)) As PA, " & _
+                "(SUM(a.[EjecutadoQ1]+a.[EjecutadoQ2]+a.[EjecutadoQ3]+a.[EjecutadoQ4])) As EA," & _
+                "(COALESCE((SUM(a.[EjecutadoQ1]+a.[EjecutadoQ2]+a.[EjecutadoQ3]+a.[EjecutadoQ4]))/ NULLIF((SUM(a.ProyectadoQ1+a.ProyectadoQ2+a.ProyectadoQ3+a.ProyectadoQ4)),0),0)) As PAA " & _
+                "FROM [MetaYMonitoreoPorPeriodo] a " & _
+                "join [IndicadoresPorPrograma] b on b.IdIndicadoresPorPrograma= a.IdIndicadorPorPrograma " & _
+                "join [Indicadores] c on b.IdIndicador= c.IdIndicador " & _
+                "join [TiposDeIndicador] d on c.IdTipoDeIndicador=d.IdTipoDeIndicador " & _
+                "where b.IdPrograma = @Programa And a.Ano = @Year And c.IdTipoDeIndicador = 1 And a.Activo=1 And b.Activo=1 and c.Activo=1 and a.IdAreaDeInfluencia=@Area and (a.ProyectadoQ1 <> 0 Or a.ProyectadoQ2 <> 0 OR a.ProyectadoQ3 <> 0 OR a.ProyectadoQ4 <> 0) " & _
+                "GROUP BY c.IdIndicador, c.DescripcionIndicador"
+        End If
+
+
         SqlMetaMonitoreo.SelectParameters(0).DefaultValue = Session("CodPrograma")
         SqlMetaMonitoreo.SelectParameters(1).DefaultValue = cmbAno.Text
         SqlMetaMonitoreo.SelectParameters(2).DefaultValue = cmbArea.Value
@@ -661,7 +1059,7 @@ Partial Class Consultas_Analizar
 
     End Function
 
- 
+
     Protected Sub GridEjecutadoPresupuesto_BeforePerformDataSelect(sender As Object, e As EventArgs)
 
 
@@ -703,5 +1101,13 @@ Partial Class Consultas_Analizar
         SqlDataSourceUbicacionArea.SelectParameters(0).DefaultValue = Session("IdAreaDeInfluencia")
         SqlDataSourceUbicacionArea.DataBind()
 
+    End Sub
+
+    Protected Sub cmbAnoI_Callback(sender As Object, e As CallbackEventArgsBase)
+        cmbAnoI.Text = " "
+    End Sub
+
+    Protected Sub cmbAno_Callback(sender As Object, e As CallbackEventArgsBase)
+        cmbAno.Text = " "
     End Sub
 End Class

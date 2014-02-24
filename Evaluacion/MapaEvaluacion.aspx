@@ -103,6 +103,27 @@
                                      <dx:GridViewDataTextColumn  FieldName="IdInstrumentoDeEvaluacion" Caption="IdInstrumentoDeEvaluacion" VisibleIndex="3" Visible="false">
                                     </dx:GridViewDataTextColumn>
 
+                                </Columns>
+
+                                  <SettingsPager>
+                                    <AllButton Visible="True" Text="Todos">
+                                    </AllButton>
+                                  </SettingsPager>
+                                <SettingsBehavior AllowFocusedRow="True" />
+
+                            <SettingsDetail ShowDetailRow="True" />
+                             <Templates>
+                             <DetailRow>
+
+                                  <dx:ASPxGridView ID="GridIndicadores" runat="server" KeyFieldName="IdIndicador" IsDetailGrid="true" OnBeforePerformDataSelect="GridIndicadores_BeforePerformDataSelect" Width="100%" DataSourceID="SqlIndicadores"  >
+
+                                <Columns>
+             
+                                     <dx:GridViewDataTextColumn FieldName="IdIndicador" Caption="IdIndicador" ReadOnly="True" VisibleIndex="0" Visible="false" >
+                                     </dx:GridViewDataTextColumn>
+                                    <dx:GridViewDataTextColumn FieldName="DescripcionIndicador" Caption="Indicador" VisibleIndex="1">
+                                    </dx:GridViewDataTextColumn>
+                                    
                                      <dx:GridViewDataTextColumn FieldName="Acciones"  Caption="Acción"  ShowInCustomizationForm="True" VisibleIndex="4" UnboundType="String">
                                                                                         <DataItemTemplate>
                                                                                         <asp:LinkButton id="link1"  Text="Ver Ubicaciones" runat="server"  OnClick="link1_Click" /> 
@@ -117,6 +138,17 @@
                                     </AllButton>
                                   </SettingsPager>
                                 <SettingsBehavior AllowFocusedRow="True" />
+
+                      
+
+                                      </dx:ASPxGridView>
+
+
+                            </DetailRow>
+                             </Templates>
+
+                            
+
 
                             </dx:ASPxGridView>
                         </DetailRow>
@@ -169,6 +201,15 @@
 
         </asp:SqlDataSource>
 
+        <asp:SqlDataSource ID="SqlIndicadores" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" >
+
+            <SelectParameters>
+                     <asp:SessionParameter Name="IdAplicacionInstrumento" />
+                     
+                </SelectParameters>
+
+        </asp:SqlDataSource>
+
 
                         <br />
                         <br />
@@ -176,7 +217,7 @@
 
                         <dx:ASPxGridView ID="DataGrid" ClientInstanceName="DataGrid" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSourceCabeceras" KeyFieldName="Latitud;Longitud;DescripcionMunicipio;Valor"  OnCustomCallback="DataGrid_CustomCallback"  OnLoad="DataGrid_Load" OnHtmlDataCellPrepared="GridIndicadores_HtmlDataCellPrepared" >
                             <Columns>
-                                <dx:GridViewCommandColumn ShowInCustomizationForm="True" ShowSelectCheckbox="True" VisibleIndex="0">
+                                <dx:GridViewCommandColumn ShowInCustomizationForm="True" ShowSelectCheckbox="True"     VisibleIndex="0">
                                 </dx:GridViewCommandColumn>
                                 <dx:GridViewDataTextColumn FieldName="DescripcionIndicador" Caption="Indicador" VisibleIndex="1"></dx:GridViewDataTextColumn>
                                 <dx:GridViewDataTextColumn FieldName="DescripcionDepartamento" Caption="Departamento" VisibleIndex="2"></dx:GridViewDataTextColumn>
@@ -203,6 +244,7 @@
                         <asp:SqlDataSource ID="SqlDataSourceCabeceras" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" >
                             <SelectParameters>
                                 <asp:SessionParameter Name="IdAplicacionInstrumento" />
+                                <asp:SessionParameter Name="IdIndicador" />
                             </SelectParameters>
                         </asp:SqlDataSource>
                         

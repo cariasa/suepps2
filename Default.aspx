@@ -89,7 +89,19 @@
             </Columns>
         </dx:ASPxGridView>
 
-       
+        <dx:ASPxGridView ID="ASPxGridViewDocumentos" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSourceDocumentos" KeyFieldName="IdDocumentoEvaluacion">
+            <Columns>
+                <dx:GridViewDataTextColumn FieldName="IdDocumentoEvaluacion" ReadOnly="True" VisibleIndex="0">
+                    <EditFormSettings Visible="False"></EditFormSettings>
+                </dx:GridViewDataTextColumn>
+                <dx:GridViewDataTextColumn FieldName="DescripcionDocumento" VisibleIndex="1"></dx:GridViewDataTextColumn>
+                <dx:GridViewDataTextColumn FieldName="PalabrasClave" VisibleIndex="2"></dx:GridViewDataTextColumn>
+                <dx:GridViewDataDateColumn FieldName="FechaDocumento" VisibleIndex="3"></dx:GridViewDataDateColumn>
+            </Columns>
+        </dx:ASPxGridView>
+
+
+        <asp:SqlDataSource runat="server" ID="SqlDataSourceDocumentos" ConnectionString='<%$ ConnectionStrings:SUEPPSConnectionString %>' ></asp:SqlDataSource>
         <asp:SqlDataSource ID="SqlInsumos" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>" ></asp:SqlDataSource>
 
        

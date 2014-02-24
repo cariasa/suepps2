@@ -46,7 +46,7 @@ Partial Class Evaluacion_Levantamientos
             Me.SqlPreguntas.DataBind()
             Me.GridPreguntas.DataBind()
 
-           
+
 
         End Using
 
@@ -63,7 +63,7 @@ Partial Class Evaluacion_Levantamientos
             Return False
 
         End If
-  
+
     End Function
 
     Protected Sub GridRespuestas_BeforePerformDataSelect1(sender As Object, e As EventArgs)

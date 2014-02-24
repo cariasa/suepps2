@@ -34,6 +34,7 @@ Partial Class Cuantitativo_Default
                 Response.Redirect("~/NoAccess.aspx")
             End If
 
+
             Session("IdPrograma") = Nothing
 
             Me.SqlPrograma.SelectCommand = "select DISTINCT(Pol.IdPolitica), Pol.Nombre, Pro.codigo_ficha, Pro.NombreProyecto, Pro.codigo_proyecto from Politicas Pol " & _
@@ -99,7 +100,8 @@ Partial Class Cuantitativo_Default
 
         Dim nombreprograma As String = detail.GetRowValues(index, "NombreProyecto").ToString()
 
-        
+
+
 
         Response.Redirect("DocumentosEvaluacion.aspx?CodP=" + uf.QueryStringEncode(codprograma) + "&NomP=" + uf.QueryStringEncode(nombreprograma))
         'Response.Redirect("DocumentosEvaluacion.aspx?CodP=113" + "&NomP=" + nombreprograma)
