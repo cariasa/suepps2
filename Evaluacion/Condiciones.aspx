@@ -20,7 +20,12 @@
     <uc1:MOCA_UE runat="server" ID="MOCA_UE01" />
     <div>
         <div>
-            <table>                
+            <table>
+                <colgroup>
+                    <col span="1" style="width: 60%;"/>
+                    <col span="1" style="width: 40%;"/>
+                </colgroup>
+                
                 <tr>
                     <td>
                         <dx:ASPxLabel ID="ASPxLabelVariable" runat="server" Font-Size="Large"/>
@@ -45,7 +50,7 @@
                     <EditFormSettings Visible="False"></EditFormSettings>
                 </dx:GridViewDataTextColumn>
 
-                <dx:GridViewDataComboBoxColumn VisibleIndex="1" FieldName="IdVariable" Caption="Variable" EditFormSettings-Visible="False">
+                <dx:GridViewDataComboBoxColumn VisibleIndex="1" FieldName="IdVariable" Caption="Variable" EditFormSettings-Visible="False" Visible="false">
                     <PropertiesComboBox ValueType="System.String"
                         DataSourceID="SqlDataSourceVariable"
                         ValueField="IdVariable"
@@ -60,7 +65,7 @@
 
                 </dx:GridViewDataComboBoxColumn>
 
-                <dx:GridViewDataComboBoxColumn VisibleIndex="2" FieldName="IdTipoCondicion" Caption="Tipo Condicion" EditFormSettings-Visible="True">
+                <dx:GridViewDataComboBoxColumn VisibleIndex="2" FieldName="IdTipoCondicion" Caption="Tipo Condición" EditFormSettings-Visible="True">
                     <PropertiesComboBox ValueType="System.String"
                         DataSourceID="SqlDataSourceTipoCondicion"
                         ValueField="IdTipoCondicion"
@@ -82,7 +87,7 @@
                 <dx:GridViewDataTextColumn FieldName="DescripcionCondicion" VisibleIndex="4" Caption="Descripción">
                     <Settings AutoFilterCondition="Contains" />
                 </dx:GridViewDataTextColumn>
-                <dx:GridViewDataCheckColumn FieldName="Raiz" VisibleIndex="5"></dx:GridViewDataCheckColumn>
+                <dx:GridViewDataCheckColumn FieldName="Raiz" Caption="Raíz" VisibleIndex="5"></dx:GridViewDataCheckColumn>
                 <dx:GridViewDataCheckColumn FieldName="Total" VisibleIndex="6"></dx:GridViewDataCheckColumn>
                 <dx:GridViewDataTextColumn FieldName="Operando1" VisibleIndex="7" Caption="Identificador"></dx:GridViewDataTextColumn>
                 <%--<dx:GridViewDataTextColumn FieldName="Operador" VisibleIndex="7"></dx:GridViewDataTextColumn>--%>

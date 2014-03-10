@@ -26,7 +26,7 @@
                                     <dx:GridViewDataTextColumn FieldName="NombreVariable" VisibleIndex="1" Caption="Nombre">
                                         <Settings AutoFilterCondition="Contains" />
                                     </dx:GridViewDataTextColumn>
-                                    <dx:GridViewDataTextColumn FieldName="Descripcion" VisibleIndex="2">
+                                    <dx:GridViewDataTextColumn FieldName="Descripcion" Caption="Descripción" VisibleIndex="2">
                                         <Settings AutoFilterCondition="Contains" />
                                     </dx:GridViewDataTextColumn>
                                     <dx:GridViewDataTextColumn FieldName="Unidad" VisibleIndex="3">
@@ -44,11 +44,11 @@
                                     </dx:GridViewCommandColumn>
                                     <dx:GridViewDataTextColumn FieldName="Acción" ShowInCustomizationForm="True" VisibleIndex="4" Caption="Acción" UnboundType="String">
                                         <DataItemTemplate>
-                                            <asp:LinkButton ID="linkValoresMacro" Text="Valores Oficiales" runat="server" OnClick="sendValoresMacro" />
+                                            <asp:LinkButton ID="linkValoresMacro" Text="Val. Oficiales" runat="server" OnClick="sendValoresMacro" />
+                                            <br />
+                                            <asp:LinkButton ID="linkValoresPrograma" Text="Val. Programa" runat="server" OnClick="linkValoresPrograma_Click"></asp:LinkButton>
                                             <br />
                                             <asp:LinkButton ID="linkCondiciones" Text="Condiciones" runat="server" OnClick="linkCondiciones_Click"></asp:LinkButton>
-                                            <br />
-                                            <asp:LinkButton ID="linkValoresPrograma" Text="Valores Por Programa" runat="server" OnClick="linkValoresPrograma_Click"></asp:LinkButton>
                                         </DataItemTemplate>
                                         <Settings AllowAutoFilter="False" />
                                         <EditFormSettings Visible="False"></EditFormSettings>
@@ -70,6 +70,11 @@
                     <ContentCollection>
                         <dx:ContentControl>
                             <table>
+                                <colgroup>
+                                   <col span="1" style="width: 40%;" />
+                                   <col span="1" style="width: 20%;" />
+                                   <col span="1" style="width: 40%;" />
+                                </colgroup>
                                 <tr>
                                     <td>
                                         <%-- Grid Indicadores --%>
@@ -133,7 +138,7 @@
                                     <td>
                                         <dx:ASPxGridView ID="ASPxGridViewVariables" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSourceVariables" KeyFieldName="IdVariable" SettingsBehavior-AllowFocusedRow="true" Settings-ShowFilterRow="true">
                                             <Columns>
-                                                <dx:GridViewDataTextColumn FieldName="IdVariable" ReadOnly="True" VisibleIndex="0" Caption="ID">
+                                                <dx:GridViewDataTextColumn FieldName="IdVariable" ReadOnly="True" VisibleIndex="0" Caption="ID" Visible="false">
                                                     <EditFormSettings Visible="False"></EditFormSettings>
                                                 </dx:GridViewDataTextColumn>
                                                 <dx:GridViewDataTextColumn FieldName="NombreVariable" VisibleIndex="1" Caption="Nombre">
@@ -152,7 +157,7 @@
                                                 </dx:GridViewDataTextColumn>
                                             </Columns>
                                         </dx:ASPxGridView>
-                                        <asp:SqlDataSource runat="server" ID="SqlDataSourceVariables" ConnectionString='<%$ ConnectionStrings:SUEPPSConnectionString %>' SelectCommand="SELECT [IdVariable], [NombreVariable], [Descripcion] FROM [Variables]"></asp:SqlDataSource>
+                                        <asp:SqlDataSource runat="server" ID="SqlDataSourceVariables" ConnectionString='<%$ ConnectionStrings:SUEPPSConnectionString %>' SelectCommand="SELECT [IdVariable], [NombreVariable], [Descripcion] FROM [Variables] WHERE [Activo]=1"></asp:SqlDataSource>
                                     </td>
                                 </tr>
                             </table>
@@ -175,7 +180,7 @@
                                             <dx:ASPxTextBox ID="ASPxTextBoxFactor" runat="server" Width="170px"></dx:ASPxTextBox>
                                         </td>
                                         <td>
-                                            <dx:ASPxCheckBox ID="ASPxCheckBoxUsarVMacroN" runat="server" Text="Usar V.Macro"></dx:ASPxCheckBox>
+                                            <dx:ASPxCheckBox ID="ASPxCheckBoxUsarVMacroN" runat="server" Text="Usar V.Macro" Visible="false"></dx:ASPxCheckBox>
                                         </td>
 
                                     </tr>
@@ -196,7 +201,7 @@
                                             <dx:ASPxTextBox ID="ASPxTextBox2" runat="server" Width="170px" Visible="false"></dx:ASPxTextBox>
                                         </td>
                                         <td>
-                                            <dx:ASPxCheckBox ID="ASPxCheckBoxUsarVMacroD" runat="server" Text="Usar V.Macro"></dx:ASPxCheckBox>
+                                            <dx:ASPxCheckBox ID="ASPxCheckBoxUsarVMacroD" runat="server" Text="Usar V.Macro" Visible="false"></dx:ASPxCheckBox>
                                         </td>
                                     </tr>
 
@@ -218,7 +223,7 @@
                             </div>
                             <dx:ASPxGridView ID="ASPxGridViewFormulas" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSourceFormulas" KeyFieldName="IdFormulaIndicador" SettingsBehavior-AllowFocusedRow="true" Settings-ShowFilterRow="true">
                                 <Columns>
-                                    <dx:GridViewDataTextColumn FieldName="IdFormulaIndicador" ReadOnly="True" VisibleIndex="0" Caption="ID">
+                                    <dx:GridViewDataTextColumn FieldName="IdFormulaIndicador" ReadOnly="True" VisibleIndex="0" Caption="ID" Visible="false">
                                         <EditFormSettings Visible="False"></EditFormSettings>
                                     </dx:GridViewDataTextColumn>
 
@@ -247,7 +252,7 @@
                                     </dx:GridViewDataComboBoxColumn>
 
 
-                                    <dx:GridViewDataCheckColumn FieldName="UsaVariableMacroNumerador" VisibleIndex="3" Caption="Usa V. Macro"></dx:GridViewDataCheckColumn>
+                                    <dx:GridViewDataCheckColumn FieldName="UsaVariableMacroNumerador" VisibleIndex="3" Caption="Usa V. Macro" Visible="false"></dx:GridViewDataCheckColumn>
 
 
                                     <dx:GridViewDataComboBoxColumn VisibleIndex="4" FieldName="IdVariableDenominador" Caption="Denominador">
@@ -261,7 +266,7 @@
 
 
                                     </dx:GridViewDataComboBoxColumn>
-                                    <dx:GridViewDataCheckColumn FieldName="UsaVariableMacroDenominador" VisibleIndex="5" Caption="Usa V. Macro"></dx:GridViewDataCheckColumn>
+                                    <dx:GridViewDataCheckColumn FieldName="UsaVariableMacroDenominador" VisibleIndex="5" Caption="Usa V. Macro"  Visible="false"></dx:GridViewDataCheckColumn>
                                     <dx:GridViewDataTextColumn FieldName="Factor" VisibleIndex="6"></dx:GridViewDataTextColumn>
                                     <dx:GridViewDataTextColumn FieldName="DescripcionFormula" VisibleIndex="7" Caption="Descripción">
                                         <Settings AutoFilterCondition="Contains" />

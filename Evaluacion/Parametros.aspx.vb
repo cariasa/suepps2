@@ -265,7 +265,7 @@ Partial Class Evaluacion_Parametros
 
         SqlDataSourceSUEPPS.InsertCommand = "INSERT INTO [Variables] ([NombreVariable], [Descripcion], [Unidad], [CreadoPor], [FechaCreacion]) VALUES (@NombreVariable, @Descripcion, @Unidad, '" + Membership.GetUser.UserName.ToString + "', getDate())"
         SqlDataSourceSUEPPS.UpdateCommand = "UPDATE [Variables] SET [NombreVariable]=@NombreVariable, [Descripcion]=@Descripcion, [Unidad]=@Unidad, [ActualizadoPor]='" + Membership.GetUser.UserName.ToString + "', [FechaActualizacion] =getDate() WHERE [IdVariable]=@IdVariable"
-        SqlDataSourceSUEPPS.DeleteCommand = "UPDATE [Activo] = 0, [ActualizadoPor]='" + Membership.GetUser.UserName.ToString + "', [FechaActualizacion] =getDate() WHERE [IdVariable]=IdVariable"
+        SqlDataSourceSUEPPS.DeleteCommand = "UPDATE [Variables] SET [Activo] = 0, [ActualizadoPor]='" + Membership.GetUser.UserName.ToString + "', [FechaActualizacion] =getDate() WHERE [IdVariable]=@IdVariable"
 
     End Sub
 

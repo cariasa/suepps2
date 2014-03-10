@@ -1,24 +1,9 @@
-<%@ Page Title="Planificación de Programas" Language="VB" AutoEventWireup="false" CodeFile="Programa.aspx.vb" Inherits="GestionPublica_Programa" MasterPageFile="~/Site.master" %>
+<%@ Page Title="Planificacion de Programas" Language="VB" AutoEventWireup="false" CodeFile="Programa.aspx.vb" Inherits="GestionPublica_Programa" MasterPageFile="~/Site.master" %>
 
-<%@ Register Assembly="DevExpress.Web.v13.2, Version=13.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web.ASPxGridView.Export" TagPrefix="dx" %>
+<%@ Register Assembly="DevExpress.Web.v13.2, Version=13.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web.ASPxGridView" TagPrefix="dx" %>
 
-<%@ Register Assembly="DevExpress.Web.v13.2, Version=13.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web.ASPxMenu" TagPrefix="dx" %>
+<%@ Register assembly="DevExpress.Web.v13.2, Version=13.2.7.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" namespace="DevExpress.Web.ASPxEditors" tagprefix="dx" %>
 
-<%@ Register Assembly="DevExpress.Web.v13.2, Version=13.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web.ASPxTabControl" TagPrefix="dx" %>
-
-<%@ Register Assembly="DevExpress.Web.v13.2, Version=13.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web.ASPxPanel" TagPrefix="dx" %>
-<%@ Register Assembly="DevExpress.Web.v13.2, Version=13.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web.ASPxGridView" TagPrefix="dx" %>
-
-<%@ Register Assembly="DevExpress.Web.v13.2, Version=13.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web.ASPxEditors" TagPrefix="dx" %>
-
-<%@ Register Assembly="DevExpress.Web.v13.2, Version=13.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web.ASPxClasses" TagPrefix="dx" %>
-
-<%@ Register Assembly="DevExpress.Web.v13.2, Version=13.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web.ASPxCallback" TagPrefix="dx" %>
-
-<%@ Register Assembly="DevExpress.Web.v13.2, Version=13.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web.ASPxPopupControl" TagPrefix="dx" %>
-
-<%@ Register Assembly="DevExpress.Web.v13.2, Version=13.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web.ASPxObjectContainer" TagPrefix="dx" %>
-<%@ Register Assembly="DevExpress.Web.v13.2, Version=13.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" Namespace="DevExpress.Web.ASPxUploadControl" TagPrefix="dx" %>
 
 <%@ Register Src="~/MOCA_UE.ascx" TagPrefix="uc1" TagName="MOCA_UE" %>
 
@@ -68,7 +53,7 @@
         }
 
 
-        function OnAñoChanged(ComboAño) {
+        function OnAnoChanged(ComboAno) {
             GridMetas.PerformCallback();
         }
 
@@ -104,7 +89,7 @@
 
             if (e.tab.index.toString() == "4") {
                 ComboAreaInfluencia.PerformCallback();
-                comboAño.PerformCallback();
+                ComboAno.PerformCallback();
                 GridMetas.PerformCallback(1);
             }
 
@@ -868,7 +853,7 @@
 
 
                                                 <dx:ASPxComboBox runat="server" ID="ComboAreaInfluencia" ClientInstanceName="ComboAreaInfluencia" DataSourceID="SqlAreaInfluenciac" TextField="DescripcionAreaDeInfluencia" ValueField="IdAreaDeInfluencia" OnCallback="ComboAreaInfluencia_Callback">
-                                                    <ClientSideEvents SelectedIndexChanged="function(s, e) {OnAñoChanged(s); }" />
+                                                    <ClientSideEvents SelectedIndexChanged="function(s, e) {OnAnoChanged(s); }" />
                                                 </dx:ASPxComboBox>
 
                                                 <asp:SqlDataSource runat="server" ID="SqlAreaInfluenciac" ConnectionString='<%$ ConnectionStrings:SUEPPSConnectionString %>'
@@ -883,9 +868,9 @@
                                                 <dx:ASPxLabel runat="server" Text="Año"></dx:ASPxLabel>
                                             </td>
                                             <td>
-                                                <dx:ASPxComboBox runat="server" ID="comboAño" ClientInstanceName="comboAño" DataSourceID="sqlDataSourceComboAno" TextField="Ano"
-                                                    ValueField="Ano" OnCallback="comboAño_Callback">
-                                                    <ClientSideEvents SelectedIndexChanged="function(s, e) {OnAñoChanged(s); }" />
+                                                <dx:ASPxComboBox runat="server" ID="ComboAno" ClientInstanceName="ComboAno" DataSourceID="sqlDataSourceComboAno" TextField="Ano"
+                                                    ValueField="Ano" OnCallback="ComboAno_Callback">
+                                                    <ClientSideEvents SelectedIndexChanged="function(s, e) {OnAnoChanged(s); }" />
                                                 </dx:ASPxComboBox>
                                                 <asp:SqlDataSource runat="server" ID="sqlDataSourceComboAno" ConnectionString='<%$ ConnectionStrings:SUEPPSConnectionString %>'
                                                     SelectCommand="SELECT Ano FROM [AnoPrograma] where IdPrograma=@p1 and Activo=1 ">

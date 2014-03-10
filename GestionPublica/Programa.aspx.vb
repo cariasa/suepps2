@@ -107,11 +107,11 @@ Partial Class GestionPublica_Programa
         If e.Parameters = "" Then
 
 
-            If ComboAreaInfluencia.Text <> "" And comboAño.Text.Equals("") Then
+            If ComboAreaInfluencia.Text <> "" And ComboAno.Text.Equals("") Then
 
             Else
 
-                If ComboAreaInfluencia.Text <> "" And comboAño.Text <> "" Then
+                If ComboAreaInfluencia.Text <> "" And ComboAno.Text <> "" Then
 
                     Me.SqlIndicadoresm.SelectCommand = "select * from [IndicadoresPorPrograma] where [IdPrograma]=" + CodPrograma.Text + "and [Activo]=1"
                     Me.SqlIndicadoresm.DataBind()
@@ -119,7 +119,7 @@ Partial Class GestionPublica_Programa
 
                     SqlMetas.SelectParameters(0).DefaultValue = CInt(CodPrograma.Text)
                     SqlMetas.SelectParameters(1).DefaultValue = CInt(ComboAreaInfluencia.Value)
-                    SqlMetas.SelectParameters(2).DefaultValue = comboAño.Value
+                    SqlMetas.SelectParameters(2).DefaultValue = ComboAno.Value
                     SqlMetas.DataBind()
                     GridMetas.DataBind()
                 End If
@@ -163,7 +163,7 @@ Partial Class GestionPublica_Programa
     Protected Sub SqlMetas_Updated(sender As Object, e As SqlDataSourceStatusEventArgs)
         SqlMetas.SelectParameters(0).DefaultValue = CInt(CodPrograma.Text)
         SqlMetas.SelectParameters(1).DefaultValue = CInt(ComboAreaInfluencia.Value)
-        SqlMetas.SelectParameters(2).DefaultValue = comboAño.Value
+        SqlMetas.SelectParameters(2).DefaultValue = ComboAno.Value
         SqlMetas.DataBind()
         GridMetas.DataBind()
     End Sub
@@ -218,7 +218,7 @@ Partial Class GestionPublica_Programa
         sqlConnection1.Close()
 
         sqlDataSourceComboAno.DataBind()
-        comboAño.DataBind()
+        ComboAno.DataBind()
 
     End Sub
 
@@ -432,16 +432,16 @@ Partial Class GestionPublica_Programa
 
     End Sub
 
-    Protected Sub comboAño_Load(sender As Object, e As EventArgs) Handles comboAño.Load
+    Protected Sub ComboAno_Load(sender As Object, e As EventArgs) Handles ComboAno.Load
         sqlDataSourceComboAno.SelectParameters(0).DefaultValue = CInt(uf.QueryStringDecode(Request.QueryString.Get(1)))
         sqlDataSourceComboAno.DataBind()
-        comboAño.DataBind()
+        ComboAno.DataBind()
     End Sub
 
-    Protected Sub comboAño_Callback(sender As Object, e As CallbackEventArgsBase)
+    Protected Sub ComboAno_Callback(sender As Object, e As CallbackEventArgsBase)
         sqlDataSourceComboAno.SelectParameters(0).DefaultValue = CInt(uf.QueryStringDecode(Request.QueryString.Get(1)))
         sqlDataSourceComboAno.DataBind()
-        comboAño.DataBind()
+        ComboAno.DataBind()
     End Sub
 
 
@@ -565,7 +565,7 @@ Partial Class GestionPublica_Programa
     Protected Sub GridMetas_Load(sender As Object, e As EventArgs)
         SqlMetas.SelectParameters(0).DefaultValue = CInt(CodPrograma.Text)
         SqlMetas.SelectParameters(1).DefaultValue = CInt(ComboAreaInfluencia.Value)
-        SqlMetas.SelectParameters(2).DefaultValue = comboAño.Value
+        SqlMetas.SelectParameters(2).DefaultValue = ComboAno.Value
         SqlMetas.DataBind()
         GridMetas.DataBind()
     End Sub

@@ -23,11 +23,11 @@
 
         <dx:ASPxGridView ID="ASPxGridViewValoresMacro" runat="server" AutoGenerateColumns="False" SettingsEditing-EditFormColumnCount="1" SettingsEditing-Mode="EditFormAndDisplayRow" DataSourceID="SqlDataSourceVariablesMacro" KeyFieldName="IdVariableMacro" Settings-ShowFilterRow="true">
             <Columns>
-                <dx:GridViewDataTextColumn FieldName="IdVariableMacro" ReadOnly="True" VisibleIndex="0" Caption="ID">
+                <dx:GridViewDataTextColumn FieldName="IdVariableMacro" ReadOnly="True" VisibleIndex="0" Caption="ID" Visible="false">
                     <EditFormSettings Visible="False"></EditFormSettings>
                 </dx:GridViewDataTextColumn>
 
-                <dx:GridViewDataComboBoxColumn VisibleIndex="1" FieldName="IdVariable" Caption="Variable" EditFormSettings-Visible="False">
+                <dx:GridViewDataComboBoxColumn VisibleIndex="1" FieldName="IdVariable" Caption="Variable" EditFormSettings-Visible="False" Visible="false">
                     <PropertiesComboBox ValueType="System.String"
                         DataSourceID="SqlDataSourceVariable"
                         ValueField="IdVariable"

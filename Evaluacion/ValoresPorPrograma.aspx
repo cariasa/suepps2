@@ -1,4 +1,4 @@
-﻿<%@ Page Language="VB" AutoEventWireup="false" CodeFile="ValoresPorPrograma.aspx.vb" Inherits="Evaluacion_ValoresPorPrograma"  MasterPageFile="~/Site.master" %>
+﻿<%@ Page Title="Definición Valores por Programa" Language="VB" AutoEventWireup="false" CodeFile="ValoresPorPrograma.aspx.vb" Inherits="Evaluacion_ValoresPorPrograma"  MasterPageFile="~/Site.master" %>
 
 <%@ Register Src="~/MOCA_UE.ascx" TagPrefix="uc1" TagName="MOCA_UE" %>
 
@@ -20,11 +20,11 @@
             </table>
         <dx:ASPxGridView ID="ASPxGridViewVariablesPrograma" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSourceVariablesPrograma" KeyFieldName="IdVariablePrograma" Settings-ShowFilterRow="true">
             <Columns>
-                <dx:GridViewDataTextColumn FieldName="IdVariablePrograma" ReadOnly="True" VisibleIndex="0" Caption="ID">
+                <dx:GridViewDataTextColumn FieldName="IdVariablePrograma" ReadOnly="True" VisibleIndex="0" Caption="ID" Visible="false">
                     <EditFormSettings Visible="False"></EditFormSettings>
                 </dx:GridViewDataTextColumn>
                 
-                <dx:GridViewDataComboBoxColumn VisibleIndex="1" FieldName="IdVariable" Caption="Variable" EditFormSettings-Visible="False">
+                <dx:GridViewDataComboBoxColumn VisibleIndex="1" FieldName="IdVariable" Caption="Variable" EditFormSettings-Visible="False" Visible="false">
                     <PropertiesComboBox ValueType="System.String"
                         DataSourceID="SqlDataSourceVariable"
                         ValueField="IdVariable"
@@ -59,7 +59,7 @@
                 <DetailRow>
                     <dx:ASPxGridView ID="ASPxGridViewDetalleVariablesPrograma" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSourceDetalleVariablesPrograma" KeyFieldName="IdDetalleVariablePrograma" Settings-ShowFilterRow="true" OnBeforePerformDataSelect="ASPxGridViewDetalleVariablesPrograma_BeforePerformDataSelect">
                         <Columns>
-                            <dx:GridViewDataTextColumn FieldName="IdDetalleVariablePrograma" ReadOnly="True" VisibleIndex="0" Caption="ID">
+                            <dx:GridViewDataTextColumn FieldName="IdDetalleVariablePrograma" ReadOnly="True" VisibleIndex="0" Caption="ID" Visible="false">
                                 <EditFormSettings Visible="False"></EditFormSettings>
                             </dx:GridViewDataTextColumn>
                             <dx:GridViewDataTextColumn FieldName="IdVariablePrograma" VisibleIndex="1" Visible="false" Caption="ID"></dx:GridViewDataTextColumn>
@@ -84,10 +84,10 @@
                             <DetailRow>
                                 <dx:ASPxGridView ID="ASPxGridViewValoresDetallePrograma" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSourceValoresDetallePrograma" KeyFieldName="IdValorVariablePrograma" Settings-ShowFilterRow="true" OnBeforePerformDataSelect="ASPxGridViewValoresDetallePrograma_BeforePerformDataSelect">
                                     <Columns>
-                                        <dx:GridViewDataTextColumn FieldName="IdValorVariablePrograma" ReadOnly="True" VisibleIndex="0" Caption="ID">
+                                        <dx:GridViewDataTextColumn FieldName="IdValorVariablePrograma" ReadOnly="True" VisibleIndex="0" Caption="ID" Visible="false">
                                             <EditFormSettings Visible="False"></EditFormSettings>
                                         </dx:GridViewDataTextColumn>
-                                        <dx:GridViewDataTextColumn FieldName="IdDetalleVariablePrograma" VisibleIndex="1" Visible="false" Caption="ID"></dx:GridViewDataTextColumn>
+                                        <dx:GridViewDataTextColumn FieldName="IdDetalleVariablePrograma" VisibleIndex="1" Visible="false" Caption="ID" ></dx:GridViewDataTextColumn>
                                         <dx:GridViewDataTextColumn FieldName="NombreValor" VisibleIndex="2" Settings-AutoFilterCondition="Contains" ></dx:GridViewDataTextColumn>
                                         <dx:GridViewDataTextColumn FieldName="Valor" VisibleIndex="3"></dx:GridViewDataTextColumn>
                                         <dx:GridViewDataTextColumn FieldName="CreadoPor" VisibleIndex="4" Visible="false"></dx:GridViewDataTextColumn>

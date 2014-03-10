@@ -36,7 +36,7 @@
 
     <%--<dx:ASPxPageControl ID="carTabPage" runat="server" ActiveTabIndex="0" EnableHierarchyRecreation="True" Height="800%" Width="100%">--%>
 
-    <dx:ASPxPageControl ID="carTabPage" runat="server" ActiveTabIndex="0" EnableHierarchyRecreation="True" Height="250">
+    <dx:ASPxPageControl ID="carTabPage" runat="server" ActiveTabIndex="0" EnableHierarchyRecreation="True" >
 
         <ClientSideEvents ActiveTabChanged="function (s,e) {click(e);}" />
     
