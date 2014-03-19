@@ -13,6 +13,11 @@
     <div>
         <div>
             <table>
+                <colgroup>
+                    <col span="1" style="width: 60%;" />
+                    <col span="1" style="width: 40%;" />
+                </colgroup>
+
                 <tr>
                     <td><dx:ASPxLabel ID="ASPxLabelTitulo" runat="server" Font-Size="Large" /></td>
                     <td>
@@ -48,6 +53,10 @@
                 </dx:GridViewDataDateColumn>
 
                 <dx:GridViewDataCheckColumn FieldName="UsaFSU" VisibleIndex="5" Caption="Usa FSU">
+                                    <PropertiesCheckEdit>
+                                        <ClientSideEvents Init="function(s, e){s.SetChecked(false);}" />
+                                    </PropertiesCheckEdit>
+
                 </dx:GridViewDataCheckColumn>
                 <dx:GridViewDataTextColumn FieldName="CreadoPor" VisibleIndex="6" Visible="false">
                 </dx:GridViewDataTextColumn>

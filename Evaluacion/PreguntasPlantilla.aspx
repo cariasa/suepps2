@@ -15,6 +15,11 @@
     <div>
         <div>
             <table>
+                <colgroup>
+                    <col span="1" style="width: 60%;"/>
+                    <col span="1" style="width: 40%;"/>
+                </colgroup>
+
                 <tr>
                     <td>
                         <dx:ASPxLabel ID="ASPxLabelTitulo" runat="server" Font-Size="Large" />
@@ -133,7 +138,7 @@
                                     </dx:GridViewDataTextColumn>
                                     <dx:GridViewDataTextColumn FieldName="Valor" VisibleIndex="2" Caption="Valor">
                                     </dx:GridViewDataTextColumn>
-                                    <dx:GridViewDataTextColumn FieldName="SaltaACodigo" VisibleIndex="3" Caption="Salta a Pregunta">
+                                    <dx:GridViewDataTextColumn FieldName="SaltaACodigo" VisibleIndex="3" Caption="Salta a Pregunta" Visible="false">
                                     </dx:GridViewDataTextColumn>
                                     <dx:GridViewDataTextColumn FieldName="IdPreguntaPorPlantilla" VisibleIndex="4" Visible="false">
                                     </dx:GridViewDataTextColumn>

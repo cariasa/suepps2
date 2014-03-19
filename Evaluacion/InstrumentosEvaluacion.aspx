@@ -18,6 +18,11 @@
 
         <div>
             <table>
+                <colgroup>
+                    <col span="1" style="width: 60%;"/>
+                    <col span="1" style="width: 40%;"/>
+                </colgroup>
+
                 <tr>
                     <td><dx:ASPxLabel runat="server" Text=" " ID="ASPxLabelTitulo" Font-Size="Large" /></td>
                     <td>
@@ -33,7 +38,7 @@
         
         <br />
 
-        <dx:ASPxGridView ID="GridInstrumentos" runat="server" AutoGenerateColumns="False" DataSourceID="SqlInstrumento" KeyFieldName="IdInstrumentoDeEvaluacion">
+        <dx:ASPxGridView ID="GridInstrumentos" runat="server" AutoGenerateColumns="False" DataSourceID="SqlInstrumento" KeyFieldName="IdInstrumentoDeEvaluacion" Settings-ShowFilterRow="true">
             <Columns>
                 <dx:GridViewDataTextColumn FieldName="IdInstrumentoDeEvaluacion" ReadOnly="True" VisibleIndex="0" Visible="false">
                     <EditFormSettings Visible="False" />
