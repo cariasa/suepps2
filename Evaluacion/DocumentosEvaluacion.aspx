@@ -41,6 +41,11 @@
     </script>
     <div>
         <table>
+                <colgroup>
+                    <col span="1" style="width: 60%;" />
+                    <col span="1" style="width: 40%;" />
+                </colgroup>
+
             <tr>
                 <td><dx:ASPxLabel ID="ASPxLabelTitulo" runat="server" Font-Size="Large" /></td>
                 <td>
@@ -55,11 +60,11 @@
 
         <dx:ASPxGridView ClientInstanceName="ASPxGridViewDocumentosEvaluacion" ID="ASPxGridViewDocumentosEvaluacion" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSourceDocumentosEvaluacion" KeyFieldName="IdDocumentoEvaluacion" OnCustomCallback="grid_custom" OnLoad="ASPxGridViewDocumentosEvaluacion_Load" Settings-ShowFilterRow="true">
             <Columns>
-                <dx:GridViewDataTextColumn FieldName="IdDocumentoEvaluacion" ReadOnly="True" VisibleIndex="0">
+                <dx:GridViewDataTextColumn FieldName="IdDocumentoEvaluacion" ReadOnly="True" VisibleIndex="0" Visible="false">
                     <EditFormSettings Visible="False"></EditFormSettings>
                 </dx:GridViewDataTextColumn>
                 <dx:GridViewDataTextColumn FieldName="IdPrograma" VisibleIndex="1" Visible="false"></dx:GridViewDataTextColumn>
-                <dx:GridViewDataTextColumn FieldName="DescripcionDocumento" VisibleIndex="2"></dx:GridViewDataTextColumn>
+                <dx:GridViewDataTextColumn FieldName="DescripcionDocumento" VisibleIndex="2" Caption="Descripción"></dx:GridViewDataTextColumn>
                 <dx:GridViewDataTextColumn FieldName="PalabrasClave" VisibleIndex="3"></dx:GridViewDataTextColumn>
                 <dx:GridViewDataDateColumn FieldName="FechaDocumento" VisibleIndex="4"></dx:GridViewDataDateColumn>
                 <dx:GridViewDataTextColumn FieldName="CreadoPor" VisibleIndex="5" Visible="false"></dx:GridViewDataTextColumn>
@@ -153,10 +158,10 @@
 
                     <dx:ASPxGridView ID="ASPxGridViewDetalleDocumentosEvaluacion" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSourceDetalleDocumentosEvaluacion" IsDetailGrid="true" OnBeforePerformDataSelect="ASPxGridViewDetalleDocumentosEvaluacion_BeforePerformDataSelect" Settings-ShowFilterRow="true">
                         <Columns>
-                            <dx:GridViewDataTextColumn FieldName="IdDetalleDocumentoEvaluacion" ReadOnly="True" VisibleIndex="0">
+                            <dx:GridViewDataTextColumn FieldName="IdDetalleDocumentoEvaluacion" ReadOnly="True" VisibleIndex="0" Visible="false">
                                 <EditFormSettings Visible="False"></EditFormSettings>
                             </dx:GridViewDataTextColumn>
-                            <dx:GridViewDataTextColumn FieldName="IdDocumentoEvaluacion" VisibleIndex="1"></dx:GridViewDataTextColumn>
+                            <dx:GridViewDataTextColumn FieldName="IdDocumentoEvaluacion" VisibleIndex="1" Visible="false"></dx:GridViewDataTextColumn>
                             <%--<dx:GridViewDataTextColumn FieldName="Enlace" VisibleIndex="2"></dx:GridViewDataTextColumn>--%>
                             <dx:GridViewDataTextColumn FieldName="Enlace" VisibleIndex="2">
                                 <DataItemTemplate>

@@ -19,6 +19,11 @@
     </script>
     <div>
         <table>
+                <colgroup>
+                    <col span="1" style="width: 60%;" />
+                    <col span="1" style="width: 40%;" />
+                </colgroup>
+
             <tr>
                 <td>
                     <dx:ASPxLabel ID="ASPxLabelTitulo" runat="server" Font-Size="Large" />
