@@ -2,6 +2,9 @@
 
 Partial Class Evaluacion_Levantamientos
     Inherits System.Web.UI.Page
+    Private GridPrograma As ASPxGridView
+    Private GridInstrumentos As ASPxGridView
+    Private GridAplicacion As ASPxGridView
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
         'Verifica si el usuario tiene el acceso a la pagina solicitada
@@ -34,17 +37,56 @@ Partial Class Evaluacion_Levantamientos
             End If
 
 
-            Me.SqlPrograma.SelectCommand = "select DISTINCT(Pol.IdPolitica), Pol.Nombre, Pro.codigo_ficha, Pro.NombreProyecto, Pro.codigo_proyecto,IE.Ano,IE.NombreInstrumento,IE.IdInstrumentoDeEvaluacion from Politicas Pol " & _
-       "join ComponentesDePolitica CP on Pol.IdPolitica=CP.IdPolitica " & _
-       "join MetasDeComponente MC on CP.IdComponentesDePolitica=MC.IdComponentesDePolitica " & _
-       "join IndicadoresDeMeta IM on MC.IdMetasDeComponente=IM.IdMetasDeComponente " & _
-       "join ProgramasPorIndicadorDeMeta PIM on IM.IdIndicadorDeMeta=PIM.IdIndicadorDeMeta " & _
-       "join vProyectos Pro ON PIM.IdPrograma=Pro.codigo_ficha " & _
-       "join InstrumentosDeEvaluacion IE ON Pro.codigo_ficha= IE.IdPrograma where Pol.[IdPolitica]=@IdPolitica "
+            Me.SqlPrograma.SelectCommand = _
+                "select " & _
+                "	distinct(Pro.codigo_ficha), " & _
+                "	Pol.IdPolitica, " & _
+                "	Pol.Nombre, " & _
+                "	Pro.NombreProyecto, " & _
+                "	Pro.codigo_proyecto " & _
+                "from " & _
+                "	Politicas Pol " & _
+                "	join ComponentesDePolitica CP on Pol.IdPolitica=CP.IdPolitica AND Pol.Activo = 1 " & _
+                "	join MetasDeComponente MC on CP.IdComponentesDePolitica=MC.IdComponentesDePolitica " & _
+                "	join IndicadoresDeMeta IM on MC.IdMetasDeComponente=IM.IdMetasDeComponente " & _
+                "	join ProgramasPorIndicadorDeMeta PIM on IM.IdIndicadorDeMeta=PIM.IdIndicadorDeMeta " & _
+                "	join vProyectos Pro ON PIM.IdPrograma=Pro.codigo_ficha " & _
+                "where " & _
+                "	Pol.[IdPolitica]=@IdPolitica and " & _
+                "	Pro.codigo_ficha in " & _
+                "		(select distinct(IdPrograma) from InstrumentosDeEvaluacion where Activo=1) "
 
-            Me.SqlAplicacion.SelectCommand = " select AI.IdAplicacionInstrumento,MA.DescripcionMomento,AI.UsaFSU,AI.FechaAplicacion,IE.IdInstrumentoDeEvaluacion from InstrumentosDeEvaluacion IE " & _
-            "join AplicacionInstrumento AI on IE.IdInstrumentoDeEvaluacion= AI.IdInstrumentoDeEvaluacion " & _
-            "join MomentosDeAplicacion MA on MA.IdMomentoDeAplicacion=IdMomentoAplicacion where AI.[IdInstrumentoDeEvaluacion]=@IdInstrumento and AI.[Activo]=1 "
+            Me.SqlInstrumentos.SelectCommand = _
+                "select  " & _
+                "	distinct(IE.IdInstrumentoDeEvaluacion),  " & _
+                "	TI.TipoDeInstrumento,  " & _
+                "	IE.IdPrograma,  " & _
+                "	IE.NombreInstrumento,  " & _
+                "	IE.Ano  " & _
+                "from  " & _
+                "	AplicacionInstrumento AI  " & _
+                "	join MomentosDeAplicacion MA on AI.IdMomentoAplicacion=MA.IdMomentoDeAplicacion  " & _
+                "	join InstrumentosDeEvaluacion IE on AI.IdInstrumentoDeEvaluacion=IE.IdInstrumentoDeEvaluacion and IE.Activo=1 " & _
+                "	join ProcesosEvaluacion PE on IE.IdProcesoEvaluacion=PE.IdProcesoEvaluacion  " & _
+                "	join TiposDeInstrumento TI on IE.IdTipoDeInstrumento=TI.IdTipoDeInstrumento  " & _
+                "where " & _
+                "	IE.IdPrograma = @IdPrograma"
+
+            Me.SqlAplicacion.SelectCommand = _
+                "select " & _
+                "	AI.IdAplicacionInstrumento, " & _
+                "	MA.DescripcionMomento, " & _
+                "	AI.UsaFSU, " & _
+                "	AI.FechaAplicacion, " & _
+                "	IE.IdInstrumentoDeEvaluacion  " & _
+                "from  " & _
+                "	InstrumentosDeEvaluacion IE  " & _
+                "	join AplicacionInstrumento AI on IE.IdInstrumentoDeEvaluacion= AI.IdInstrumentoDeEvaluacion  " & _
+                "	join MomentosDeAplicacion MA on MA.IdMomentoDeAplicacion=IdMomentoAplicacion  " & _
+                "where  " & _
+                "	AI.[IdInstrumentoDeEvaluacion]= @IdInstrumentoDeEvaluacion and  " & _
+                "	AI.[Activo]=1 and " & _
+                "	IE.[Activo]=1"
 
 
 
@@ -56,68 +98,44 @@ Partial Class Evaluacion_Levantamientos
     Protected Sub ASPxGridView2_BeforePerformDataSelect(sender As Object, e As EventArgs)
 
         Session("IdPolitica") = CType(sender, ASPxGridView).GetMasterRowKeyValue()
-        Me.SqlPrograma.SelectParameters(0).DefaultValue = Session("IdPolitica")
-        Me.SqlPrograma.DataBind()
-
-        Session("indexpolitica") = GridPolitica.FocusedRowIndex()
 
     End Sub
 
 
 
     Protected Sub ASPxGridView3_BeforePerformDataSelect(sender As Object, e As EventArgs)
+        GridInstrumentos = (TryCast(sender, ASPxGridView))
+        Session("IdInstrumentoDeEvaluacion") = GridInstrumentos.GetMasterRowKeyValue()
 
-        Session("IdInstrumento") = CType(sender, ASPxGridView).GetMasterRowKeyValue()
-        Me.SqlAplicacion.SelectParameters(0).DefaultValue = Session("IdInstrumento")
-        Me.SqlAplicacion.DataBind()
+        'Session("IdInstrumento") = CType(sender, ASPxGridView).GetMasterRowKeyValue()
+        'Me.SqlAplicacion.SelectParameters(0).DefaultValue = Session("IdInstrumento")
+        'Me.SqlAplicacion.DataBind()
 
-        Dim detail As ASPxGridView = TryCast(GridPolitica.FindDetailRowTemplateControl(GridPolitica.FocusedRowIndex(), "GridPrograma"), ASPxGridView)
+        'Dim detail As ASPxGridView = TryCast(GridPolitica.FindDetailRowTemplateControl(GridPolitica.FocusedRowIndex(), "GridPrograma"), ASPxGridView)
 
-        Dim index As Integer = detail.FocusedRowIndex()
+        'Dim index As Integer = detail.FocusedRowIndex()
 
-        Session("IdPrograma") = detail.GetRowValues(index, "codigo_ficha")
+        'Session("IdPrograma") = detail.GetRowValues(index, "codigo_ficha")
 
 
 
 
     End Sub
 
-    Protected Sub ASPxGridView3_HtmlDataCellPrepared(sender As Object, e As ASPxGridViewTableDataCellEventArgs)
-
-        If e.DataColumn.FieldName = "UsaFSU" Then
-
-            If IsDBNull(e.CellValue) Then
-
-
-            Else
-
-                If e.CellValue.ToString() = "True" Then
-
-                    e.Cell.Text = "Revisión Social Integral"
-
-                Else
-
-                    e.Cell.Text = "Gestión Pública"
-
-
-                End If
-            End If
-
-
-        End If
-
-    End Sub
+    
 
 
     Protected Sub link1_Click(sender As Object, e As EventArgs)
-        'Session("IdLevantamiento") = CType(sender, ASPxGridView).GetMasterRowKeyValue()
-
-        Dim detail1 As ASPxGridView = TryCast(GridPolitica.FindDetailRowTemplateControl(GridPolitica.FocusedRowIndex(), "GridPrograma"), ASPxGridView)
-        Dim detail2 As ASPxGridView = TryCast(detail1.FindDetailRowTemplateControl(detail1.FocusedRowIndex(), "GridAplicacion"), ASPxGridView)
-        Dim index As Integer = detail2.FocusedRowIndex()
-        Dim IdLevantamiento As Integer = detail2.GetRowValues(index, "IdAplicacionInstrumento")
+        Dim IdLevantamiento As Integer = GridInstrumentos.GetRowValues(GridInstrumentos.FocusedRowIndex, "IdAplicacionInstrumento")
         Dim Calculadora As New CalculadoraIndicadores(SqlPolitica.ConnectionString, Session("IdPrograma"), IdLevantamiento)
         Calculadora.Run(Membership.GetUser.UserName.ToString)
+    End Sub
+
+    Protected Sub GridInstrumentos_BeforePerformDataSelect(sender As Object, e As EventArgs)
+        Session("IdPrograma") = (TryCast(sender, ASPxGridView)).GetMasterRowKeyValue()
+    End Sub
+
+    Protected Sub GridPolitica_DetailRowExpandedChanged(sender As Object, e As ASPxGridViewDetailRowEventArgs)
 
     End Sub
 End Class

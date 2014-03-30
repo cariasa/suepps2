@@ -34,13 +34,40 @@ Partial Class Evaluacion_Levantamientos
                 Response.Redirect("~/NoAccess.aspx")
             End If
 
-            Me.SqlDataSourceProyectos.SelectCommand = "select DISTINCT(Pol.IdPolitica), Pol.Nombre, Pro.codigo_ficha, Pro.NombreProyecto, Pro.codigo_proyecto,IE.Ano,IE.NombreInstrumento,IE.IdInstrumentoDeEvaluacion from Politicas Pol " & _
-       "join ComponentesDePolitica CP on Pol.IdPolitica=CP.IdPolitica AND Pol.Activo = 1 " & _
-       "join MetasDeComponente MC on CP.IdComponentesDePolitica=MC.IdComponentesDePolitica " & _
-       "join IndicadoresDeMeta IM on MC.IdMetasDeComponente=IM.IdMetasDeComponente " & _
-       "join ProgramasPorIndicadorDeMeta PIM on IM.IdIndicadorDeMeta=PIM.IdIndicadorDeMeta " & _
-       "join vProyectos Pro ON PIM.IdPrograma=Pro.codigo_ficha " & _
-       "join InstrumentosDeEvaluacion IE ON Pro.codigo_ficha= IE.IdPrograma where Pol.[IdPolitica]=@IdPolitica "
+            Me.SqlDataSourceProyectos.SelectCommand = _
+                "select " & _
+                "	distinct(Pro.codigo_ficha), " & _
+                "	Pol.IdPolitica, " & _
+                "	Pol.Nombre, " & _
+                "	Pro.NombreProyecto, " & _
+                "	Pro.codigo_proyecto " & _
+                "from " & _
+                "	Politicas Pol " & _
+                "	join ComponentesDePolitica CP on Pol.IdPolitica=CP.IdPolitica AND Pol.Activo = 1 " & _
+                "	join MetasDeComponente MC on CP.IdComponentesDePolitica=MC.IdComponentesDePolitica " & _
+                "	join IndicadoresDeMeta IM on MC.IdMetasDeComponente=IM.IdMetasDeComponente " & _
+                "	join ProgramasPorIndicadorDeMeta PIM on IM.IdIndicadorDeMeta=PIM.IdIndicadorDeMeta " & _
+                "	join vProyectos Pro ON PIM.IdPrograma=Pro.codigo_ficha " & _
+                "where " & _
+                "	Pol.[IdPolitica]=@IdPolitica and " & _
+                "	Pro.codigo_ficha in " & _
+                "		(select distinct(IdPrograma) from InstrumentosDeEvaluacion where Activo=1) "
+
+            Me.SqlDataSourceInstrumentos.SelectCommand = _
+                "select  " & _
+                "	distinct(IE.IdInstrumentoDeEvaluacion),  " & _
+                "	TI.TipoDeInstrumento,  " & _
+                "	IE.IdPrograma,  " & _
+                "	IE.NombreInstrumento,  " & _
+                "	IE.Ano  " & _
+                "from  " & _
+                "	AplicacionInstrumento AI  " & _
+                "	join MomentosDeAplicacion MA on AI.IdMomentoAplicacion=MA.IdMomentoDeAplicacion  " & _
+                "	join InstrumentosDeEvaluacion IE on AI.IdInstrumentoDeEvaluacion=IE.IdInstrumentoDeEvaluacion and IE.Activo=1 " & _
+                "	join ProcesosEvaluacion PE on IE.IdProcesoEvaluacion=PE.IdProcesoEvaluacion  " & _
+                "	join TiposDeInstrumento TI on IE.IdTipoDeInstrumento=TI.IdTipoDeInstrumento  " & _
+                "where " & _
+                "	IE.IdPrograma = @IdPrograma"
 
             Me.SqlDataSourceLevantamientos.SelectCommand = " select AI.IdAplicacionInstrumento,MA.DescripcionMomento,PE.ProcesoEvaluacion,AI.FechaAplicacion,VIP.FechaCalculo from InstrumentosDeEvaluacion IE" & _
             " join AplicacionInstrumento AI on IE.IdInstrumentoDeEvaluacion= AI.IdInstrumentoDeEvaluacion" & _
@@ -50,7 +77,7 @@ Partial Class Evaluacion_Levantamientos
             " join IndicadoresEvaluacionPorPrograma IEP on IE.IdPrograma = IEP.IdPrograma" & _
             " join Indicadores I on IEP.IdIndicador = I.IdIndicador" & _
             " left join ValoresIndicadorPorLevantamiento VIP on AI.IdAplicacionInstrumento=VIP.IdAplicacionInstrumento" & _
-            " AND IEP.IdIndicadoresEvaluacionPorPrograma=VIP.IdIndicadoresEvaluacionPorPrograma where AI.[IdInstrumentoDeEvaluacion]=@IdInstrumento and AI.[Activo]=1 group by AI.IdAplicacionInstrumento,MA.DescripcionMomento,PE.ProcesoEvaluacion,AI.FechaAplicacion,VIP.FechaCalculo  "
+            " AND IEP.IdIndicadoresEvaluacionPorPrograma=VIP.IdIndicadoresEvaluacionPorPrograma where AI.[IdInstrumentoDeEvaluacion]=@IdInstrumento and AI.[Activo]=1 and IE.[Activo]=1 group by AI.IdAplicacionInstrumento,MA.DescripcionMomento,PE.ProcesoEvaluacion,AI.FechaAplicacion,VIP.FechaCalculo  "
 
             Me.SqlDataSourceIndicadores.SelectCommand = "Select distinct(I.IdIndicador), " & _
                 "I.DescripcionIndicador Indicador, " & _
@@ -201,26 +228,9 @@ Partial Class Evaluacion_Levantamientos
     End Sub
 
     Protected Sub ASPxGridViewInstrumentos_BeforePerformDataSelect(sender As Object, e As EventArgs)
+        Session("IdPrograma") = (TryCast(sender, ASPxGridView)).GetMasterRowKeyValue()
 
-
-        Dim key As Integer
-        key = CType(sender, ASPxGridView).GetMasterRowKeyValue()
-
-        Dim detail As ASPxGridView = TryCast(ASPxGridViewPoliticas.FindDetailRowTemplateControl(ASPxGridViewPoliticas.FocusedRowIndex(), "ASPxGridViewProyectos"), ASPxGridView)
-
-        Dim index As Integer = detail.FocusedRowIndex()
-
-        Session("IdPrograma") = detail.GetRowValues(index, "codigo_ficha")
         
-        'Session("IdPrograma") = CType(sender, ASPxGridView).GetRowValues(key, "codigo_ficha")
-        SqlDataSourceInstrumentos.SelectParameters(0).DefaultValue = Session("IdPrograma")
-        SqlDataSourceInstrumentos.DataBind()
-
-        'Dim detail As ASPxGridView = TryCast(ASPxGridViewPoliticas.FindDetailRowTemplateControl(ASPxGridViewPoliticas.FocusedRowIndex(), "ASPxGridViewProyectos"), ASPxGridView)
-
-        'Dim index As Integer = detail.FocusedRowIndex()
-
-        'Session("IdPrograma") = detail.GetRowValues(index, "codigo_ficha")
     End Sub
 
 End Class

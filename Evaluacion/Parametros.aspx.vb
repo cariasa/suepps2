@@ -103,6 +103,7 @@ Partial Class Evaluacion_Parametros
         usuario = "'" + Membership.GetUser.UserName.ToString + "'"
         Dim unum As Integer
         Dim uden As Integer
+        Dim basadoenfsu As Integer
 
         If ASPxCheckBoxUsarVMacroN.Checked Then
             unum = 1
@@ -116,7 +117,13 @@ Partial Class Evaluacion_Parametros
             uden = 0
         End If
 
-        SqlDataSourceFormulas.InsertCommand = "INSERT INTO [FormulaIndicador] (IdIndicador, IdVariableNumerador, IdVariableDenominador, UsaVariableMacroNumerador, UsaVariableMacroDenominador, Factor, DescripcionFormula, CreadoPor, FechaCreacion) VALUES (" + Session("idIndicador").ToString + "," + Session("idVariableNumerador").ToString + "," + Session("idvariableDenominador").ToString + "," + unum.ToString + "," + uden.ToString + "," + ASPxTextBoxFactor.Text + ",'" + ASPxTextBoxDes.Text + "'," + usuario + ",getDate())"
+        If FSU.Checked Then
+            basadoenfsu = 1
+        Else
+            basadoenfsu = 0
+        End If
+
+        SqlDataSourceFormulas.InsertCommand = "INSERT INTO [FormulaIndicador] (IdIndicador, IdVariableNumerador, IdVariableDenominador, UsaVariableMacroNumerador, UsaVariableMacroDenominador, Factor, DescripcionFormula, CreadoPor, FechaCreacion, BasadoEnFSU) VALUES (" + Session("idIndicador").ToString + "," + Session("idVariableNumerador").ToString + "," + Session("idvariableDenominador").ToString + "," + unum.ToString + "," + uden.ToString + "," + ASPxTextBoxFactor.Text + ",'" + ASPxTextBoxDes.Text + "'," + usuario + ",getDate(), " + basadoenfsu.ToString + ")"
         'Revisar si IdVariableDenominador tiene una condición Q o C en la tabla de variables (O sea que no sea Total)
         'Si el denominador no es un contador de la muestra, su condición debe ser heredada al numerador, esto es mediante COPIA de esas condiciones
         'En condiciones nuevas
@@ -202,6 +209,7 @@ Partial Class Evaluacion_Parametros
         usuario = "'" + Membership.GetUser.UserName.ToString + "'"
         Dim unum As Integer
         Dim uden As Integer
+        Dim basadoenfsu As Integer
 
         If ASPxCheckBoxUsarVMacroN.Checked Then
             unum = 1
@@ -215,7 +223,13 @@ Partial Class Evaluacion_Parametros
             uden = 0
         End If
 
-        SqlDataSourceFormulas.UpdateCommand = "UPDATE [FormulaIndicador] SET IdIndicador=" + Session("idIndicador").ToString + ", IdVariableNumerador=" + Session("idVariableNumerador").ToString + ", IdVariableDenominador=" + Session("idvariableDenominador").ToString + ", UsaVariableMacroNumerador=" + unum.ToString + ", UsaVariableMacroDenominador=" + uden.ToString + ", Factor=" + ASPxTextBoxFactor.Text + ", DescripcionFormula='" + ASPxTextBoxDes.Text + "', CreadoPor=" + usuario + ", FechaCreacion=getDate() WHERE idFormulaIndicador=" + ASPxGridViewFormulas.GetRowValues(ASPxGridViewFormulas.FocusedRowIndex, "IdFormulaIndicador").ToString
+        If FSU.Checked Then
+            basadoenfsu = 1
+        Else
+            basadoenfsu = 0
+        End If
+
+        SqlDataSourceFormulas.UpdateCommand = "UPDATE [FormulaIndicador] SET IdIndicador=" + Session("idIndicador").ToString + ", IdVariableNumerador=" + Session("idVariableNumerador").ToString + ", IdVariableDenominador=" + Session("idvariableDenominador").ToString + ", UsaVariableMacroNumerador=" + unum.ToString + ", UsaVariableMacroDenominador=" + uden.ToString + ", Factor=" + ASPxTextBoxFactor.Text + ", DescripcionFormula='" + ASPxTextBoxDes.Text + "', ActualizadoPor=" + usuario + ", FechaActualizacion=getDate(), BasadoEnFSU=" + basadoenfsu.ToString + " WHERE idFormulaIndicador=" + ASPxGridViewFormulas.GetRowValues(ASPxGridViewFormulas.FocusedRowIndex, "IdFormulaIndicador").ToString
         SqlDataSourceFormulas.Update()
         ASPxGridViewFormulas.DataBind()
 

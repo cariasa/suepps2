@@ -215,6 +215,11 @@
                                             <dx:ASPxTextBox ID="ASPxTextBoxDes" runat="server" Width="370px"></dx:ASPxTextBox>
                                         </td>
                                         <td>
+                                            <dx:ASPxCheckBox ID="FSU" runat="server" Text="Basado en FSU" ClientSideEvents-Init="function(s, e){s.SetChecked(false);}">
+                                                
+                                            </dx:ASPxCheckBox>
+                                        </td>
+                                        <td>
                                             <dx:ASPxButton ID="ASPxButtonGuardar" runat="server" Text="Guardar" OnClick="ASPxButtonGuardar_Click"></dx:ASPxButton>
                                             <dx:ASPxButton ID="ASPxButtonGuardarEditar" runat="server" Text="Guardar" OnClick="ASPxButtonGuardarEditar_Click" Visible="false"></dx:ASPxButton>
                                         </td>
@@ -238,8 +243,10 @@
 
 
                                     </dx:GridViewDataComboBoxColumn>
+                                    <dx:GridViewDataCheckColumn VisibleIndex="2" FieldName="BasadoEnFSU" Caption="FSU">
 
-                                    <dx:GridViewDataComboBoxColumn VisibleIndex="2" FieldName="IdVariableNumerador" Caption="Numerador">
+                                    </dx:GridViewDataCheckColumn>
+                                    <dx:GridViewDataComboBoxColumn VisibleIndex="3" FieldName="IdVariableNumerador" Caption="Numerador">
                                         <PropertiesComboBox ValueType="System.String"
                                             DataSourceID="SqlDataSourceVariablesCombo"
                                             ValueField="IdVariable"
