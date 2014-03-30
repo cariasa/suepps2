@@ -33,19 +33,19 @@
                 </dx:PivotGridField>
                 <dx:PivotGridField ID="fieldCalculadoEn" FieldName="Calculado En">
                 </dx:PivotGridField>
-                <dx:PivotGridField ID="fieldValorIndicador" FieldName="ValorIndicador">
+                <dx:PivotGridField ID="fieldValorIndicador" FieldName="ValorIndicador" CellFormat-FormatString="P0" cellFormat-FormatType="Numeric">
                 </dx:PivotGridField>
                 <dx:PivotGridField ID="fieldDescripcionDepartamento" FieldName="DescripcionDepartamento">
                 </dx:PivotGridField>
-                <dx:PivotGridField ID="fieldValorDepartamento" FieldName="Valor Departamento">
+                <dx:PivotGridField ID="fieldValorDepartamento" FieldName="Valor Departamento" CellFormat-FormatString="P0" cellFormat-FormatType="Numeric">
                 </dx:PivotGridField>
                 <dx:PivotGridField ID="fieldDescripcionMunicipio" FieldName="DescripcionMunicipio">
                 </dx:PivotGridField>
-                <dx:PivotGridField ID="fieldValorMunicipio" FieldName="Valor Municipio">
+                <dx:PivotGridField ID="fieldValorMunicipio" FieldName="Valor Municipio" CellFormat-FormatString="P0" cellFormat-FormatType="Numeric">
                 </dx:PivotGridField>
                 <dx:PivotGridField ID="fieldDescripcionSexo" FieldName="DescripcionSexo">
                 </dx:PivotGridField>
-                <dx:PivotGridField ID="fieldSexo" FieldName="Sexo">
+                <dx:PivotGridField ID="fieldSexo" FieldName="Sexo" CellFormat-FormatString="P0" cellFormat-FormatType="Numeric">
                 </dx:PivotGridField>
             </Fields>
         </dx:ASPxPivotGrid>
