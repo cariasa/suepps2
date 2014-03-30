@@ -655,7 +655,33 @@ Public Class CalculadoraIndicadores
         Dim Reader As SqlDataReader = Command.ExecuteReader
         Dim List As New ArrayList
         While Reader.Read
-            Dim Ficha As New ParFSU_IE(Reader("CodigoFSU"), Reader("IdVivienda"), Reader("IdHogar"), Reader("IdMiembro"), Reader("IdEncabezadoRespuesta"))
+            ' ----------------------------------------------------------------
+            ' Se hacen estas validaciones porque es posible que se esté evaluando un instrumento de evaluación que 
+            ' no tiene asociados levantamientos de Ficha Socioeconómica Única, entonces viene NULL en esos campos
+            ' y simplemente se dejarán en cero para este tratamiento
+            Dim CodigoFSU, IdVivienda, IdHogar, IdMiembro As Integer
+            If IsDBNull(Reader("CodigoFSU")) Then
+                CodigoFSU = 0
+            Else
+                CodigoFSU = Reader("CodigoFSU")
+            End If
+            If IsDBNull(Reader("IdVivienda")) Then
+                IdVivienda = 0
+            Else
+                IdVivienda = Reader("IdVivienda")
+            End If
+            If IsDBNull(Reader("IdHogar")) Then
+                IdHogar = 0
+            Else
+                IdHogar = Reader("IdHogar")
+            End If
+            If IsDBNull(Reader("IdMiembro")) Then
+                IdMiembro = 0
+            Else
+                IdMiembro = Reader("IdMiembro")
+            End If
+            ' ----------------------------------------------------------------
+            Dim Ficha As New ParFSU_IE(CodigoFSU, IdVivienda, IdHogar, IdMiembro, Reader("IdEncabezadoRespuesta"))
             List.Add(Ficha)
         End While
         Reader.Close()
