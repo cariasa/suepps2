@@ -1,19 +1,17 @@
-﻿Imports Microsoft.VisualBasic
+﻿
+Imports Microsoft.VisualBasic
 Imports System
 Imports DevExpress.Web.ASPxGridView
 Imports System.Web.UI
 Imports DevExpress.Web.ASPxEditors
 
-Partial Class Evaluacion_ExportarRespuestas
+Partial Class Evaluacion_Exportart
     Inherits System.Web.UI.Page
 
-    Protected Sub ASPxButtonExportarRespuestas_Click(sender As Object, e As EventArgs)
-        UpdateExportMode()
-        exporterRespuestas.WriteXlsToResponse()
-    End Sub
 
-    Protected Sub UpdateExportMode()
-        ASPxGridViewRespuestas.SettingsDetail.ExportMode = GridViewDetailExportMode.All
+
+    Protected Sub ASPxGridViewOpcionesDePregunta_BeforePerformDataSelect(sender As Object, e As EventArgs)
+        Session("IdPreguntaDeMonitoreo") = (TryCast(sender, DevExpress.Web.ASPxGridView.ASPxGridView)).GetMasterRowKeyValue()
     End Sub
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
@@ -47,5 +45,26 @@ Partial Class Evaluacion_ExportarRespuestas
                 Response.Redirect("~/NoAccess.aspx")
             End If
         End Using
+        If (Not IsPostBack) Then
+
+            ASPxGridViewPreguntas.DataBind()
+
+
+        End If
+
+        
     End Sub
+
+    Protected Sub ASPxButtonExportarPreguntas_Click(sender As Object, e As EventArgs)
+        UpdateExportMode()
+        exporter.WriteXlsToResponse("RespuestasInstrumentos", True)
+
+
+    End Sub
+
+    Protected Sub UpdateExportMode()
+        ASPxGridViewPreguntas.SettingsDetail.ExportMode = GridViewDetailExportMode.All
+    End Sub
+
+   
 End Class
