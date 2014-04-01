@@ -69,15 +69,22 @@ Partial Class Evaluacion_Levantamientos
                 "where " & _
                 "	IE.IdPrograma = @IdPrograma"
 
-            Me.SqlDataSourceLevantamientos.SelectCommand = " select AI.IdAplicacionInstrumento,MA.DescripcionMomento,PE.ProcesoEvaluacion,AI.FechaAplicacion,VIP.FechaCalculo from InstrumentosDeEvaluacion IE" & _
-            " join AplicacionInstrumento AI on IE.IdInstrumentoDeEvaluacion= AI.IdInstrumentoDeEvaluacion" & _
-            " join ProcesosEvaluacion PE on PE.IdProcesoEvaluacion=IE.IdProcesoEvaluacion" & _
-            " join MomentosDeAplicacion MA on MA.IdMomentoDeAplicacion=AI.IdMomentoAplicacion" & _
-            " join vProyectos P on IE.IdPrograma=P.codigo_ficha" & _
-            " join IndicadoresEvaluacionPorPrograma IEP on IE.IdPrograma = IEP.IdPrograma" & _
-            " join Indicadores I on IEP.IdIndicador = I.IdIndicador" & _
-            " left join ValoresIndicadorPorLevantamiento VIP on AI.IdAplicacionInstrumento=VIP.IdAplicacionInstrumento" & _
-            " AND IEP.IdIndicadoresEvaluacionPorPrograma=VIP.IdIndicadoresEvaluacionPorPrograma where AI.[IdInstrumentoDeEvaluacion]=@IdInstrumento and AI.[Activo]=1 and IE.[Activo]=1 group by AI.IdAplicacionInstrumento,MA.DescripcionMomento,PE.ProcesoEvaluacion,AI.FechaAplicacion,VIP.FechaCalculo  "
+            Me.SqlDataSourceLevantamientos.SelectCommand = _
+                "select  " & _
+                "	distinct(AI.IdAplicacionInstrumento), " & _
+                "	MA.DescripcionMomento, " & _
+                "	PE.ProcesoEvaluacion, " & _
+                "	AI.FechaAplicacion, " & _
+                "	VIP.FechaCalculo  " & _
+                "from " & _
+                "	AplicacionInstrumento AI " & _
+                "	join MomentosDeAplicacion MA on AI.IdMomentoAplicacion=MA.IdMomentoDeAplicacion " & _
+                "	join InstrumentosDeEvaluacion IE on AI.IdInstrumentoDeEvaluacion=IE.IdInstrumentoDeEvaluacion and IE.Activo=1 " & _
+                "	join ProcesosEvaluacion PE on IE.IdProcesoEvaluacion=PE.IdProcesoEvaluacion " & _
+                "	left join ValoresIndicadorPorLevantamiento VIP on AI.IdAplicacionInstrumento=VIP.IdAplicacionInstrumento " & _
+                "where " & _
+                "	IE.IdInstrumentoDeEvaluacion=@IdInstrumento and " & _
+                "	AI.Activo = 1"
 
             Me.SqlDataSourceIndicadores.SelectCommand = "Select distinct(I.IdIndicador), " & _
                 "I.DescripcionIndicador Indicador, " & _
@@ -141,16 +148,16 @@ Partial Class Evaluacion_Levantamientos
     End Sub
 
     Protected Sub ASPxGridViewLevantamientos_HtmlDataCellPrepared(sender As Object, e As ASPxGridViewTableDataCellEventArgs)
-
+        Dim bandera As Boolean
         If e.DataColumn.FieldName = "FechaCalculo" Then
 
             If IsDBNull(e.CellValue) Then
+                bandera = False
 
-                Session("bandera") = False
 
             Else
+                bandera = True
 
-                Session("bandera") = True
 
             End If
 
@@ -158,7 +165,7 @@ Partial Class Evaluacion_Levantamientos
 
         If e.DataColumn.Name = "Calculado" Then
 
-            If Session("bandera") = True Then
+            If bandera Then
 
                 e.Cell.Text = "No"
 

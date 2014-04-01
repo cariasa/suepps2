@@ -272,6 +272,9 @@ Public Class CalculadoraIndicadores
         Dim DeptoPair As KeyValuePair(Of VariableDepartamento, Double)
         Dim MuniPair As KeyValuePair(Of VariableDepartamentoMunicipio, Double)
         Dim SexoPair As KeyValuePair(Of VariableSexo, Double)
+
+        Dim denominadorGlobal As Double
+
         For Each Formula As FormulaIndicador In Formulas
             ComputeIndicatorsAndInsertOficialProgram(Formula, CreadoPor)
             Dim Command As New SqlCommand("InsertarValoresIndicadores", SqlConn)
@@ -294,6 +297,10 @@ Public Class CalculadoraIndicadores
             Else
                 res = num / den
             End If
+            ' Esta Variable guardará el denominador de la fórmula, que luego se usará para los cálculos
+            ' de variables desagregadas
+            denominadorGlobal = den
+
             Command.Parameters.AddWithValue("@IdLevantamiento", IdLevantamiento)
             Command.Parameters.AddWithValue("@IdIndicadorEvaluacionPorPrograma", Formula.IdIndicadoresEvaluacionPorPrograma)
             Command.Parameters.AddWithValue("@ValorIndicador", res)
@@ -307,6 +314,8 @@ Public Class CalculadoraIndicadores
             Console.WriteLine("IdIndicador = " + Convert.ToString(Formula.IdIndicador) + " = " + Convert.ToString(res))
             'Insertar Valores Desagregados
             'Insertar Valores por Departamento ===================================================================
+            NumsDepto.Clear()
+            DensDepto.Clear()
             For Each DeptoPair In VariableDeptoAcum
                 If DeptoPair.Key.Variable = Formula.Numerador Then
                     NumsDepto(DeptoPair.Key.Departamento) = DeptoPair.Value
@@ -339,7 +348,7 @@ Public Class CalculadoraIndicadores
                     ElseIf den = 0 Then
                         res = 0
                     Else
-                        res = num / den
+                        res = num / denominadorGlobal
                     End If
                     Dim CommandDepto As New SqlCommand(InsertValoresDepartameto, SqlConn)
                     CommandDepto.Parameters.AddWithValue("@IdLevantamiento", IdLevantamiento)
@@ -398,7 +407,7 @@ Public Class CalculadoraIndicadores
                     ElseIf den = 0 Then
                         res = 0
                     Else
-                        res = num / den
+                        res = num / denominadorGlobal
                     End If
                     Dim CommandMuni As New SqlCommand(InsertValoresMunicipio, SqlConn)
                     CommandMuni.Parameters.AddWithValue("@IdLevantamiento", IdLevantamiento)
@@ -413,6 +422,8 @@ Public Class CalculadoraIndicadores
             End If
             '=====================================================================================================
             'Insertar Valores por Sexo ===========================================================================
+            NumsSexo.Clear()
+            DensSexo.Clear()
             For Each SexoPair In VariableSexoAcum
                 If SexoPair.Key.Variable = Formula.Numerador Then
                     NumsSexo(SexoPair.Key.Sexo) = SexoPair.Value
@@ -445,7 +456,7 @@ Public Class CalculadoraIndicadores
                     ElseIf den = 0 Then
                         res = 0
                     Else
-                        res = num / den
+                        res = num / denominadorGlobal
                     End If
                     Dim CommandSexo As New SqlCommand(InsertValoresSexo, SqlConn)
                     CommandSexo.Parameters.AddWithValue("@IdLevantamiento", IdLevantamiento)
@@ -492,6 +503,7 @@ Public Class CalculadoraIndicadores
                 Next
             End If
         Next
+        ClearPreviousIndicators()
         ComputeIndicatorsAndInsert(Formulas, CreadoPor, VariableAcum, VariableDeptoAcum, VariableMuniAcum, VariableSexoAcum)
 
         ' ========================================================================================================
@@ -738,5 +750,14 @@ Public Class CalculadoraIndicadores
         End While
         Return Ficha
     End Function
+
+    Private Sub ClearPreviousIndicators()
+        Dim SqlConn As SqlConnection = GetConnection()
+        Dim Command As New SqlCommand("BorraCalculados", SqlConn)
+        Command.Parameters.AddWithValue("@IdLevantamiento", IdLevantamiento)
+        Command.CommandType = CommandType.StoredProcedure
+        Command.ExecuteNonQuery()
+        SqlConn.Close()
+    End Sub
 
 End Class
