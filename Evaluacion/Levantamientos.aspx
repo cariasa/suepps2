@@ -17,7 +17,7 @@
     </div>
     <div>
 
-        <dx:ASPxGridView ID="ASPxGridViewPoliticas" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSourcePoliticas" KeyFieldName="IdPolitica" SettingsDetail-ShowDetailRow="true">
+        <dx:ASPxGridView ID="ASPxGridViewPoliticas" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSourcePoliticas" KeyFieldName="IdPolitica" SettingsDetail-ShowDetailRow="true" >
             <Columns>
                 <dx:GridViewDataTextColumn FieldName="IdPolitica" ReadOnly="True" VisibleIndex="0" Visible="false">
                     <EditFormSettings Visible="False" />
@@ -35,11 +35,11 @@
             </SettingsPager>
 
 
-            <SettingsDetail ShowDetailRow="True" />
+            <SettingsDetail ShowDetailRow="True" AllowOnlyOneMasterRowExpanded="true" />
             <Templates>
                 <DetailRow>
 
-                    <dx:ASPxGridView ID="ASPxGridViewProyectos" runat="server" KeyFieldName="codigo_ficha" IsDetailGrid="true" OnBeforePerformDataSelect="ASPxGridViewProyectos_BeforePerformDataSelect" Width="100%" DataSourceID="SqlDataSourceProyectos">
+                    <dx:ASPxGridView ID="ASPxGridViewProyectos" runat="server" KeyFieldName="codigo_ficha" IsDetailGrid="true" OnBeforePerformDataSelect="ASPxGridViewProyectos_BeforePerformDataSelect" Width="100%" DataSourceID="SqlDataSourceProyectos"  >
                         <Columns>
                             <dx:GridViewDataTextColumn FieldName="codigo_ficha" ReadOnly="True" VisibleIndex="0" Visible="false">
                                 <EditFormSettings Visible="False" />
@@ -54,7 +54,7 @@
                             <AllButton Visible="True" Text="Todos">
                             </AllButton>
                         </SettingsPager>
-                        <SettingsDetail ShowDetailRow="True" />
+                        <SettingsDetail ShowDetailRow="True" AllowOnlyOneMasterRowExpanded="true" />
                         <Templates>
                             <DetailRow>
 
@@ -75,7 +75,7 @@
                                         </AllButton>
                                     </SettingsPager>
 
-                                    <SettingsDetail ShowDetailRow="True" />
+                                    <SettingsDetail ShowDetailRow="True" AllowOnlyOneMasterRowExpanded="true" />
                                     <Templates>
                                         <DetailRow>
 
@@ -106,7 +106,7 @@
 
 
 
-                                                <SettingsDetail ShowDetailRow="True" />
+                                                <SettingsDetail ShowDetailRow="True" AllowOnlyOneMasterRowExpanded="true" />
                                                 <Templates>
                                                     <DetailRow>
 
@@ -262,7 +262,7 @@
         <asp:SqlDataSource ID="SqlDataSourceLevantamientos" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>">
 
             <SelectParameters>
-                <asp:SessionParameter Name="IdInstrumento" />
+                <asp:SessionParameter Name="IdInstrumento" SessionField="IdInstrumento" />
 
             </SelectParameters>
 
@@ -271,7 +271,7 @@
         <asp:SqlDataSource ID="SqlDataSourceIndicadores" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>">
 
             <SelectParameters>
-                <asp:SessionParameter Name="IdAplicacion" />
+                <asp:SessionParameter Name="IdAplicacion" SessionField="IdAplicacion" />
 
             </SelectParameters>
 
@@ -280,8 +280,8 @@
         <asp:SqlDataSource ID="SqlDataSourceDepartamentos" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>">
 
             <SelectParameters>
-                <asp:SessionParameter Name="IdAplicacion" />
-                <asp:SessionParameter Name="IdIndicador" />
+                <asp:SessionParameter Name="IdAplicacion" SessionField="IdAplicacion" />
+                <asp:SessionParameter Name="IdIndicador" SessionField="IdIndicador" />
 
             </SelectParameters>
 
@@ -290,9 +290,8 @@
         <asp:SqlDataSource ID="SqlDataSourceMunicipios" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>">
 
             <SelectParameters>
-                <asp:SessionParameter Name="IdAplicacion" />
-                <asp:SessionParameter Name="IdIndicador" />
-
+                <asp:SessionParameter Name="IdAplicacion" SessionField="IdAplicacion" />
+                <asp:SessionParameter Name="IdIndicador" SessionField="IdIndicador" />
             </SelectParameters>
 
         </asp:SqlDataSource>
@@ -300,9 +299,8 @@
         <asp:SqlDataSource ID="SqlDataSourceSexo" runat="server" ConnectionString="<%$ ConnectionStrings:SUEPPSConnectionString %>">
 
             <SelectParameters>
-                <asp:SessionParameter Name="IdAplicacion" />
-                <asp:SessionParameter Name="IdIndicador" />
-
+                <asp:SessionParameter Name="IdAplicacion" SessionField="IdAplicacion" />
+                <asp:SessionParameter Name="IdIndicador" SessionField="IdIndicador" />
             </SelectParameters>
 
         </asp:SqlDataSource>

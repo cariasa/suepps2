@@ -122,8 +122,8 @@ Partial Class Evaluacion_Levantamientos
     Protected Sub ASPxGridViewLevantamientos_BeforePerformDataSelect(sender As Object, e As EventArgs)
 
         Session("IdInstrumento") = CType(sender, ASPxGridView).GetMasterRowKeyValue()
-        Me.SqlDataSourceLevantamientos.SelectParameters(0).DefaultValue = Session("IdInstrumento")
-        Me.SqlDataSourceLevantamientos.DataBind()
+        'Me.SqlDataSourceLevantamientos.SelectParameters(0).DefaultValue = Session("IdInstrumento")
+        'Me.SqlDataSourceLevantamientos.DataBind()
 
         Dim detail As ASPxGridView = TryCast(ASPxGridViewPoliticas.FindDetailRowTemplateControl(ASPxGridViewPoliticas.FocusedRowIndex(), "ASPxGridViewProyectos"), ASPxGridView)
 
@@ -141,8 +141,8 @@ Partial Class Evaluacion_Levantamientos
 
         Session("IdAplicacion") = CType(sender, ASPxGridView).GetMasterRowKeyValue()
 
-        Me.SqlDataSourceIndicadores.SelectParameters(0).DefaultValue = Session("IdAplicacion")
-        Me.SqlDataSourceIndicadores.DataBind()
+        'Me.SqlDataSourceIndicadores.SelectParameters(0).DefaultValue = Session("IdAplicacion")
+        'Me.SqlDataSourceIndicadores.DataBind()
 
 
     End Sub
@@ -189,9 +189,9 @@ Partial Class Evaluacion_Levantamientos
 
         Session("IdIndicador") = CType(sender, ASPxGridView).GetMasterRowKeyValue()
 
-        Me.SqlDataSourceDepartamentos.SelectParameters(0).DefaultValue = Session("IdAplicacion")
-        Me.SqlDataSourceDepartamentos.SelectParameters(1).DefaultValue = Session("IdIndicador")
-        Me.SqlDataSourceDepartamentos.DataBind()
+        'Me.SqlDataSourceDepartamentos.SelectParameters(0).DefaultValue = Session("IdAplicacion")
+        'Me.SqlDataSourceDepartamentos.SelectParameters(1).DefaultValue = Session("IdIndicador")
+        'Me.SqlDataSourceDepartamentos.DataBind()
 
 
 
@@ -209,9 +209,9 @@ Partial Class Evaluacion_Levantamientos
 
         Session("IdIndicador") = CType(sender, ASPxGridView).GetMasterRowKeyValue()
 
-        Me.SqlDataSourceMunicipios.SelectParameters(0).DefaultValue = Session("IdAplicacion")
-        Me.SqlDataSourceMunicipios.SelectParameters(1).DefaultValue = Session("IdIndicador")
-        Me.SqlDataSourceMunicipios.DataBind()
+        'Me.SqlDataSourceMunicipios.SelectParameters(0).DefaultValue = Session("IdAplicacion")
+        'Me.SqlDataSourceMunicipios.SelectParameters(1).DefaultValue = Session("IdIndicador")
+        'Me.SqlDataSourceMunicipios.DataBind()
 
 
 
@@ -227,9 +227,9 @@ Partial Class Evaluacion_Levantamientos
 
         Session("IdIndicador") = CType(sender, ASPxGridView).GetMasterRowKeyValue()
 
-        Me.SqlDataSourceSexo.SelectParameters(0).DefaultValue = Session("IdAplicacion")
-        Me.SqlDataSourceSexo.SelectParameters(1).DefaultValue = Session("IdIndicador")
-        Me.SqlDataSourceSexo.DataBind()
+        'Me.SqlDataSourceSexo.SelectParameters(0).DefaultValue = Session("IdAplicacion")
+        'Me.SqlDataSourceSexo.SelectParameters(1).DefaultValue = Session("IdIndicador")
+        'Me.SqlDataSourceSexo.DataBind()
 
 
     End Sub
