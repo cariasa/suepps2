@@ -1,4 +1,4 @@
-﻿<%@ Page Language="VB" AutoEventWireup="false"  MasterPageFile="~/Site.master" CodeFile  ="MapaEvaluacion.aspx.vb" Inherits="Consultas_MapTest" %>
+﻿<%@ Page Language="VB" AutoEventWireup="false"  MasterPageFile="~/Site.master" CodeFile  ="MapaIndicadores.aspx.vb" Inherits="Consultas_MapTest" %>
 
 <asp:Content ID="CssContent" ContentPlaceHolderID="HeadContent" runat="server">
     <script type="text/javascript">
