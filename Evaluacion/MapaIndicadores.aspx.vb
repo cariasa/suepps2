@@ -47,14 +47,14 @@ Partial Class Consultas_MapTest
         "join MetasDeComponente MC on CP.IdComponentesDePolitica=MC.IdComponentesDePolitica " & _
         "join IndicadoresDeMeta IM on MC.IdMetasDeComponente=IM.IdMetasDeComponente " & _
         "join ProgramasPorIndicadorDeMeta PIM on IM.IdIndicadorDeMeta=PIM.IdIndicadorDeMeta " & _
-        "join vProyectos Pro ON PIM.IdPrograma=Pro.codigo_ficha where Pol.[IdPolitica]=@IdPolitica Order by Pro.NombreProyecto " 
+        "join vProyectos Pro ON PIM.IdPrograma=Pro.codigo_ficha where Pol.[IdPolitica]=@IdPolitica And Pol.Activo=1 Order by Pro.NombreProyecto "
 
-        Me.SqlInstrumentos.SelectCommand = " select IdInstrumentoDeEvaluacion,NombreInstrumento,Ano from InstrumentosDeEvaluacion Where IdPrograma=@IdPrograma order by NombreInstrumento,Ano "
+        Me.SqlInstrumentos.SelectCommand = " select IdInstrumentoDeEvaluacion,NombreInstrumento,Ano from InstrumentosDeEvaluacion Where IdPrograma=@IdPrograma And Activo=1 order by NombreInstrumento,Ano "
 
 
         Me.SqlAplicacion.SelectCommand = " select AI.IdAplicacionInstrumento,MA.DescripcionMomento,AI.UsaFSU,AI.FechaAplicacion,IE.IdInstrumentoDeEvaluacion from InstrumentosDeEvaluacion IE " & _
         "join AplicacionInstrumento AI on IE.IdInstrumentoDeEvaluacion= AI.IdInstrumentoDeEvaluacion " & _
-        "join MomentosDeAplicacion MA on MA.IdMomentoDeAplicacion=IdMomentoAplicacion where AI.[IdInstrumentoDeEvaluacion]=@IdInstrumento and AI.[Activo]=1 "
+        "join MomentosDeAplicacion MA on MA.IdMomentoDeAplicacion=IdMomentoAplicacion where AI.[IdInstrumentoDeEvaluacion]=@IdInstrumento and AI.[Activo]=1 and IE.Activo=1"
 
 
         Me.SqlDataSourceCabeceras.SelectCommand = "select AI.IdAplicacionInstrumento,I.DescripcionIndicador,M.DescripcionMunicipio,D.DescripcionDepartamento,VM.Valor,MG.Latitud,MG.Longitud from AplicacionInstrumento AI " & _
