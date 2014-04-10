@@ -237,7 +237,7 @@ Partial Class Evaluacion_Levantamientos
     Protected Sub ASPxGridViewInstrumentos_BeforePerformDataSelect(sender As Object, e As EventArgs)
         Session("IdPrograma") = (TryCast(sender, ASPxGridView)).GetMasterRowKeyValue()
 
-        
+
     End Sub
 
 End Class
