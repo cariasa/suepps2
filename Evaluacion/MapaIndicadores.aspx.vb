@@ -1,4 +1,5 @@
 ﻿Imports DevExpress.Web.ASPxGridView
+Imports DevExpress.Web.ASPxEditors
 
 Partial Class Consultas_MapTest
     Inherits System.Web.UI.Page
@@ -40,7 +41,7 @@ Partial Class Consultas_MapTest
         'Session("CodPrograma") = uf.QueryStringDecode(Request.QueryString.Get(1))
 
 
-       
+
 
         Me.SqlPrograma.SelectCommand = "select DISTINCT(Pol.IdPolitica), Pol.Nombre, Pro.codigo_ficha, Pro.NombreProyecto from Politicas Pol " & _
         "join ComponentesDePolitica CP on Pol.IdPolitica=CP.IdPolitica " & _
@@ -69,7 +70,7 @@ Partial Class Consultas_MapTest
 
 
     Protected Sub GridIndicadores_HtmlDataCellPrepared(sender As Object, e As ASPxGridViewTableDataCellEventArgs)
- 
+
         If e.DataColumn.Name = "Valor" Then
 
             Session("Porcenta1") = Convert.ToDouble(e.CellValue)
@@ -99,7 +100,7 @@ Partial Class Consultas_MapTest
     Protected Sub link1_Click(sender As Object, e As EventArgs)
 
 
- 
+
         Dim IndexPolitica As Integer
         Dim IndexPrograma As Integer
         Dim IndexInstrumento As Integer
@@ -192,5 +193,11 @@ Partial Class Consultas_MapTest
         SqlInstrumentos.SelectParameters(0).DefaultValue = Session("IdPrograma")
         SqlInstrumentos.DataBind()
 
+    End Sub
+
+    Protected Sub cbAll_Init(sender As Object, e As EventArgs)
+        Dim chk As ASPxCheckBox = TryCast(sender, ASPxCheckBox)
+        Dim grid As ASPxGridView = (TryCast(chk.NamingContainer, GridViewHeaderTemplateContainer).Grid)
+        chk.Checked = (grid.Selection.Count = grid.VisibleRowCount)
     End Sub
 End Class

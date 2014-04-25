@@ -6,6 +6,22 @@
         document.write('<scr' + 'ipt charset="UTF-8" type="text/javascript" src="' +
             'http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=6.2&mkt=en-us' + '"></scr' + 'ipt>');
         // ]]> 
+        function OnAllCheckedChanged(s, e) {
+
+            if (s.GetChecked())
+
+                DataGrid.SelectRows();
+
+            else
+
+                DataGrid.UnselectRows();
+
+        }
+        function OnGridSelectionChanged(s, e) {
+
+            cbAll.SetChecked(s.GetSelectedRowCount() == s.cpVisibleRowCount);
+
+        }
     </script>
 </asp:Content>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="Server">
@@ -105,7 +121,7 @@
 
                                                                     <dx:GridViewDataTextColumn FieldName="Acciones" Caption="Acción" ShowInCustomizationForm="True" VisibleIndex="4" UnboundType="String">
                                                                         <DataItemTemplate>
-                                                                            <asp:LinkButton ID="link1" Text="Ver Ubicaciones" runat="server" OnClick="link1_Click" />
+                                                                            <asp:LinkButton ID="link1" Text="Ver Indicadores" runat="server" OnClick="link1_Click" />
                                                                         </DataItemTemplate>
                                                                         <Settings AllowAutoFilter="False" />
                                                                     </dx:GridViewDataTextColumn>
@@ -173,8 +189,19 @@
 
 
                         <dx:ASPxGridView ID="DataGrid" ClientInstanceName="DataGrid" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSourceCabeceras" KeyFieldName="Latitud;Longitud;DescripcionMunicipio;Valor" OnCustomCallback="DataGrid_CustomCallback" OnLoad="DataGrid_Load" OnHtmlDataCellPrepared="GridIndicadores_HtmlDataCellPrepared">
+                            <ClientSideEvents SelectionChanged="OnGridSelectionChanged"/>
                             <Columns>
                                 <dx:GridViewCommandColumn ShowInCustomizationForm="True" ShowSelectCheckbox="True" VisibleIndex="0">
+                                    <HeaderTemplate>
+
+                                        <dx:ASPxCheckBox ID="cbAll" runat="server" ClientInstanceName="cbAll" ToolTip="Seleccionar Todos" OnInit="cbAll_Init">
+                                            <ClientSideEvents CheckedChanged="OnAllCheckedChanged" />
+                                        </dx:ASPxCheckBox>
+
+                                        
+
+                                    </HeaderTemplate>
+
                                 </dx:GridViewCommandColumn>
                                 <dx:GridViewDataTextColumn FieldName="DescripcionIndicador" Caption="Indicador" VisibleIndex="1"></dx:GridViewDataTextColumn>
                                 <dx:GridViewDataTextColumn FieldName="DescripcionDepartamento" Caption="Departamento" VisibleIndex="2"></dx:GridViewDataTextColumn>
@@ -222,6 +249,27 @@
 
     </dx:ASPxPageControl>
     <script type="text/javascript">
+        
+        function Point(x, y) {
+            this.x = x || 0;
+            this.y = y || 0;
+        };
+        Point.prototype.x = null;
+        Point.prototype.y = null;
+        Point.prototype.add = function (v) {
+            return new Point(this.x + v.x, this.y + v.y);
+        };
+        Point.prototype.clone = function () {
+            return new Point(this.x, this.y);
+        };
+        Point.prototype.distance = function (v) {
+            var x = this.x - v.x;
+            var y = this.y - v.y;
+            return Math.sqrt(x * x + y * y);
+        };
+        Point.prototype.equals = function (toCompare) {
+            return this.x == toCompare.x && this.y == toCompare.y;
+        };
         function OnGetSelectedFieldValues(selectedValues) {
             if (selectedValues.length == 0) return;
             var shape = null;
@@ -242,6 +290,14 @@
                 //Centra el mapa en la primera coordenada, y coloca el zoomlevel en 6, queda para que se vea toda Honduras
                 map.SetCenterAndZoom(new VELatLong(selectedValues[0][0], selectedValues[0][1]), 6);
             }
+            // Por cada registro de la tabla seleccionado contar cuantos son iguales
+            // crear un conjunto que tenga los valores unicos de municipio o coordenada, el ultimo intento fue hacerlo string
+            var coords = {};
+            for (i = 0; i < selectedValues.length; i++) {
+                var p = "" + selectedValues[i][0] + "," + selectedValues[i][1];
+                coords[p] = true;
+            }
+            alert(coords.length);
             //Por cada municipio seleccionado, hacer un pin, y colocarle la descripción que viene en selectedValues
             for (i = 0; i < selectedValues.length; i++) {
 
