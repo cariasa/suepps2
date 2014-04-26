@@ -899,6 +899,7 @@ Partial Class RevisionSocial_MonitoreoCualitativo
                 Dim IdCategoria As String = GridPreguntas.GetRowValues(i, "IdSeccionFSU")
                 Dim Categoria As String = GridPreguntas.GetRowValues(i, "NombreSeccion")
                 Dim TipoRespuesta As Integer = GridPreguntas.GetRowValues(i, "IdTipoDeRespuesta")
+                Dim IdAmigable As String = GridPreguntas.GetRowValues(i, "IdAmigable")
 
                 If tipocategoria2 = CInt(IdCategoria) And bandera2 = 0 Then
 
@@ -918,7 +919,7 @@ Partial Class RevisionSocial_MonitoreoCualitativo
                 If (IdTipoPregunta.Equals("1")) Then
                     'La pregunta es abierta creara un textbox
                     Dim Lbl As New ASPxLabel()
-                    Lbl.Text = Descripcion
+                    Lbl.Text = Descripcion + "(" + IdAmigable + ")"
                     Lbl.ID = "Lbl" + CStr(contadorLabels)
                     Lbl.Visible = True
                     Lbl.AssociatedControlID = "txt" + CStr(contadorpabiertas)
@@ -969,7 +970,7 @@ Partial Class RevisionSocial_MonitoreoCualitativo
                 If (IdTipoPregunta.Equals("2")) Then
                     'Es Linker
                     Dim Lbl As New ASPxLabel()
-                    Lbl.Text = Descripcion
+                    Lbl.Text = Descripcion + "(" + IdAmigable + ")"
                     Lbl.ID = "Lbl" + CStr(contadorLabels)
                     Lbl.Visible = True
                     Lbl.AssociatedControlID = "Linker" + CStr(contadorplinker)
@@ -1020,7 +1021,7 @@ Partial Class RevisionSocial_MonitoreoCualitativo
                     GridOpciones.DataBind()
                     'creando Label
                     Dim Lbl As New ASPxLabel()
-                    Lbl.Text = Descripcion
+                    Lbl.Text = Descripcion + "(" + IdAmigable + ")"
                     Lbl.ID = "Lbl" + CStr(contadorLabels)
                     Lbl.Visible = True
                     Lbl.AssociatedControlID = "OMul" + CStr(contadorom)
@@ -1088,7 +1089,7 @@ Partial Class RevisionSocial_MonitoreoCualitativo
                     GridOpciones.DataBind()
                     'creando Label
                     Dim Lbl As New ASPxLabel()
-                    Lbl.Text = Descripcion
+                    Lbl.Text = Descripcion + "(" + IdAmigable + ")"
                     Lbl.ID = "Lbl" + CStr(contadorLabels)
                     Lbl.Visible = True
                     Lbl.AssociatedControlID = "OMul" + CStr(contadorom)
@@ -1138,7 +1139,7 @@ Partial Class RevisionSocial_MonitoreoCualitativo
                     GridOpciones.DataBind()
 
                     Dim Lbl As New ASPxLabel()
-                    Lbl.Text = Descripcion
+                    Lbl.Text = Descripcion + "(" + IdAmigable + ")"
                     Lbl.ID = "Lbl" + CStr(contadorLabels)
                     Lbl.Visible = True
                     Lbl.AssociatedControlID = "OUnica" + CStr(contadorou)
@@ -1207,7 +1208,7 @@ Partial Class RevisionSocial_MonitoreoCualitativo
                     GridOpciones.DataBind()
 
                     Dim Lbl As New ASPxLabel()
-                    Lbl.Text = Descripcion
+                    Lbl.Text = Descripcion + "(" + IdAmigable + ")"
                     Lbl.ID = "Lbl" + CStr(contadorLabels)
                     Lbl.Visible = True
                     Lbl.AssociatedControlID = "OUnica" + CStr(contadorou)

@@ -244,6 +244,10 @@ Partial Class Evaluacion_Parametros
 
     End Sub
 
+    Protected Sub Page_Init(sender As Object, e As EventArgs) Handles Me.Init
+        ASPxComboBoxPosicion.SelectedIndex = 0
+    End Sub
+
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
         'Verifica si el usuario tiene el acceso a la pagina solicitada
         Using dtMOCA As System.Data.DataTable = fMOCA.CheckPageAccess(3.05) 'este es el Id definido en el MOCA
@@ -276,7 +280,7 @@ Partial Class Evaluacion_Parametros
                 Response.Redirect("~/NoAccess.aspx")
             End If
         End Using
-        ASPxComboBoxPosicion.SelectedIndex = 0
+
         SqlDataSourceSUEPPS.InsertCommand = "INSERT INTO [Variables] ([NombreVariable], [Descripcion], [Unidad], [CreadoPor], [FechaCreacion]) VALUES (@NombreVariable, @Descripcion, @Unidad, '" + Membership.GetUser.UserName.ToString + "', getDate())"
         SqlDataSourceSUEPPS.UpdateCommand = "UPDATE [Variables] SET [NombreVariable]=@NombreVariable, [Descripcion]=@Descripcion, [Unidad]=@Unidad, [ActualizadoPor]='" + Membership.GetUser.UserName.ToString + "', [FechaActualizacion] =getDate() WHERE [IdVariable]=@IdVariable"
         SqlDataSourceSUEPPS.DeleteCommand = "UPDATE [Variables] SET [Activo] = 0, [ActualizadoPor]='" + Membership.GetUser.UserName.ToString + "', [FechaActualizacion] =getDate() WHERE [IdVariable]=@IdVariable"

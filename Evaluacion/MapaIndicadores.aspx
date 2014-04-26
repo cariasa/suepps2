@@ -297,7 +297,7 @@
                 var p = "" + selectedValues[i][0] + "," + selectedValues[i][1];
                 coords[p] = true;
             }
-            alert(coords.length);
+            //alert(coords.length);
             //Por cada municipio seleccionado, hacer un pin, y colocarle la descripción que viene en selectedValues
             for (i = 0; i < selectedValues.length; i++) {
 
