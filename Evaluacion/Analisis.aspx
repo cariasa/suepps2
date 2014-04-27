@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Análisis Cualitativo Evaluación" Language="VB" AutoEventWireup="false" CodeFile="Analisis.aspx.vb" Inherits="Evaluacion_Levantamientos" MasterPageFile="~/Site.master" %>
+﻿<%@ Page Title="Análisis Cualitativo Evaluación" Language="VB" AutoEventWireup="false" CodeFile="Analisis.aspx.vb" Inherits="Evaluacion_Analisis" MasterPageFile="~/Site.master" %>
 
 <%@ Register Src="~/MOCA_UE.ascx" TagPrefix="uc1" TagName="MOCA_UE" %>
 

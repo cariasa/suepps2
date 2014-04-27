@@ -15,7 +15,7 @@ Partial Class Evaluacion_Exportart
     End Sub
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
-        Using dtMOCA As System.Data.DataTable = fMOCA.CheckPageAccess(3.05) 'este es el Id definido en el MOCA
+        Using dtMOCA As System.Data.DataTable = fMOCA.CheckPageAccess(3.07) 'este es el Id definido en el MOCA
 
 
             If dtMOCA.Rows.Count() > 0 Then

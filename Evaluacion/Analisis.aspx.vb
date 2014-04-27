@@ -1,6 +1,6 @@
 ﻿Imports DevExpress.Web.ASPxGridView
 
-Partial Class Evaluacion_Levantamientos
+Partial Class Evaluacion_Analisis
     Inherits System.Web.UI.Page
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load

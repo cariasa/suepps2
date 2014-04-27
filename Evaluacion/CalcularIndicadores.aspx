@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Calcular Indicadores" Language="VB" AutoEventWireup="false" CodeFile="CalcularIndicadores.aspx.vb" Inherits="Evaluacion_Levantamientos" MasterPageFile="~/Site.master" %>
+﻿<%@ Page Title="Calcular Indicadores" Language="VB" AutoEventWireup="false" CodeFile="CalcularIndicadores.aspx.vb" Inherits="Evaluacion_Calcular" MasterPageFile="~/Site.master" %>
 
 <%@ Register Src="~/MOCA_UE.ascx" TagPrefix="uc1" TagName="MOCA_UE" %>
 

@@ -15,7 +15,7 @@ Partial Class Reportes_SerieTiempoIndicadores
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
         'Verifica si el usuario tiene el acceso a la pagina solicitada
-        Using dtMOCA As System.Data.DataTable = fMOCA.CheckPageAccess(3.05) 'este es el Id definido en el MOCA
+        Using dtMOCA As System.Data.DataTable = fMOCA.CheckPageAccess(4.06) 'este es el Id definido en el MOCA
             If dtMOCA.Rows.Count() > 0 Then
                 ''Activa o Inactiva los objetos,(sean botones, grid, hiperlinks, etc),  
                 ''en la pagina que se indique deacuerdo al parametro indicado
